@@ -1,0 +1,8 @@
+#+latex_class: cn-article
+#+title: 游戏通用功能底层逻辑Android SDK 封装
+#+author: deepwaterooo 
+
+* Android SDK 封装for unity games
+- Initial design, to be modified and linked later
+- Will work on packing lower layer Android SDK feature/functionality packing for coming a few days
+- 屏幕适配可需要再改一下

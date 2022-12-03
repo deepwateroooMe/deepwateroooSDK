@@ -1,0 +1,9 @@
+<resources>
+
+  <string name="app_name" translatable="false">SPSDK</string>
+  <string name="LoBatteryTitle">Low Battery</string>
+  <string name="LowBatteryMsg">Approximately X% of battery remaining.</string>
+  <string name="game_activity" translatable="false">com.squarepanda.sdk.activities.bluetooth.DemoActivity</string>
+  <string name="Enable_Production" translatable="false">false</string>
+
+</resources>

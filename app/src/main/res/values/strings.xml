@@ -1,0 +1,5 @@
+<resources>
+  <string name="deepwaterooo">dw</string>
+  <string name="game_activity">com.deepwaterooo.app.DemoActivity</string>
+  <string name="Enable_Production">false</string>
+</resources>

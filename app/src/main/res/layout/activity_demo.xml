@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/purple_bg"
+                android:orientation="vertical"
+                android:padding="@dimen/ten_dip"
+    tools:ignore="MissingDefaultResource">
+
+
+    <TextView
+        android:id="@+id/tvSelChild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLength="35"
+        android:maxLines="1"
+        android:padding="@dimen/twenty_dip"
+        android:textColor="@color/white"
+        android:textSize="@dimen/twenty_sp" />
+
+    <ImageView
+        android:id="@+id/ivSelChild"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/ten_dip"
+        android:layout_toRightOf="@+id/tvSelChild" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/twenty_dip"
+        android:background="@drawable/choose_playset_bg"
+        android:text="Logout"
+        android:textColor="@color/white"
+        android:textSize="@dimen/twenty_sp" />
+
+
+    <Button
+        android:id="@+id/btnUploadFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSelChild"
+        android:layout_marginBottom="@dimen/twenty_dip"
+        android:layout_marginTop="@dimen/twenty_dip"
+        android:background="@drawable/choose_playset_bg"
+        android:text="  Upload File "
+        android:textColor="@color/white"
+        android:textSize="@dimen/twenty_sp" />
+
+    <Button
+        android:id="@+id/btnDownloadFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvSelChild"
+        android:layout_marginBottom="@dimen/twenty_dip"
+        android:layout_marginTop="@dimen/twenty_dip"
+        android:background="@drawable/choose_playset_bg"
+        android:text="  Download File   "
+        android:textColor="@color/white"
+        android:textSize="@dimen/twenty_sp" />
+
+    <Button
+        android:id="@+id/btnManagePlayset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btnDownloadFile"
+        android:background="@drawable/choose_playset_bg"
+        android:text="Manage Playset"
+        android:textColor="@color/white"
+        android:textSize="@dimen/twenty_sp" />
+
+    <Button
+        android:id="@+id/btnLostCharacters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnUploadFile"
+        android:layout_marginBottom="@dimen/twenty_dip"
+        android:background="@drawable/choose_playset_bg"
+        android:padding="@dimen/ten_dip"
+        android:text="Lost Characters"
+        android:textColor="@color/white"
+        android:textSize="@dimen/twenty_sp" />
+
+    <Button
+        android:id="@+id/btnManagePlayers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnLostCharacters"
+        android:layout_marginBottom="@dimen/twenty_dip"
+        android:background="@drawable/choose_playset_bg"
+        android:text="@string/Manage_Player"
+        android:textColor="@color/white"
+        android:textSize="@dimen/twenty_sp" />
+
+    <Button
+        android:id="@+id/btnTermsNConditions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnManagePlayers"
+        android:layout_marginBottom="@dimen/twenty_dip"
+        android:background="@drawable/choose_playset_bg"
+        android:text="@string/Terms_and_Conditions"
+        android:textColor="@color/white"
+        android:textSize="@dimen/twenty_sp" />
+
+    <Button
+        android:id="@+id/btnCredits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnTermsNConditions"
+        android:layout_marginBottom="@dimen/twenty_dip"
+        android:background="@drawable/choose_playset_bg"
+        android:text="@string/Credits"
+        android:textColor="@color/white"
+        android:textSize="@dimen/twenty_sp" />
+
+
+    <Button
+        android:id="@+id/btnSelectChild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btnLostCharacters"
+        android:layout_marginBottom="@dimen/twenty_dip"
+        android:background="@drawable/choose_playset_bg"
+        android:text="Select Player"
+        android:textColor="@color/white"
+        android:textSize="@dimen/twenty_sp" />
+
+    <Button
+        android:id="@+id/btnPrivacyPolicy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btnSelectChild"
+        android:layout_marginBottom="@dimen/twenty_dip"
+        android:background="@drawable/choose_playset_bg"
+        android:text="@string/Privacy_Policy"
+        android:textColor="@color/white"
+        android:textSize="@dimen/twenty_sp" />
+
+    <Button
+        android:id="@+id/btnHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btnPrivacyPolicy"
+        android:layout_marginBottom="@dimen/twenty_dip"
+        android:background="@drawable/choose_playset_bg"
+        android:text="@string/Help"
+        android:textColor="@color/white"
+        android:textSize="@dimen/twenty_sp" />
+
+
+    <Button
+        android:id="@+id/btnGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/fifty_dip"
+        android:background="@drawable/choose_playset_bg"
+        android:text="Demo"
+        android:textColor="@color/white"
+        android:textSize="@dimen/twenty_sp" />
+
+</RelativeLayout>
