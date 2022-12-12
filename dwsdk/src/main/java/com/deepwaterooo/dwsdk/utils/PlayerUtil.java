@@ -2,12 +2,24 @@ package com.deepwaterooo.dwsdk.utils;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
+import android.text.TextUtils;
 
 import com.deepwaterooo.dwsdk.R;
+import com.deepwaterooo.dwsdk.activities.BaseActivity;
 import com.deepwaterooo.dwsdk.activities.DWAllSetForGameActivity;
+import com.deepwaterooo.dwsdk.activities.DWSplashScreenActivity;
 import com.deepwaterooo.dwsdk.appconfig.Constants;
+import com.deepwaterooo.dwsdk.appconfig.Numerics;
+import com.deepwaterooo.dwsdk.beans.ParentInfoDO;
+import com.deepwaterooo.dwsdk.beans.PlayerDO;
+import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 /**
  * Utility class for player activities
@@ -37,5 +49,116 @@ public class PlayerUtil {
     }
 // 改写成给游戏评分呀
     public static void startPlaygroundActivity(DWAllSetForGameActivity dwAllSetForGameActivity) {
+    }
+
+    /**
+     * Used to logout the user
+     *
+     * @param activity activity
+     */
+    public static void logoutUser(BaseActivity activity) {
+        // 把这里的桥折了,直接调用网络请求        
+        // startParentalCheckActivity(activity, Constants.REQUEST_CODE_PARENTAL_CHECK);
+        // 这里就是直接换成是网络请求登出用户呀
+    }
+
+    /**
+     * call the splash activity
+     *
+     * @param activity activity
+     */
+    public static void startSplashScreenActivity(Activity activity) {
+        Intent intent = new Intent(activity, DWSplashScreenActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        activity.startActivityForResult(intent, Numerics.ZERO);
+    }
+
+    /**
+     * This method is to get the selected player information
+     *
+     * @param activity - Context of the Activity
+     * @return - Player information object
+     */
+    public static PlayerDO getSelectedPlayer(Activity activity) {
+        SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(activity);
+        Gson gson = new Gson();
+        String json = sharedPrefUtil.getString(SharedPrefUtil.PREF_SELECTED_PLAYER);
+        PlayerDO obj = null;
+        if (!TextUtils.isEmpty(json)) {
+            obj = gson.fromJson(json, PlayerDO.class);
+            if (obj.getProfileURL() == null) {
+                obj.setProfileURL("");
+            }
+        }
+        return obj;
+    }
+
+    /**
+     * This method is to get the Logged-in parent/user information
+     *
+     * @param activity - Context of the Activity
+     * @return - Parent/User information object
+     */
+    public static ParentInfoDO getParentInfo(Activity activity) {
+        SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(activity);
+        ParentInfoDO obj = null;
+
+        if (sharedPrefUtil.getBoolean(SharedPrefUtil.PREF_LOGIN_USER_STATUS)) {
+            Gson gson = new Gson();
+            String json = sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_INFO);
+            if (!TextUtils.isEmpty(json)) {
+                obj = gson.fromJson(json, ParentInfoDO.class);
+            }
+        }
+        return obj;
+    }
+
+    /**
+     * This method to get the player profile image bitmap using profile URL
+     *
+     * @param bluetoothBaseActivity - Context of the activity
+     * @param profileURL            - profile image url to display
+     * @return Bitmap -  profile image bitmap
+     */
+    static Bitmap profileBitmap = null;
+    public static void getProfileImageURLString(final BaseActivity bluetoothBaseActivity, final PlayerImageListener listener,
+                                                String profileURL) {
+        profileBitmap = null;
+//        bluetoothBaseActivity.showProgressDialog(null);
+        if (TextUtils.isEmpty(profileURL)) {
+//            bluetoothBaseActivity.dismissProgressDialog();
+            profileBitmap = BitmapFactory.decodeResource(bluetoothBaseActivity.getResources(), R.drawable.default_avatar);
+            if (listener != null) {
+                listener.onImageLoadSuccess(profileBitmap);
+            }
+
+            return;
+        }
+        Picasso.with(bluetoothBaseActivity).load(profileURL).into(new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                bluetoothBaseActivity.dismissProgressDialog();
+                    profileBitmap = bitmap;
+                    if (listener != null) {
+                        listener.onImageLoadSuccess(profileBitmap);
+                    }
+                }
+
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
+//                bluetoothBaseActivity.dismissProgressDialog();
+                    profileBitmap = BitmapFactory.decodeResource(bluetoothBaseActivity.getResources(), R.drawable.default_avatar);
+                    if (listener != null) {
+                        listener.onImageLoadSuccess(profileBitmap);
+                    }
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+//                context.dismissProgressDialog();
+//                profileBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.default_avatar);
+                }
+            });
+
     }
 }

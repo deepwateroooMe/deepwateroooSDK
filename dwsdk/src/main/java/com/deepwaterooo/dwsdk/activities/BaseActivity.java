@@ -204,19 +204,19 @@ public class BaseActivity extends AppCompatActivity implements DialogInterface.O
         }
     }
     @Override
-    public void onBackPressed() {  }
+    public void onBackPressed() {
+    }
     @Override
     public void onDismiss(DialogInterface dialogInterface) {
         hideSystemUI();
     }
-
     @Override
     public void didFinishSdkUserConfiguration() {
-
     }
-
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+    protected void didfinishSDKscreenflow() {
     }
 }

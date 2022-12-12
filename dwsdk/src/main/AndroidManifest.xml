@@ -1,27 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Dw">
+  <!-- User permissions -->
+  <!--
+      Declare this required feature if you want to make the app available to BLE-capable
+      devices only.  If you want to make your app available to devices that don't support BLE,
+      you should omit this in the manifest.  Instead, determine BLE capability by using
+      PackageManager.hasSystemFeature(FEATURE_BLUETOOTH_LE)
+  -->
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <!-- <uses-permission android:name="android.permission.CAMERA"/> -->
 
-      <activity
-            android:name=".DWSplashScreenActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+  <!-- 相机相关功能的某些特性 -->
+  <!-- <uses-feature android:name="android.hardware.camera.any"/> -->
+  <!-- <uses-feature -->
+  <!--     android:name="android.hardware.camera.autofocus" -->
+  <!--     android:required="false"/> -->
+  <!-- <uses-feature -->
+  <!--     android:name="android.hardware.camera.flash" -->
+  <!--     android:required="false"/> -->
+  <uses-feature android:name="android.hardware.screen.landscape"/>
 
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-    </application>
+  <application
+       android:name=".DWApplication"
+      android:label="@string/app_name"
+      android:largeHeap="true"
+      android:supportsRtl="true">
 
+    <activity
+        android:name=".activities.authentication.DWLoginActivity"
+        android:screenOrientation="sensorLandscape"
+        android:theme="@style/DWAppTheme.NoActionBar.keyboard"
+        android:exported="true"
+        android:windowSoftInputMode="stateHidden|adjustResize"/>
+    <activity
+        android:name=".activities.authentication.DWSignUpActivity"
+        android:exported="true"
+        android:screenOrientation="sensorLandscape"
+        android:theme="@style/DWAppTheme.NoActionBar.keyboard"
+        android:windowSoftInputMode="stateHidden|adjustResize"/>
+    <activity
+        android:name=".activities.authentication.DWDialogActivity"
+        android:screenOrientation="sensorLandscape"
+        android:exported="true"
+        android:theme="@style/Theme.Transparent"/>
+    <activity
+        android:name=".activities.BaseActivity"
+        android:screenOrientation="sensorLandscape"
+        android:exported="true"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+    <activity
+        android:name=".activities.authentication.SpActivateAccountActivity"
+        android:screenOrientation="sensorLandscape"
+        android:exported="true"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+    <activity
+        android:name=".activities.authentication.DWBeforeStartActivity"
+        android:screenOrientation="sensorLandscape"
+        android:exported="true"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+    <activity
+        android:name=".activities.DWHaveAccountActivity"
+        android:exported="true"
+        android:screenOrientation="sensorLandscape"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+    <activity
+        android:name=".activities.bluetooth.DWPlaysetScanActivity"
+        android:launchMode="singleTop"
+        android:screenOrientation="sensorLandscape"
+        android:exported="true"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+    <activity
+        android:name=".activities.authentication.DWForgotPasswordActivity"
+        android:screenOrientation="sensorLandscape"
+        android:exported="true"
+        android:theme="@style/DWAppTheme.NoActionBar.keyboard"
+        android:windowSoftInputMode="stateHidden"/>
+
+    <service
+        android:name=".dfu.BluetoothLeService"
+        android:exported="true"
+        android:enabled="true"/>
+
+    <activity
+        android:name=".activities.bluetooth.DWRememberPlaysetActivity"
+        android:exported="true"
+        android:screenOrientation="sensorLandscape"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+    <activity
+        android:name=".activities.bluetooth.DWManagePlaysetActivity"
+        android:screenOrientation="sensorLandscape"
+        android:theme="@style/DWAppTheme.NoActionBar"
+        android:exported="true"
+        android:windowSoftInputMode="stateHidden"/>
+    <activity
+        android:name=".activities.DWSplashScreenActivity"
+        android:screenOrientation="sensorLandscape"
+        android:exported="true"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+    <activity
+        android:name=".activities.bluetooth.DWPlaysetCalibrationActivity"
+        android:exported="true"
+        android:screenOrientation="sensorLandscape"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+    <activity
+        android:name=".activities.bluetooth.DWIdlePlaysetActivity"
+        android:exported="true"
+        android:screenOrientation="sensorLandscape"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+    <activity
+        android:name=".activities.players.DWManagePlayerActivity"
+        android:launchMode="singleTop"
+        android:screenOrientation="sensorLandscape"
+        android:exported="true"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+    <activity
+        android:name=".activities.players.DWAddEditPlayerActivity"
+        android:screenOrientation="sensorLandscape"
+        android:exported="true"
+        android:theme="@style/Theme.Transparent"
+        android:windowSoftInputMode="stateHidden"/>
+    <activity
+        android:name=".activities.DWAllSetForGameActivity"
+        android:exported="true"
+        android:screenOrientation="sensorLandscape"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+    <activity
+        android:name=".activities.authentication.DWParentalCheckActivity"
+        android:exported="true"
+        android:screenOrientation="sensorLandscape"
+        android:theme="@style/ParentalCheck.Transparent"/>
+    <activity
+        android:name=".activities.players.DWAddNewPlayerActivity"
+        android:screenOrientation="sensorLandscape"
+        android:exported="true"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+    <activity
+        android:name=".activities.players.DWLostLettersActivity"
+        android:screenOrientation="sensorLandscape"
+        android:exported="true"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+    <activity
+        android:name=".activities.CustomWebViewActivity"
+        android:exported="true"
+        android:screenOrientation="sensorLandscape"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+    <activity
+        android:name="com.soundcloud.android.crop.CropImageActivity"
+        android:exported="true"
+        android:screenOrientation="sensorLandscape"
+        android:theme="@style/Base.Theme.AppCompat"/>
+    <activity
+        android:name=".activities.players.DWGameImageActivity"
+        android:exported="true"
+        android:screenOrientation="sensorLandscape"
+        android:theme="@style/DWAppTheme.NoActionBar"></activity>
+
+    <receiver android:name=".utils.NetworkChangeReceiver"
+              android:exported="true">
+      <intent-filter>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+      </intent-filter>
+    </receiver>
+    <receiver
+        android:name=".utils.IdleTimeOutReceiver"
+        android:exported="true"
+        android:enabled="true"/>
+  </application>
 </manifest>
+<!--     <application -->
+<!--         android:allowBackup="true" -->
+<!--         android:icon="@mipmap/ic_launcher" -->
+<!--         android:label="@string/app_name" -->
+<!--         android:roundIcon="@mipmap/ic_launcher_round" -->
+<!--         android:supportsRtl="true" -->
+<!--         android:theme="@style/Theme.Dw"> -->
+<!--       <activity -->
+<!--             android:name=".DWSplashScreenActivity" -->
+<!--             android:exported="true"> -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.MAIN" /> -->
+<!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
+<!--             </intent-filter> -->
+<!--             <meta-data -->
+<!--                 android:name="android.app.lib_name" -->
+<!--                 android:value="" /> -->
+<!--         </activity> -->
+<!--     </application> -->
+<!-- </manifest> -->
