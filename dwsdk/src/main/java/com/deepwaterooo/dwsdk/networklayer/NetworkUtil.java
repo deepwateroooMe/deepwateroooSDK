@@ -10,9 +10,17 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.deepwaterooo.dwsdk.R;
+import com.deepwaterooo.dwsdk.activities.BaseActivity;
+import com.deepwaterooo.dwsdk.activities.authentication.DWForgotPasswordActivity;
+import com.deepwaterooo.dwsdk.appconfig.Constants;
+import com.deepwaterooo.dwsdk.appconfig.JSONConstants;
+import com.deepwaterooo.dwsdk.beans.AppUpdatesDO;
 import com.deepwaterooo.dwsdk.utils.ApiCallListener;
+import com.deepwaterooo.dwsdk.utils.DWActivityUtil;
 import com.deepwaterooo.dwsdk.utils.PlayerUtil;
 import com.deepwaterooo.dwsdk.utils.SharedPrefUtil;
+import com.deepwaterooo.dwsdk.utils.Util;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -24,6 +32,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.Logger;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Class used to check the state of network connectivity in the Android device
@@ -58,14 +71,14 @@ public class NetworkUtil {
     public static void callReAuthenticationAPI(final Context activity, final ApiCallListener listener, final boolean isProgresNeeded) throws Exception {
         if (NetworkUtil.checkInternetConnection(activity)) {
             final SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(activity);
-            if (activity instanceof BluetoothBaseActivity && isProgresNeeded) {
-                ((BluetoothBaseActivity) activity).showProgressDialog(activity.getString(R.string.Please_Wait));
+            if (activity instanceof BaseActivity && isProgresNeeded) {
+//                ((BaseActivity) activity).showProgressDialog(activity.getString(R.string.Please_Wait)); // 这里可能要涉及到一点儿方法的垂柳
             }
-            ApiClient.getApiInterface(activity).ReAuthenticationAPI(sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_TOKEN)).enqueue(new Callback<ResponseBody>() {
+            ApiClient.getApiInterface((DWForgotPasswordActivity) activity).ReAuthenticationAPI(sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_TOKEN)).enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (activity instanceof BluetoothBaseActivity && isProgresNeeded) {
-                            ((BluetoothBaseActivity) activity).dismissProgressDialog();
+                        if (activity instanceof BaseActivity && isProgresNeeded) {
+                            ((BaseActivity) activity).dismissProgressDialog();
                         }
                         try {
                             if (response.body() != null) {
@@ -75,11 +88,11 @@ public class NetworkUtil {
                                 listener.onResponse(null);
 //
                             } else {
-                                if (response.code() == SyncStateContract.Constants.RESPONSE_CODE_UNAUTHORIZED ||
-                                    response.code() == SyncStateContract.Constants.RESPONSE_CODE_FORBIDDEN) {
-                                    if (activity instanceof BluetoothBaseActivity) {
-                                        // PlayerUtil.logoutUser((BluetoothBaseActivity) activity);
-                                        PlayerUtil.logoutParent((BluetoothBaseActivity) activity);
+                                if (response.code() == Constants.RESPONSE_CODE_UNAUTHORIZED ||
+                                    response.code() == Constants.RESPONSE_CODE_FORBIDDEN) {
+                                    if (activity instanceof BaseActivity) {
+                                        // PlayerUtil.logoutUser((BaseActivity) activity);
+//                                        PlayerUtil.logoutParent((BaseActivity) activity);
                                     }
                                 } else if (response.errorBody() != null) {
                                     JSONObject jsonObject = new JSONObject(response.errorBody().string());
@@ -88,8 +101,8 @@ public class NetworkUtil {
                                     listener.onFailure(jsonObject.toString());
                                     if (response.code() == Constants.RESPONSE_CODE_LOGOUT &&
                                         jsonObject.getString(JSONConstants.ERR).equals(Constants.TOKEN_ALREADY_EXPIRED)) {
-                                        if (activity instanceof BluetoothBaseActivity) {
-                                            PlayerUtil.logoutParent((BluetoothBaseActivity) activity);
+                                        if (activity instanceof BaseActivity) {
+//                                            PlayerUtil.logoutParent((BaseActivity) activity);
                                         }
                                     }
                                 }
@@ -101,8 +114,8 @@ public class NetworkUtil {
                     }
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        if (activity instanceof BluetoothBaseActivity && isProgresNeeded) {
-                            ((BluetoothBaseActivity) activity).dismissProgressDialog();
+                        if (activity instanceof BaseActivity && isProgresNeeded) {
+                            ((BaseActivity) activity).dismissProgressDialog();
                         }
                         //Logger.info("ReAuthentication", "onFailure: " + t.toString());
                         t.printStackTrace();
@@ -128,7 +141,7 @@ public class NetworkUtil {
      * @param fileData This parameter accepts file data in byte array
      * @param fileName upload file name
      */
-    public static void uploadFile(final BluetoothBaseActivity activity, final ApiCallListener listener, byte[] fileData, String fileName) {
+    public static void uploadFile(final BaseActivity activity, final ApiCallListener listener, byte[] fileData, String fileName) {
         if (NetworkUtil.checkInternetConnection(activity)) {
             new UploadFileTask(activity, listener, null, fileData, fileName).execute();
         } else {
@@ -148,7 +161,7 @@ public class NetworkUtil {
      * @param filepath upload file path
      * @param fileName upload file name
      */
-    public static void uploadFile(final BluetoothBaseActivity activity, final ApiCallListener listener, String filepath, String fileName) {
+    public static void uploadFile(final BaseActivity activity, final ApiCallListener listener, String filepath, String fileName) {
         if (NetworkUtil.checkInternetConnection(activity)) {
             new UploadFileTask(activity, listener, filepath, null, fileName).execute();
         } else {
@@ -162,12 +175,12 @@ public class NetworkUtil {
     }
     public static class UploadFileTask extends AsyncTask<Void, Void, String> {
         private ApiCallListener listener;
-        private BluetoothBaseActivity activity;
+        private BaseActivity activity;
         private String filepath;
         private String fileName;
         private byte[] fileData;
         private SharedPrefUtil sharedPrefUtil;
-        public UploadFileTask(BluetoothBaseActivity activity, ApiCallListener listener, String filepath, byte[] fileData, String fileName) {
+        public UploadFileTask(BaseActivity activity, ApiCallListener listener, String filepath, byte[] fileData, String fileName) {
             this.activity = activity;
             this.listener = listener;
             this.filepath = filepath;
@@ -206,7 +219,7 @@ public class NetworkUtil {
             super.onPostExecute(base64);
             if (base64 != null) {
                 try {
-                    ApiClient.getApiInterface(activity).uploadFile(JSONConstants.AUTHORIZATION_BEARER +
+                    ApiClient.getApiInterface((DWForgotPasswordActivity) activity).uploadFile(JSONConstants.AUTHORIZATION_BEARER +
                                                                    sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_TOKEN),
                                                                    fileName, base64).enqueue(new Callback<ResponseBody>() {
                                                                            @Override
@@ -265,7 +278,7 @@ public class NetworkUtil {
      * @param fileName file name to download.
      * @return
      */
-    public static void downloadFile(final BluetoothBaseActivity activity, final ApiCallListener listener, final String fileName) {
+    public static void downloadFile(final BaseActivity activity, final ApiCallListener listener, final String fileName) {
         if (NetworkUtil.checkInternetConnection(activity)) {
 //            activity.showProgressDialog(activity.getString(R.string.Please_Wait));
             try {
@@ -273,7 +286,7 @@ public class NetworkUtil {
                 SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(activity);
                 String url = sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_BUCKET_URL);
                 if (url != null && !url.isEmpty()) {
-                    ApiClient.getApiInterface(activity).downloadFileWithURL(url + "games/" + fileName).enqueue(new Callback<ResponseBody>() {
+                    ApiClient.getApiInterface((DWForgotPasswordActivity) activity).downloadFileWithURL(url + "games/" + fileName).enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 //                        activity.dismissProgressDialog();
@@ -326,10 +339,10 @@ public class NetworkUtil {
      * @param listener listener to pass result to caller
      * @param fileUrl  url to file download
      */
-    public static void downloadFileWithURL(final BluetoothBaseActivity activity, final ApiCallListener listener, final String fileUrl) {
+    public static void downloadFileWithURL(final BaseActivity activity, final ApiCallListener listener, final String fileUrl) {
         if (NetworkUtil.checkInternetConnection(activity)) {
             try {
-                ApiClient.getApiInterface(activity).downloadFileWithURL(fileUrl).enqueue(new Callback<ResponseBody>() {
+                ApiClient.getApiInterface((DWForgotPasswordActivity) activity).downloadFileWithURL(fileUrl).enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             try {
@@ -418,16 +431,16 @@ public class NetworkUtil {
             try {
                 final SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(context);
                 ApiClient.getApiInterface(context).appUpdateAPI(sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_ID),
-                                                                context.getString(R.string.gameID), SPActivityUtil.getSDKVersion(),
-                                                                SPActivityUtil.getGameAppVersion(context), "Android").enqueue(new Callback<AppUpdatesDO>() {
+                                                                context.getString(R.string.gameID), DWActivityUtil.getSDKVersion(),
+                                                                DWActivityUtil.getGameAppVersion(context), "Android").enqueue(new Callback<AppUpdatesDO>() {
                                                                         @Override
                                                                         public void onResponse(Call<AppUpdatesDO> call, Response<AppUpdatesDO> response) {
                                                                             try {
                                                                                 if (response != null && response.body() != null) {
                                                                                     sharedPrefUtil.setBoolean(SharedPrefUtil.PREF_IS_APP_UPDATE_CALLED, true);
                                                                                     AppUpdatesDO appUpdatesDO = (AppUpdatesDO) response.body();
-                                                                                    sharedPrefUtil.setString(SharedPrefUtil.PREF_UPDATE_MSG, appUpdatesDO.getUpdateVersionText());
-                                                                                    sharedPrefUtil.setString(SharedPrefUtil.PREF_UPDATE_LINK, appUpdatesDO.getNavigation_link());
+//                                                                                    sharedPrefUtil.setString(SharedPrefUtil.PREF_UPDATE_MSG, appUpdatesDO.getUpdateVersionText());
+//                                                                                    sharedPrefUtil.setString(SharedPrefUtil.PREF_UPDATE_LINK, appUpdatesDO.getNavigation_link());
                                                                                     if (appUpdatesDO.getSettings() != null ) {
                                                                                         sharedPrefUtil.setBoolean(SharedPrefUtil.PREF_LOGIN_USER_QR_STATUS, Boolean.valueOf(appUpdatesDO.getSettings().getQrCodeStatus()));
                                                                                     }
@@ -435,16 +448,16 @@ public class NetworkUtil {
                                                                                         Gson gson = new Gson();
                                                                                         String json = sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_INFO);
                                                                                         if (!TextUtils.isEmpty(json)) {
-                                                                                            ParentInfoDO parentInfoDO = gson.fromJson(json, ParentInfoDO.class);
-                                                                                            parentInfoDO.setRole(appUpdatesDO.getRole());
-                                                                                            sharedPrefUtil.setString(SharedPrefUtil.PREF_LOGIN_USER_INFO, gson.toJson(parentInfoDO));
+//                                                                                            ParentInfoDO parentInfoDO = gson.fromJson(json, ParentInfoDO.class);
+//                                                                                            parentInfoDO.setRole(appUpdatesDO.getRole());
+//                                                                                            sharedPrefUtil.setString(SharedPrefUtil.PREF_LOGIN_USER_INFO, gson.toJson(parentInfoDO));
                                                                                         }
-                                                                                        if (appUpdatesDO.getChildCount() != null) {
-                                                                                            //  sharedPrefUtil.setInteger(SharedPrefUtil.PREF_PLAYERS_LIMIT, Integer.parseInt(appUpdatesDO.getChildCount()));
-                                                                                        }
+//                                                                                        if (appUpdatesDO.getChildCount() != null) {
+//                                                                                            //  sharedPrefUtil.setInteger(SharedPrefUtil.PREF_PLAYERS_LIMIT, Integer.parseInt(appUpdatesDO.getChildCount()));
+//                                                                                        }
                                                                                     }
                                                                                 } else if (response != null && response.errorBody() != null) {
-                                                                                    Logger.debug("appUpdateAPI", "errorBody : " + response.errorBody().string());
+//                                                                                    Logger.debug("appUpdateAPI", "errorBody : " + response.errorBody().string());
                                                                                 }
                                                                             } catch (Exception e) {
                                                                                 e.printStackTrace();

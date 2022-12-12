@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.deepwaterooo.dwsdk.R;
+import com.deepwaterooo.dwsdk.appconfig.Constants;
+
 /**
  * This class is used to load web pages using urls.
  */
 // 必要的时候,我可能需要用这个特性,比如要用户帮给游戏打分,不知道是否可以无缝衔接好
-public class CustomWebViewActivity {
+public class CustomWebViewActivity extends BaseActivity {
     private WebView webView;
     private Activity conActivity; // <<<<<<<<<<<<<<<<<<<< 因为我不需要实现什么接口,所以这里可能就不需要了
 
@@ -34,7 +37,8 @@ public class CustomWebViewActivity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            showProgressDialog(null);
+//            showProgressDialog(null); // 空字符串
+//            showProgressDialog(null); // 空字符串
         }
         @Override
         public void onPageFinished(WebView view, String url) {
@@ -44,12 +48,9 @@ public class CustomWebViewActivity {
             }
         }
     }
-    @Override
-    public void availableServices() {}
-    @Override
-    public void gamePaused(boolean isScreenLocked) {}
-    @Override
-    protected void didNavigatesToMainMenu() {}
+//    public void availableServices() {}
+//    public void gamePaused(boolean isScreenLocked) {}
+//    protected void didNavigatesToMainMenu() {}
 
     @Override
     public void onBackPressed() {

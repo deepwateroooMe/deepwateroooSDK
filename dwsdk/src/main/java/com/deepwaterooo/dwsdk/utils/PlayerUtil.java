@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.provider.SyncStateContract;
 
 import com.deepwaterooo.dwsdk.R;
+import com.deepwaterooo.dwsdk.activities.DWAllSetForGameActivity;
+import com.deepwaterooo.dwsdk.appconfig.Constants;
 
 /**
  * Utility class for player activities
@@ -32,5 +34,8 @@ public class PlayerUtil {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+// 改写成给游戏评分呀
+    public static void startPlaygroundActivity(DWAllSetForGameActivity dwAllSetForGameActivity) {
     }
 }

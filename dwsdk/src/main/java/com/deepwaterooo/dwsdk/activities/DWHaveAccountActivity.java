@@ -1,9 +1,22 @@
 package com.deepwaterooo.dwsdk.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import com.deepwaterooo.dwsdk.R;
+import com.deepwaterooo.dwsdk.activities.authentication.DWLoginActivity;
+import com.deepwaterooo.dwsdk.appconfig.Constants;
+import com.deepwaterooo.dwsdk.appconfig.Numerics;
+import com.deepwaterooo.dwsdk.networklayer.NetworkUtil;
+import com.deepwaterooo.dwsdk.utils.PlayerUtil;
+import com.deepwaterooo.dwsdk.utils.SharedPrefUtil;
+
 /**
  * Activity used for User navigation for Login or Signup
  */
-public class DWHaveAccountActivity extends BaseActivity implements OnClickListener {
+public class DWHaveAccountActivity extends BaseActivity implements View.OnClickListener {
     private final String TAG = "DWHaveAccountActivity";
 
     private Button btnYes;
@@ -55,7 +68,6 @@ public class DWHaveAccountActivity extends BaseActivity implements OnClickListen
 //            sharedPrefUtil.setBoolean(SharedPrefUtil.PREF_DO_YOU_HAVE_ACC, true);
 //            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 //            startActivityForResult(intent, Numerics.ZERO);
-            callTeacherAlert(false);
         }
         isClicked = false;
     }
@@ -76,8 +88,15 @@ public class DWHaveAccountActivity extends BaseActivity implements OnClickListen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Constants.RESULT_PARENTAL_CHECK_SUCCESS && requestCode == Numerics.ZERO) {
-            PlayerUtil.loadTeacherPortalUrl(this, false);
-        }
+    }
+
+    @Override
+    public void didFinishSdkUserConfiguration() {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 }

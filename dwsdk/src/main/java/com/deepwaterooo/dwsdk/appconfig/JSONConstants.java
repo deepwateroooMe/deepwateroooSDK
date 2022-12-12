@@ -111,4 +111,6 @@ public class JSONConstants {
     public static final String TRAY_TIME = "tray_time";
     public static final String TRAY_MS_TIME = "tray_ms_time";
     public static final String TYPE = "type";
+    public static final String SETTINGS = "settings";
+    public static final String PLAYER_UPDATES = "player_updates";
 }

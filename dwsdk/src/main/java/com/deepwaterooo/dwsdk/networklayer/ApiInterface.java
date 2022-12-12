@@ -123,23 +123,23 @@ public interface ApiInterface {
                                                    @Path("parent_id") String parentId,
                                                    @Field(JSONConstants.VERSION) String version);
 
-    /**
-     * API used to get user Privacy policy description
-     *
-     * @return
-     */
-    @GET("cms/v2/listCmsbyCategory/privacy/{role}")
-    Call<PrivacyPolicyDO> privacyPolicyAPI(/*@Header(JSONConstants.AUTHORIZATION_TOKEN) String authorization,*/
-        @Path("role") String role);
-
-    /**
-     * API used to get user Privacy policy description
-     *
-     * @return
-     */
-    @GET("cms/v2/listCmsbyCategory/privacy/{role}")
-    Call<PrivacyPolicyDO> privacyPolicyWithTokenAPI(@Header(JSONConstants.AUTHORIZATION_TOKEN) String authorization,
-                                                    @Path("role") String role);
+//    /**
+//     * API used to get user Privacy policy description
+//     *
+//     * @return
+//     */
+//    @GET("cms/v2/listCmsbyCategory/privacy/{role}")
+//    Call<PrivacyPolicyDO> privacyPolicyAPI(/*@Header(JSONConstants.AUTHORIZATION_TOKEN) String authorization,*/
+//        @Path("role") String role);
+//
+//    /**
+//     * API used to get user Privacy policy description
+//     *
+//     * @return
+//     */
+//    @GET("cms/v2/listCmsbyCategory/privacy/{role}")
+//    Call<PrivacyPolicyDO> privacyPolicyWithTokenAPI(@Header(JSONConstants.AUTHORIZATION_TOKEN) String authorization,
+//                                                    @Path("role") String role);
 
 
     /**

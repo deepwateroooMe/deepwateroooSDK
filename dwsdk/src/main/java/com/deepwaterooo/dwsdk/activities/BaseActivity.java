@@ -21,16 +21,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.deepwaterooo.dwsdk.R;
 import com.deepwaterooo.dwsdk.appconfig.Constants;
 import com.deepwaterooo.dwsdk.appconfig.Numerics;
+import com.deepwaterooo.dwsdk.utils.LoginListener;
 import com.deepwaterooo.dwsdk.utils.SharedPrefUtil;
-
-import okhttp3.internal.Util;
+import com.deepwaterooo.dwsdk.utils.Util;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Activity used for base class for all activities
  */
-// ACTIVITY基类: 就是把一些必要的会话框及其相关的回调都包装在基类里了
-public class BaseActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
+// ACTIVITY基类: 就是把一些必要的会话框及其相关的回调都包装在基类里了.把这个作为安卓SDK端所有活动的基类
+public class BaseActivity extends AppCompatActivity implements DialogInterface.OnDismissListener, LoginListener {
     private static final String TAG = "BaseActivity";
 
     private ProgressDialog progressDialog;
@@ -43,7 +43,7 @@ public class BaseActivity extends AppCompatActivity implements DialogInterface.O
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         sharedPrefUtil = new SharedPrefUtil(this); 
         super.onCreate(savedInstanceState);
-        LocaleHelper.setLocale(this, LocaleHelper.getLanguage(this));
+//        LocaleHelper.setLocale(this, LocaleHelper.getLanguage(this));
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mDecorView = getWindow().getDecorView();
         IS_APP_RUNNING = true;
@@ -208,5 +208,15 @@ public class BaseActivity extends AppCompatActivity implements DialogInterface.O
     @Override
     public void onDismiss(DialogInterface dialogInterface) {
         hideSystemUI();
+    }
+
+    @Override
+    public void didFinishSdkUserConfiguration() {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 }

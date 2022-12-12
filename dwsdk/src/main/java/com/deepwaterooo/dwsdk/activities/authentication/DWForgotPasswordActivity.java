@@ -1,22 +1,41 @@
 package com.deepwaterooo.dwsdk.activities.authentication;
 
+import android.app.Dialog;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.deepwaterooo.dwsdk.R;
 import com.deepwaterooo.dwsdk.activities.BaseActivity;
+import com.deepwaterooo.dwsdk.appconfig.Constants;
+import com.deepwaterooo.dwsdk.appconfig.JSONConstants;
+import com.deepwaterooo.dwsdk.networklayer.ApiClient;
+import com.deepwaterooo.dwsdk.networklayer.NetworkUtil;
+import com.deepwaterooo.dwsdk.utils.Util;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Activity used for re-set User password using registered e-mail
  */
-public class DWForgotPasswordActivity extends BaseActivity implements OnClickListener {
+public class DWForgotPasswordActivity extends BaseActivity implements View.OnClickListener {
     private EditText etFPEmail;
     private Button btnFPCancel;
     private Button btnFPSubmit;
@@ -52,7 +71,7 @@ public class DWForgotPasswordActivity extends BaseActivity implements OnClickLis
         contentContainer =
             (ViewGroup) this.findViewById(android.R.id.content);
 
-        listener = new OnGlobalLayoutListener() {
+        listener = new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
                     possiblyResizeChildOfContent();
@@ -68,7 +87,7 @@ public class DWForgotPasswordActivity extends BaseActivity implements OnClickLis
         etFPEmail.setMinimumWidth((int) (Constants.getDeviceWidth() * 0.35));
         etFPEmail.setMaxWidth((int) (Constants.getDeviceWidth() * 0.35));
         ivPanda = (ImageView) findViewById(R.id.ivPanda);
-        ivDWLogo = (ImageView) findViewById(R.id.ivDWLogo);
+        ivDWLogo = (ImageView) findViewById(R.id.ivSPLogo);
         btnFPSubmit.setOnClickListener(this);
         btnFPCancel.setOnClickListener(this);
 
@@ -204,7 +223,7 @@ public class DWForgotPasswordActivity extends BaseActivity implements OnClickLis
             });
     }
 
-    OnClickListener okListener = new OnClickListener() {
+    View.OnClickListener okListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((Dialog) v.getTag()).dismiss();
@@ -262,5 +281,15 @@ public class DWForgotPasswordActivity extends BaseActivity implements OnClickLis
 
             this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         }
+    }
+
+    @Override
+    public void didFinishSdkUserConfiguration() {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 }

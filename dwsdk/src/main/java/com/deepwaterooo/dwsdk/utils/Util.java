@@ -123,8 +123,8 @@ public class Util {
         dialog.setCancelable(false);
         if (context instanceof BaseActivity) {
             dialog.setOnDismissListener((BaseActivity) context);
-        } else if (context instanceof BluetoothBaseActivity) {
-            dialog.setOnDismissListener((BluetoothBaseActivity) context);
+        } else if (context instanceof BaseActivity) {
+            dialog.setOnDismissListener((BaseActivity) context);
         }
         playSound(context, Constants.AUDIO_GROWN_UP);
         if (!((Activity) context).isFinishing() && !((Activity) context).isDestroyed()) {
@@ -175,8 +175,8 @@ public class Util {
         }
         if (context instanceof BaseActivity) {
             dialog.setOnDismissListener((BaseActivity) context);
-        } else if (context instanceof BluetoothBaseActivity) {
-            dialog.setOnDismissListener((BluetoothBaseActivity) context);
+        } else if (context instanceof BaseActivity) {
+            dialog.setOnDismissListener((BaseActivity) context);
         }
         dialog.setCancelable(false);
         if (!((Activity) context).isFinishing() && !((Activity) context).isDestroyed()) {
@@ -218,8 +218,8 @@ public class Util {
         dialog.setCancelable(false);
         if (context instanceof BaseActivity) {
             dialog.setOnDismissListener((BaseActivity) context);
-        } else if (context instanceof BluetoothBaseActivity) {
-            dialog.setOnDismissListener((BluetoothBaseActivity) context);
+        } else if (context instanceof BaseActivity) {
+            dialog.setOnDismissListener((BaseActivity) context);
         }
         if (!((Activity) context).isFinishing() && !((Activity) context).isDestroyed()) {
             dialog.show();
@@ -299,6 +299,7 @@ public class Util {
      * @return json string from the file
      */
     public static String getChildActivityFromFile(Context context, String fileName) {
+        return "I love my dear cousin~!!!";
     }
     public static List<String> getListOfChildActivitiesFromFile(Context context) {
         List<String> activities = new ArrayList<>();

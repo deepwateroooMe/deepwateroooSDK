@@ -5,6 +5,8 @@ import android.os.Parcelable;
 import com.deepwaterooo.dwsdk.appconfig.JSONConstants;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Class used to get the Login user attributes from server API response
  */
@@ -50,8 +52,8 @@ public class LoginUserDO implements Parcelable {
     ArrayList<PlayerDO> player = new ArrayList<PlayerDO>();
     @SerializedName(JSONConstants.TOKEN_ID)
     private String tokenId;
-    @SerializedName(JSONConstants.CUSTOM_WORDS_LIMIT)
-    private String customWordsLimit;
+//    @SerializedName(JSONConstants.CUSTOM_WORDS_LIMIT)
+//    private String customWordsLimit;
     @SerializedName(JSONConstants.GR_AVATAR_URL)
     private String gravatarUrl;
     @SerializedName(JSONConstants.BUCKET_URL)
@@ -89,7 +91,6 @@ public class LoginUserDO implements Parcelable {
         id = in.readString();
         playerCount = in.readInt();
         tokenId = in.readString();
-        customWordsLimit = in.readString();
         gravatarUrl = in.readString();
         in.readTypedList(player, PlayerDO.CREATOR);
         bucketUrl = in.readString();
@@ -135,7 +136,6 @@ public class LoginUserDO implements Parcelable {
         dest.writeString(id);
         dest.writeInt(playerCount);
         dest.writeString(tokenId);
-        dest.writeString(customWordsLimit);
         dest.writeString(gravatarUrl);
         dest.writeTypedList(player);
         dest.writeString(bucketUrl);
@@ -265,12 +265,6 @@ public class LoginUserDO implements Parcelable {
     }
     public void setTokenId(String tokenId) {
         this.tokenId = tokenId;
-    }
-    public String getCustomWordsLimit() {
-        return customWordsLimit;
-    }
-    public void setCustomWordsLimit(String customWordsLimit) {
-        this.customWordsLimit = customWordsLimit;
     }
     public String getGravatarUrl() {
         return gravatarUrl;

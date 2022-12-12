@@ -106,18 +106,18 @@ public class DWDialogActivity extends BaseActivity implements View.OnClickListen
                 if (getIntent().getBooleanExtra(JSONConstants.PRIVACY, false)) {
                     tvTitle.setText(getString(R.string.Privacy_Policy));
 //                    btnIAgree.setText(getString(R.string.Submit));
-                    if (isFromSignUp) {
-                        callPrivacyPolicy();
-                    } else {
-                        callPrivacyPolicyWithToken();
-                    }
+//                    if (isFromSignUp) {
+//                        callPrivacyPolicy();
+//                    } else {
+//                        callPrivacyPolicyWithToken();
+//                    }
                 } else {
                     tvTitle.setText(getString(R.string.Terms_and_Conditions));
-                    if (isFromSignUp) {
-                        callTermsAndConditions();
-                    } else {
-                        callTermsAndConditionsWithToken();
-                    }
+//                    if (isFromSignUp) {
+//                        callTermsAndConditions();
+//                    } else {
+//                        callTermsAndConditionsWithToken();
+//                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -170,6 +170,17 @@ public class DWDialogActivity extends BaseActivity implements View.OnClickListen
         }
         hideSystemUI();
     }
+
+    @Override
+    public void didFinishSdkUserConfiguration() {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
+
     /**
      * class used to control the web view
      */
@@ -223,11 +234,11 @@ public class DWDialogActivity extends BaseActivity implements View.OnClickListen
 //            finish();
             try {
                 if (!TextUtils.isEmpty(url)) {
-                    if (getIntent().getBooleanExtra(JSONConstants.PRIVACY, false)) {
-                        callSubmitPrivacyPolicy();
-                    } else {
-                        callSubmitTermsAndConditions();
-                    }
+//                    if (getIntent().getBooleanExtra(JSONConstants.PRIVACY, false)) {
+//                        callSubmitPrivacyPolicy();
+//                    } else {
+//                        callSubmitTermsAndConditions();
+//                    }
                 } else {
                     btnCancel.performClick();
                 }
@@ -238,382 +249,6 @@ public class DWDialogActivity extends BaseActivity implements View.OnClickListen
             isPlaysetConnected = false;
             Intent intent = new Intent();
             intent.putExtra(JSONConstants.MESSAGE, getString(R.string.Failed));
-            setResult(Numerics.ONE, intent);
-            finish();
-        }
-    }
-    /**
-     * sending Privacy Policy request to server and get the response
-     *
-     * @throws Exception thrown for network/response  issues
-     */
-    private void callPrivacyPolicy() throws Exception {
-        if (NetworkUtil.checkInternetConnection(this)) {
-            showProgressDialog(getString(R.string.Please_Wait));
-            ApiClient.getApiInterface(this).privacyPolicyAPI(/*JSONConstants.AUTHORIZATION_BEARER +
-                                                               sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_TOKEN),*/
-                getString(R.string.PARENT)).enqueue(new Callback<PrivacyPolicyDO>() {
-                        @Override
-                        public void onResponse(Call<PrivacyPolicyDO> call, Response<PrivacyPolicyDO> response) {
-                            dismissProgressDialog();
-                            try {
-                                if (response.body() != null) {
-                                    PrivacyPolicyDO privacyPolicyDO = (PrivacyPolicyDO) response.body();
-                                    version = privacyPolicyDO.getVersion();
-                                    //Logger.info("Privacy Success body", privacyPolicyDO.getContentUrl().toString());
-                                    tvTitle.setText(getString(R.string.Privacy_Policy));
-                                    url = privacyPolicyDO.getHtmlView();
-                                    wvPrivacyPolicy.loadUrl(url);
-                                } else {
-                                    if (response.errorBody() != null) {
-//                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
-//                            Logger.info("Login Error body", jsonObject.getString(JSONConstants.ERROR));
-                                    }
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<PrivacyPolicyDO> call, Throwable t) {
-                            //Logger.info("Privacy Policy", "onFailure: " + t.toString());
-                            dismissProgressDialog();
-                            Util.showAlertWarning(DWDialogActivity.this, getString(R.string.Sorry),
-                                                  getString(R.string.Failure_Unknown_Case), getString(R.string.Ok), okListener);
-                        }
-                    });
-        } else {
-            Util.showAlert(this, getString(R.string.We_Need_Internet), getString(R.string.Please_Connect_Internet),
-                           getString(R.string.Ok),
-                           okListener);
-        }
-    }
-    /**
-     * sending Privacy Policy request to server and get the response
-     *
-     * @throws Exception thrown for network/response  issues
-     */
-    private void callPrivacyPolicyWithToken() throws Exception {
-        if (NetworkUtil.checkInternetConnection(this)) {
-            showProgressDialog(getString(R.string.Please_Wait));
-            ParentInfoDO parentInfoDO = PlayerUtil.getParentInfo(this);
-            ApiClient.getApiInterface(this).privacyPolicyWithTokenAPI(JSONConstants.AUTHORIZATION_BEARER +
-                                                                      sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_TOKEN),
-                                                                      parentInfoDO.getRole()).enqueue(new Callback<PrivacyPolicyDO>() {
-                                                                              @Override
-                                                                              public void onResponse(Call<PrivacyPolicyDO> call, Response<PrivacyPolicyDO> response) {
-                                                                                  dismissProgressDialog();
-                                                                                  try {
-                                                                                      if (response.body() != null) {
-                                                                                          PrivacyPolicyDO privacyPolicyDO = (PrivacyPolicyDO) response.body();
-                                                                                          version = privacyPolicyDO.getVersion();
-                                                                                          //Logger.info("Privacy Success body", privacyPolicyDO.getContentUrl().toString());
-                                                                                          tvTitle.setText(getString(R.string.Privacy_Policy));
-                                                                                          url = privacyPolicyDO.getHtmlView();
-                                                                                          wvPrivacyPolicy.loadUrl(url);
-                                                                                      } else if (response.code() == Constants.RESPONSE_CODE_UNAUTHORIZED) {
-                                                                                          NetworkUtil.callReAuthenticationAPI(DWDialogActivity.this, new ApiCallListener() {
-                                                                                                  @Override
-                                                                                                  public void onResponse(Object object) {
-                                                                                                      if (object == null) {
-                                                                                                          try {
-                                                                                                              callPrivacyPolicyWithToken();
-                                                                                                          } catch (Exception e) {
-                                                                                                              e.printStackTrace();
-                                                                                                          }
-                                                                                                      }
-                                                                                                  }
-                                                                                                  @Override
-                                                                                                  public void onFailure(Object error) {
-                                                                                                  }
-                                                                                              }, true);
-                                                                                      } else {
-                                                                                          if (response.errorBody() != null) {
-//                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
-//                            Logger.info("Login Error body", jsonObject.getString(JSONConstants.ERROR));
-                                                                                          }
-                                                                                      }
-                                                                                  } catch (Exception e) {
-                                                                                      e.printStackTrace();
-                                                                                  }
-                                                                              }
-                                                                              @Override
-                                                                              public void onFailure(Call<PrivacyPolicyDO> call, Throwable t) {
-                                                                                  //Logger.info("Privacy Policy", "onFailure: " + t.toString());
-                                                                                  dismissProgressDialog();
-                                                                                  Util.showAlertWarning(DWDialogActivity.this, getString(R.string.Sorry),
-                                                                                                        getString(R.string.Failure_Unknown_Case), getString(R.string.Ok), okListener);
-                                                                              }
-                                                                          });
-        } else {
-            Util.showAlert(this, getString(R.string.We_Need_Internet), getString(R.string.Please_Connect_Internet),
-                           getString(R.string.Ok),
-                           okListener);
-        }
-    }
-    /**
-     * sending Terms and Conditions request to server and get the response
-     *
-     * @throws Exception thrown for network/response  issues
-     */
-    private void callTermsAndConditions() throws Exception {
-        if (NetworkUtil.checkInternetConnection(this)) {
-            showProgressDialog(getString(R.string.Please_Wait));
-            ApiClient.getApiInterface(this).termsAndConditionsAPI(/*JSONConstants.AUTHORIZATION_BEARER +
-                                                                    sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_TOKEN),*/
-                getString(R.string.PARENT)).enqueue(new Callback<PrivacyPolicyDO>() {
-                        @Override
-                        public void onResponse(Call<PrivacyPolicyDO> call, Response<PrivacyPolicyDO> response) {
-                            dismissProgressDialog();
-                            try {
-                                if (response.body() != null) {
-                                    PrivacyPolicyDO privacyPolicyDO = (PrivacyPolicyDO) response.body();
-                                    version = privacyPolicyDO.getVersion();
-                                    //Logger.info("TermsAndConditions Success body", privacyPolicyDO.getContentUrl().toString());
-                                    tvTitle.setText(getString(R.string.Terms_and_Conditions));
-                                    url = privacyPolicyDO.getHtmlView();
-                                    wvPrivacyPolicy.loadUrl(url);
-                                } else {
-                                    if (response.errorBody() != null) {
-//                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
-//                            Logger.info("Login Error body", jsonObject.getString(JSONConstants.ERROR));
-                                    }
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<PrivacyPolicyDO> call, Throwable t) {
-                            //Logger.info("TermsAndConditions", "onFailure: " + t.toString());
-                            dismissProgressDialog();
-                            Util.showAlertWarning(DWDialogActivity.this, getString(R.string.Sorry),
-                                                  getString(R.string.Failure_Unknown_Case), getString(R.string.Ok), okListener);
-                        }
-                    });
-        } else {
-            Util.showAlert(this, getString(R.string.We_Need_Internet), getString(R.string.Please_Connect_Internet),
-                           getString(R.string.Ok),
-                           okListener);
-        }
-    }
-    /**
-     * sending Terms and Conditions request to server and get the response
-     *
-     * @throws Exception thrown for network/response  issues
-     */
-    private void callTermsAndConditionsWithToken() throws Exception {
-        if (NetworkUtil.checkInternetConnection(this)) {
-            showProgressDialog(getString(R.string.Please_Wait));
-            ParentInfoDO parentInfoDO = PlayerUtil.getParentInfo(this);
-            ApiClient.getApiInterface(this).termsAndConditionsWithTokenAPI(JSONConstants.AUTHORIZATION_BEARER +
-                                                                           sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_TOKEN),
-                                                                           parentInfoDO.getRole()).enqueue(new Callback<PrivacyPolicyDO>() {
-                                                                                   @Override
-                                                                                   public void onResponse(Call<PrivacyPolicyDO> call, Response<PrivacyPolicyDO> response) {
-                                                                                       dismissProgressDialog();
-                                                                                       try {
-                                                                                           if (response.body() != null) {
-                                                                                               PrivacyPolicyDO privacyPolicyDO = (PrivacyPolicyDO) response.body();
-                                                                                               version = privacyPolicyDO.getVersion();
-                                                                                               //Logger.info("TermsAndConditions Success body", privacyPolicyDO.getContentUrl().toString());
-                                                                                               tvTitle.setText(getString(R.string.Terms_and_Conditions));
-                                                                                               url = privacyPolicyDO.getHtmlView();
-                                                                                               wvPrivacyPolicy.loadUrl(url);
-                                                                                           } else if (response.code() == Constants.RESPONSE_CODE_UNAUTHORIZED) {
-                                                                                               NetworkUtil.callReAuthenticationAPI(DWDialogActivity.this, new ApiCallListener() {
-                                                                                                       @Override
-                                                                                                       public void onResponse(Object object) {
-                                                                                                           if (object == null) {
-                                                                                                               try {
-                                                                                                                   callTermsAndConditionsWithToken();
-                                                                                                               } catch (Exception e) {
-                                                                                                                   e.printStackTrace();
-                                                                                                               }
-                                                                                                           }
-                                                                                                       }
-                                                                                                       @Override
-                                                                                                       public void onFailure(Object error) {
-                                                                                                       }
-                                                                                                   }, true);
-                                                                                           } else {
-                                                                                               if (response.errorBody() != null) {
-//                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
-//                            Logger.info("Login Error body", jsonObject.getString(JSONConstants.ERROR));
-                                                                                               }
-                                                                                           }
-                                                                                       } catch (Exception e) {
-                                                                                           e.printStackTrace();
-                                                                                       }
-                                                                                   }
-                                                                                   @Override
-                                                                                   public void onFailure(Call<PrivacyPolicyDO> call, Throwable t) {
-                                                                                       //Logger.info("TermsAndConditions", "onFailure: " + t.toString());
-                                                                                       dismissProgressDialog();
-                                                                                       Util.showAlertWarning(DWDialogActivity.this, getString(R.string.Sorry),
-                                                                                                             getString(R.string.Failure_Unknown_Case), getString(R.string.Ok), okListener);
-                                                                                   }
-                                                                               });
-        } else {
-            Util.showAlert(this, getString(R.string.We_Need_Internet), getString(R.string.Please_Connect_Internet),
-                           getString(R.string.Ok),
-                           okListener);
-        }
-    }
-    /**
-     * sending Terms and Conditions submit status to update server
-     *
-     * @throws Exception
-     */
-    private void callSubmitTermsAndConditions() throws Exception {
-        if (isFromLogin) {
-            if (NetworkUtil.checkInternetConnection(this)) {
-                showProgressDialog(getString(R.string.Please_Wait));
-                ApiClient.getApiInterface(this).submitTermsAndConditionsAPI(JSONConstants.AUTHORIZATION_BEARER +
-                                                                            sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_TOKEN),
-                                                                            PlayerUtil.getParentInfo(DWDialogActivity.this).getId()
-                                                                            , version).
-                    enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                dismissProgressDialog();
-                                try {
-                                    if (response.body() != null) {
-                                        JSONObject jsonObject = new JSONObject(response.body().string());
-                                        //Logger.info("Submit TermsAndConditions Success ", jsonObject.getString(JSONConstants.MESSAGE));
-                                        Intent intent = new Intent();
-                                        intent.putExtra(JSONConstants.MESSAGE, JSONConstants.SUCCESS);
-                                        if (!TextUtils.isEmpty(version)) {
-                                            intent.putExtra(Constants.EXTRA_TERMS_VERSION, version);
-                                        }
-                                        setResult(Numerics.ONE, intent);
-                                        finish();
-                                    } else if (response.code() == Constants.RESPONSE_CODE_UNAUTHORIZED) {
-                                        NetworkUtil.callReAuthenticationAPI(DWDialogActivity.this, new ApiCallListener() {
-                                                @Override
-                                                public void onResponse(Object object) {
-                                                    if (object == null) {
-                                                        try {
-                                                            callSubmitTermsAndConditions();
-                                                        } catch (Exception e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                    }
-                                                }
-                                                @Override
-                                                public void onFailure(Object error) {
-                                                }
-                                            }, true);
-                                    } else {
-                                        if (response.errorBody() != null) {
-                                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
-                                            //Logger.info("Submit TermsAndConditions Error ", jsonObject.getString(JSONConstants.ERROR));
-                                        }
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                //Logger.info("Submit TermsAndConditions", "onFailure: " + t.toString());
-                                dismissProgressDialog();
-                                Util.showAlertWarning(DWDialogActivity.this, getString(R.string.Sorry),
-                                                      getString(R.string.Failure_Unknown_Case), getString(R.string.Ok), okListener);
-                            }
-                        });
-            } else {
-                Util.showAlert(this, getString(R.string.We_Need_Internet), getString(R.string.Please_Connect_Internet),
-                               getString(R.string.Ok),
-                               null);
-            }
-        } else {
-            Intent intent = new Intent();
-            intent.putExtra(JSONConstants.MESSAGE, JSONConstants.SUCCESS);
-            if (!TextUtils.isEmpty(version)) {
-                intent.putExtra(Constants.EXTRA_TERMS_VERSION, version);
-            }
-            setResult(Numerics.ONE, intent);
-            finish();
-        }
-    }
-    /**
-     * sending  Privacy Policy submit status to update server
-     *
-     * @throws Exception
-     */
-    private void callSubmitPrivacyPolicy() throws Exception {
-        if (isFromLogin) {
-            if (NetworkUtil.checkInternetConnection(this)) {
-                showProgressDialog(getString(R.string.Please_Wait));
-                ApiClient.getApiInterface(this).submitPrivacyPolicyAPI(JSONConstants.AUTHORIZATION_BEARER +
-                                                                       sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_TOKEN),
-                                                                       PlayerUtil.getParentInfo(DWDialogActivity.this).getId()
-                                                                       , version).
-                    enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                dismissProgressDialog();
-                                try {
-                                    if (response.body() != null) {
-                                        JSONObject jsonObject = new JSONObject(response.body().string());
-                                        //Logger.info("Submit PrivacyPolicy Success ", jsonObject.getString(JSONConstants.MESSAGE));
-                                        sharedPrefUtil.setBoolean(SharedPrefUtil.PREF_TERMS_AND_CONDITIONS, false);
-                                        sharedPrefUtil.setBoolean(SharedPrefUtil.PREF_PRIVACY, false);
-                                        Intent intent = new Intent();
-                                        intent.putExtra(JSONConstants.MESSAGE, JSONConstants.SUCCESS);
-                                        if (!TextUtils.isEmpty(version)) {
-                                            intent.putExtra(Constants.EXTRA_PRIVACY_VERSION, version);
-                                        }
-                                        setResult(Numerics.ONE, intent);
-                                        finish();
-                                    } else if (response.code() == Constants.RESPONSE_CODE_UNAUTHORIZED) {
-                                        NetworkUtil.callReAuthenticationAPI(DWDialogActivity.this, new ApiCallListener() {
-                                                @Override
-                                                public void onResponse(Object object) {
-                                                    if (object == null) {
-                                                        try {
-                                                            callSubmitPrivacyPolicy();
-                                                        } catch (Exception e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                    }
-                                                }
-                                                @Override
-                                                public void onFailure(Object error) {
-                                                }
-                                            }, true);
-                                    } else {
-                                        if (response.errorBody() != null) {
-                                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
-                                            //Logger.info("Submit PrivacyPolicy Error ", jsonObject.getString(JSONConstants.ERROR));
-                                        }
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                //Logger.info("Submit PrivacyPolicy", "onFailure: " + t.toString());
-                                dismissProgressDialog();
-                                Util.showAlertWarning(DWDialogActivity.this, getString(R.string.Sorry),
-                                                      getString(R.string.Failure_Unknown_Case), getString(R.string.Ok), okListener);
-                            }
-                        });
-            } else {
-                Util.showAlert(this, getString(R.string.We_Need_Internet), getString(R.string.Please_Connect_Internet),
-                               getString(R.string.Ok),
-                               null);
-            }
-        } else {
-            sharedPrefUtil.setBoolean(SharedPrefUtil.PREF_TERMS_AND_CONDITIONS, false);
-            sharedPrefUtil.setBoolean(SharedPrefUtil.PREF_PRIVACY, false);
-            Intent intent = new Intent();
-            intent.putExtra(JSONConstants.MESSAGE, JSONConstants.SUCCESS);
-            if (!TextUtils.isEmpty(version)) {
-                intent.putExtra(Constants.EXTRA_PRIVACY_VERSION, version);
-            }
             setResult(Numerics.ONE, intent);
             finish();
         }
@@ -651,12 +286,12 @@ public class DWDialogActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onPause() {
         super.onPause();
-        if (!(isFromSignUp || isFromLogin) && isPlaysetConnected && BluetoothUtil.isPlaysetConnected() &&
-            !BluetoothUtil.isFirmwareUpdateInProgress() && !BluetoothUtil.isBootModeEnabled()) {
-            Util.IS_APP_RUNNING = false;
-            Util.playSound(DWDialogActivity.this, Constants.AUDIO_DISCONNECT);
-            BluetoothUtil.restartPlayset();
-        }
+//        if (!(isFromSignUp || isFromLogin) && isPlaysetConnected && BluetoothUtil.isPlaysetConnected() &&
+//            !BluetoothUtil.isFirmwareUpdateInProgress() && !BluetoothUtil.isBootModeEnabled()) {
+//            Util.IS_APP_RUNNING = false;
+//            Util.playSound(DWDialogActivity.this, Constants.AUDIO_DISCONNECT);
+//            BluetoothUtil.restartPlayset();
+//        }
         if(getIntent().hasExtra(Constants.EXTRA_IS_FROM_GAME)){
             finish();
         }

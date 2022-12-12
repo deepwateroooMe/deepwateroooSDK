@@ -3,9 +3,10 @@ package com.deepwaterooo.dwsdk.networklayer;
 // 现在仍是参考源项目,我觉得应该是去找年前年中写过的两个网络请求数据库什么的关于网络的利用框架的封装,感觉比这里写得要好
 // 本质上原理应该是一样的,因为使用了相同的网络请求框架,只是版本不同而已
 
+import android.content.Context;
+
 import com.deepwaterooo.dwsdk.R;
 import com.deepwaterooo.dwsdk.activities.authentication.DWDialogActivity;
-import com.deepwaterooo.dwsdk.activities.authentication.SPDialogActivity;
 import com.deepwaterooo.dwsdk.appconfig.Logger;
 
 import java.security.cert.CertificateException;
@@ -52,7 +53,7 @@ public class ApiClient {
      * @param context
      */
 
-    public static ApiInterface getApiInterface(DWDialogActivity context) throws Exception {
+    public static ApiInterface getApiInterface(Context context) throws Exception {
         if (context.getString(R.string.Enable_Production).equals("true")) {
             BASE_URL = PROD_URL;
         } else {

@@ -11,6 +11,9 @@ public class AppUpdatesDO implements Parcelable {
     @SerializedName(JSONConstants.ROLE)
     private String role;
 
+    @SerializedName(JSONConstants.SETTINGS)
+    private AppUpdateSettingsDO settings;
+
     protected AppUpdatesDO(Parcel in) {
         role = in.readString();
     }
@@ -40,5 +43,11 @@ public class AppUpdatesDO implements Parcelable {
     }
     public void setRole(String role) {
         this.role = role;
+    }
+    public void setSettings(AppUpdateSettingsDO settings) {
+        this.settings = settings;
+    }
+    public AppUpdateSettingsDO getSettings() {
+        return this.settings;
     }
 }

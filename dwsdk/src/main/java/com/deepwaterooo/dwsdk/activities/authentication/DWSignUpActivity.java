@@ -1,25 +1,56 @@
 package com.deepwaterooo.dwsdk.activities.authentication;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.TextUtils;
+import android.text.style.UnderlineSpan;
+import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.deepwaterooo.dwsdk.R;
 import com.deepwaterooo.dwsdk.activities.BaseActivity;
+import com.deepwaterooo.dwsdk.appconfig.Constants;
+import com.deepwaterooo.dwsdk.appconfig.JSONConstants;
+import com.deepwaterooo.dwsdk.appconfig.Numerics;
+import com.deepwaterooo.dwsdk.networklayer.ApiClient;
+import com.deepwaterooo.dwsdk.networklayer.NetworkUtil;
+import com.deepwaterooo.dwsdk.utils.Util;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.Locale;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Activity used for User Sign Up with specified input fields
  */
-public class DWSignUpActivity extends BaseActivity implements OnClickListener, OnCheckedChangeListener {
+public class DWSignUpActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     private TextView createAccountLabel;
     private EditText etFirstName;
     private EditText etLastName;
@@ -63,7 +94,7 @@ public class DWSignUpActivity extends BaseActivity implements OnClickListener, O
         contentContainer =
             (ViewGroup) this.findViewById(android.R.id.content);
 
-        listener = new OnGlobalLayoutListener() {
+        listener = new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
                     possiblyResizeChildOfContent();
@@ -189,7 +220,7 @@ public class DWSignUpActivity extends BaseActivity implements OnClickListener, O
             valid = false;
         }
         if (!valid)
-            Util.showAlertWarning(SPSignUpActivity.this, errorMsgTitle,
+            Util.showAlertWarning(DWSignUpActivity.this, errorMsgTitle,
                                   errorMsg, getString(R.string.Ok), null);
         return valid;
     }
@@ -212,7 +243,7 @@ public class DWSignUpActivity extends BaseActivity implements OnClickListener, O
                 }
             }
         } else if (v.getId() == R.id.tvAlreadyHaveAccount) {
-            Intent intent = new Intent(SPSignUpActivity.this, SPLoginActivity.class);
+            Intent intent = new Intent(DWSignUpActivity.this, DWLoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivityForResult(intent, Numerics.ZERO);
             //finish();
@@ -239,7 +270,7 @@ public class DWSignUpActivity extends BaseActivity implements OnClickListener, O
                                     JSONObject jsonObject = new JSONObject(response.body().string());
                                     //{"message":"Email already verified"}
                                     if (jsonObject.getString(JSONConstants.MESSAGE).equals(JSONConstants.EMAIL_ALREADY_VERIFIED)) {
-                                        Util.showAlertWarning(SPSignUpActivity.this, getString(R.string.Hmm),
+                                        Util.showAlertWarning(DWSignUpActivity.this, getString(R.string.Hmm),
                                                               getString(R.string.Email_Already_Exists), getString(R.string.Ok), null);
                                     }
                                 } else {
@@ -247,7 +278,7 @@ public class DWSignUpActivity extends BaseActivity implements OnClickListener, O
                                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
                                         //{"error":"Email not verified. Please verify it"}
                                         if (jsonObject.getString(JSONConstants.ERROR).equals(JSONConstants.EMAIL_NOT_VERIFIED)) {
-                                            Util.showAlertWarning(SPSignUpActivity.this, getString(R.string.Hmm),
+                                            Util.showAlertWarning(DWSignUpActivity.this, getString(R.string.Hmm),
                                                                   getString(R.string.Email_Already_Exists), getString(R.string.Ok), null);
                                         } else {
                                             //{"error":"Email not available"}
@@ -270,7 +301,7 @@ public class DWSignUpActivity extends BaseActivity implements OnClickListener, O
                         //Logger.info("VerifyEmail", "onFailure: " + t.toString());
                         dismissProgressDialog();
                         if (Util.IS_APP_RUNNING || BaseActivity.IS_APP_RUNNING) {
-                            Util.showAlertWarning(SPSignUpActivity.this, getString(R.string.Sorry),
+                            Util.showAlertWarning(DWSignUpActivity.this, getString(R.string.Sorry),
                                                   getString(R.string.Failure_Unknown_Case), getString(R.string.Ok), null);
                         }
                     }
@@ -308,7 +339,7 @@ public class DWSignUpActivity extends BaseActivity implements OnClickListener, O
                                     if (response.body() != null) {
                                         JSONObject jsonObject = new JSONObject(response.body().string());
                                         //Logger.info("SignUp Success body", jsonObject.getString(JSONConstants.MESSAGE));
-                                        Intent intent = new Intent(SPSignUpActivity.this, SpActivateAccountActivity.class);
+                                        Intent intent = new Intent(DWSignUpActivity.this, DWActivateAccountActivity.class);
                                         intent.putExtra(Constants.EXTRA_EMAIL, etEmail.getText().toString());
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                         startActivityForResult(intent, Numerics.ZERO);
@@ -317,10 +348,10 @@ public class DWSignUpActivity extends BaseActivity implements OnClickListener, O
                                             JSONObject jsonObject = new JSONObject(response.errorBody().string());
                                             //Logger.info("SignUp Error body", jsonObject.getString(JSONConstants.MESSAGE));
                                             if (jsonObject.getString(JSONConstants.MESSAGE).equals(JSONConstants.EMAIL_ALREADY_EXIST)) {
-                                                Util.showAlertWarning(SPSignUpActivity.this, getString(R.string.Hmm),
+                                                Util.showAlertWarning(DWSignUpActivity.this, getString(R.string.Hmm),
                                                                       getString(R.string.Email_Already_Exists), getString(R.string.Ok), null);
                                             } else {
-                                                Util.showAlertWarning(SPSignUpActivity.this, getString(R.string.Hmm),
+                                                Util.showAlertWarning(DWSignUpActivity.this, getString(R.string.Hmm),
                                                                       getString(R.string.Email_Not_Verified), getString(R.string.Ok), null);
                                             }
                                         }
@@ -339,7 +370,7 @@ public class DWSignUpActivity extends BaseActivity implements OnClickListener, O
                             dismissProgressDialog();
                             if (Util.IS_APP_RUNNING || BaseActivity.IS_APP_RUNNING) {
 
-                                Util.showAlertWarning(SPSignUpActivity.this, getString(R.string.Sorry),
+                                Util.showAlertWarning(DWSignUpActivity.this, getString(R.string.Sorry),
                                                       getString(R.string.Failure_Unknown_Case), getString(R.string.Ok), null);
                             }
                         }
@@ -357,7 +388,7 @@ public class DWSignUpActivity extends BaseActivity implements OnClickListener, O
      * @throws Exception
      */
     private void ShowPrivacyAndTermsDialog(boolean isPrivacy) {
-        Intent intent = new Intent(SPSignUpActivity.this, SPDialogActivity.class);
+        Intent intent = new Intent(DWSignUpActivity.this, DWDialogActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra(JSONConstants.PRIVACY, isPrivacy);
         intent.putExtra(Constants.EXTRA_IS_FROM_SIGNUP, true);
@@ -413,7 +444,7 @@ public class DWSignUpActivity extends BaseActivity implements OnClickListener, O
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(LocaleHelper.onAttach(base));
+//        super.attachBaseContext(LocaleHelper.onAttach(base)); // 不处理语言问题
     }
 
     @Override
@@ -423,16 +454,16 @@ public class DWSignUpActivity extends BaseActivity implements OnClickListener, O
             buttonView.setTextColor(getResources().getColor(R.color.white));
         } else {
             buttonView.setTextColor(getResources().getColor(R.color.MediumPurple));
-            if (buttonView.getId() == R.id.rbtnEnglish) {
-                LocaleHelper.persist(this, Locale.ENGLISH.getLanguage());
-            } else {
-                LocaleHelper.persist(this, Locale.SIMPLIFIED_CHINESE.getLanguage());
-            }
+//            if (buttonView.getId() == R.id.rbtnEnglish) {
+//                LocaleHelper.persist(this, Locale.ENGLISH.getLanguage());
+//            } else {
+//                LocaleHelper.persist(this, Locale.SIMPLIFIED_CHINESE.getLanguage());
+//            }
 
             Resources res = getResources();
             DisplayMetrics dm = res.getDisplayMetrics();
             Configuration conf = res.getConfiguration();
-            conf.locale = new Locale(LocaleHelper.getLanguage(SPSignUpActivity.this));
+//            conf.locale = new Locale(LocaleHelper.getLanguage(DWSignUpActivity.this));
             res.updateConfiguration(conf, dm);
             onConfigurationChanged(conf);
             //  intUI();
@@ -461,15 +492,15 @@ public class DWSignUpActivity extends BaseActivity implements OnClickListener, O
     }
 
     private void updateLanButtons() {
-        if (LocaleHelper.getLanguage(this).equals(Locale.ENGLISH.getLanguage())) {
-            rbtnEnglish.setChecked(true);
-            rbtnChinese.setTextColor(getResources().getColor(R.color.white));
-            rbtnEnglish.setTextColor(getResources().getColor(R.color.MediumPurple));
-        } else {
+//        if (LocaleHelper.getLanguage(this).equals(Locale.ENGLISH.getLanguage())) {
+//            rbtnEnglish.setChecked(true);
+//            rbtnChinese.setTextColor(getResources().getColor(R.color.white));
+//            rbtnEnglish.setTextColor(getResources().getColor(R.color.MediumPurple));
+//        } else {
             rbtnChinese.setChecked(true);
             rbtnChinese.setTextColor(getResources().getColor(R.color.MediumPurple));
             rbtnEnglish.setTextColor(getResources().getColor(R.color.white));
-        }
+//        }
     }
 
     @Override

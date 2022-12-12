@@ -6,4 +6,295 @@
   <string name="game_activity" translatable="false">com.squarepanda.sdk.activities.bluetooth.DemoActivity</string>
   <string name="Enable_Production" translatable="false">false</string>
 
+  <!--Have a DW account  -->
+  <string name="Have_Account">Do you have a Square Panda account?</string>
+  <string name="Not_Yet_New_User">Not yet, I\'m a new user.</string>
+
+  <string name="English">English</string>
+  <string name="Chinese">中文（简体）</string>
+
+
+  <!-- Login screen  -->
+  <string name="Username">Username</string>
+  <string name="Password">Password</string>
+  <string name="Log_In">Log In</string>
+  <string name="Forgot_Password"><u>Forgot your password?</u></string>
+  <string name="New_User_Account"><u>New User? Create an Account.</u></string>
+  <string name="gameID">56cab8e937f4c94f14bf5502</string>
+  <string name="Resp_423_Title">Hmm...that account doesn\'t exist.</string>
+  <string name="Resp_423_msg">If you have an account and believe you have received this message in error, please visit our help area.</string>
+
+  <string name="Login_Mail_Not_Found_Title">Hmm...that account doesn\'t exist.</string>
+  <string name="Login_Mail_Not_Found_Message">If you have an account and believe you have received this message in error, please visit our help area.</string>
+
+  <!-- Sign screen  -->
+  <string name="Create_Account">Create a Square Panda Account</string>
+  <string name="Firstname">Grown-up\'s First Name</string>
+  <string name="Lastname">Grown-up\'s Last Name</string>
+  <string name="Email">Grown-up\'s Email</string>
+  <string name="Retype_Password">Re-Enter Password</string>
+  <string name="Next">Next</string>
+  <string name="User_Have_Account"><u>Already have an account? Log in.</u></string>
+  <string name="Stay_Up_To_Date_Msg"><u>Stay up to date with the latest Square Panda news!</u></string>
+
+  <!-- Forgot Password screen  -->
+  <string name="ForgotPassword">Forgot your password?</string>
+  <string name="Email_Hint">Email</string>
+  <string name="Forgot_Password_Title">We all do! Those pesky passwords.</string>
+  <string name="Forgot_Password_Text">Don\'t worry, we\'ll send you an email that\nwill allow you
+  to reset your password.</string>
+  <string name="Forgot_Password_Success">You will receive an email shortly that will allow you to reset your password.</string>
+
+  <string name="Email_Not_Active">Your email status not in active. Please contact admin.</string>
+
+
+  <!--privacy & Terms and conditions  -->
+  <string name="Privacy_Policy">Privacy Policy</string>
+  <string name="Submit">Submit</string>
+  <string name="IAgree">I Agree</string>
+  <string name="Cancel">Cancel</string>
+  <string name="Close">Close</string>
+  <string name="Privacy_Policy_Text"></string>
+  <string name="Terms_and_Conditions">Terms and Conditions</string>
+  <string name="Failed">Failed</string>
+  <string name="Failedd">Failed!</string>
+
+
+  <!--Account activate  -->
+  <string name="Resend_Email">Resend Email</string>
+  <string name="Take_me_Login">OK, take me to Log In</string>
+  <string name="Activate_Account">Activate your account!</string>
+  <string name="Activate_Account_Text">We\'ve sent a verification email to %s. Please click on the Activate button to verify your account.
+  If you can\'t find it, be sure to check your DWAM folder!</string>
+
+  <!--Before starting  -->
+  <string name="Before_Start">Before we get started, do you have \nthe Square Panda playset?</string>
+  <string name="Yes">Yes!</string>
+  <string name="What_Playset">What\'s a Playset?</string>
+
+  <!--Internet alert  -->
+  <string name="Ok">OK</string>
+  <string name="We_Need_Internet">We need internet!</string>
+  <string name="Please_Connect_Internet">Please connect to an internet source.</string>
+
+  <!-- alert Messages -->
+  <string name="Please_Wait"></string>
+  <string name="Loading">Loading</string>
+  <string name="Warning">Warning</string>
+  <string name="Email_Verification">Email Verification</string>
+  <string name="Resend_Message">Resend Message</string>
+  <string name="EnableBluetooth">Enable Bluetooth</string>
+  <string name="EnableBluetoothMsg">Looks like your device bluetooth isn\'t enabled yet. Please go to your device Settings to turn bluetooth on.</string>
+
+
+  <!--Login & signup validations -->
+  <string name="Empty_Username">Please enter your email.</string>
+  <string name="Empty_Password">Please enter your password.</string>
+  <string name="Provide_Password">Please provide a password.</string>
+  <string name="Invalid_Email_format">That doesn\'t look like a valid email. Please check for typos.</string>
+  <string name="Invalid_Password">The email or password is incorrect.\n\nIf you have forgotten your password, you can reset it.</string>
+  <string name="User_does_not_exits">Sorry, we don\'t recognize that email.</string>
+  <string name="Email_not_verified">Looks like your account has not yet been activated. Check your email for a message from Square Panda.</string>
+  <string name="Login_failure_in_unknown_case">Something is wrong on our end.  Please, try again later.</string>
+
+  <string name="Without_giving_any_input">Please fill in</string>
+  <string name="Empty_Grownups_First_Name">Please enter Grown-up\'s First Name</string>
+  <string name="Empty_Grownups_Last_Name">Please enter Grown-up\'s Last Name</string>
+  <string name="Empty_Grown_ups_Email">Please enter Grown-up\'s Email</string>
+  <string name="Password_Length">Please choose a password with at least 8 characters.</string>
+  <string name="Empty_Retype_Password">Please re-enter your password.</string>
+
+
+  <string name="Password_RetypePassword_Match">That\'s not the same password as the first one.</string>
+  <string name="Email_Already_Exists">That email has already been used to create a Square Panda account.
+  \n\n If you\'ve forgotten your password, you can reset it.</string>
+  <string name="Email_Not_Verified">Looks like your account has not yet been activated.
+  Check your email for a message from Square Panda.</string>
+  <string name="Failure_Unknown_Case">Something is wrong on our end.  Please, try again later.</string>
+  <string name="ForgotPwd_Success">You will receive an email shortly that will allow you to reset your password.</string>
+  <string name="Bluetooth_OFF">Looks like your bluetooth isn\'t enabled yet.
+  Please go to your Settings to turn Bluetooth on.</string>
+  <string name="Whoops">Whoops!</string>
+  <string name="Oops">Oops!</string>
+  <string name="Hmm">Hmm...</string>
+  <string name="Sorry">Sorry!</string>
+  <string name="Sent">Sent.</string>
+  <string name="Done">Done!</string>
+  <string name="Empty"></string>
+
+  <!-- Playset Scan Activity-->
+  <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
+  <string name="ble_not_supported">BLE is not supported</string>
+  <string name="unknown_device">Unknown device</string>
+
+  <string name="Resend_Email_Message">You will receive an email shortly that will allow you to verify your account.</string>
+  <string name="Resend_Email_Already_Activated">Your account has already been activated. You can continue with Login.</string>
+
+
+<string name="Turn_On_Playset_Message">Turn on your playset.</string>
+<string name="Back">Back</string>
+<string name="SelectaPlayset">Tap on your playset icon below.</string>
+<string name="Searching">Searching...</string>
+
+<!-- Upgrade Firmware Alert screen-->
+
+<string name="UpgradeTitle">Playset upgrade available!</string>
+<string name="UpgradeMsg">A firmware update is available for your playset. \nWould you like to update now? It will just take a \nfew minutes.</string>
+<string name="UpgradeNow">Upgrade Now</string>
+<string name="Later">Later</string>
+<string name="Updating">Updating...</string>
+<string name="UpdateProgressMsg">Please do not turn off your playset or mobile device. Thanks for waiting, it\'ll just be a moment</string>
+<string name="UpgradeFirmwareFailure">Something went wrong. Please try again.</string>
+<string name="UpdateCompleteTitle">Update Complete!</string>
+<string name="UpdateCompleteMsg">Your playset is now better than ever!</string>
+
+<!-- Remember playset-->
+<string name="RememberPlayset">Remember Playset</string>
+<string name="ChooseDifferentPlaset">Choose a different playset</string>
+<string name="BatterySaver">Battery Saver</string>
+<string name="BatterySaverMsg">We\'ll turn off your playset for you if \nwe detect a long period of inactivity.</string>
+
+<!-- Manage Playset Activity-->
+<string name="ManagePlayset">Manage Playset</string>
+<string name="RenamePlayset">Rename Playset</string>
+<string name="Disconnect">Disconnect</string>
+<string name="Calibrate">Calibrate</string>
+<string name="Save">Save</string>
+<string name="RenameMsg">Please enter a proper playset name.</string>
+
+<!-- Playset calibration -->
+<string name="Calibration_Title">Clear the letters!</string>
+<string name="Calibration_Button">Playset is clear. Calibrate!</string>
+<string name="Calibration_Message">Calibrating your playset will help improve its accuracy.
+Please clear the playset of all letters. when you\'re ready, press the button below.</string>
+<string name="Calibration_Success_Dialog_Title">Done!</string>
+<string name="Calibration_Success_Dialog">Your playset has been successfully calibrated.</string>
+<string name="Calibration_Still_LettersMsg"> <u>My playset is clear, but I\'m still seeing this message...</u></string>
+
+<!--Plasyset idle activity state -->
+<string name="Idle_Playset_Title">Are you there?</string>
+<string name="Idle_Playset_Message">We haven\'t detected any activity for a while, so we turned off your playset for you.</string>
+<string name="Idle_Playset_Button">I\'m here!</string>
+
+<!--Add/Edit player -->
+<string name="Add_Players">Add Players</string>
+<string name="AddPlayer">Add Player</string>
+<string name="Add_Player_Msg">Add players to your account so that each child can enjoy their own personal learning process. You can add up to %s players in your account.</string>
+<string name="Add_Player">Add Player</string>
+<string name="Edit_Player">Edit Player</string>
+<string name="Continue">Continue</string>
+<string name="Manage_Player">Manage Players</string>
+<string name="SelectAPlayer">Select a Player</string>
+<string name="EditPlayerMsg">Select a player to edit.</string>
+<string name="DoneEditing">Done Editing</string>
+<string name="EnterPlayerBirthday">Please enter the player\'s birthday.</string>
+<string name="EnterPlayerFirstName">Please enter the player\'s first name.</string>
+<string name="EnterPlayerLastName">Please enter the player\'s last name.</string>
+<string name="EnterPlayerGender">Please select the player\'s gender.</string>
+<string name="EnterPlayerIEPDescription">Please enter the player\'s IEP.</string>
+
+
+
+
+<!-- Delete Player-->
+<string name="Delete">Delete</string>
+<string name="DeletePlayerTitle">Are you sure?</string>
+<string name="DeletePlayerMsg">Deleting this player will wipe curriculum advancement and game progress across all games, and will not be recoverable.</string>
+<string name="DeletePlayerInfo">If you would like more info about our privacy policies click here to read more</string>
+<string name="click_here_to_read_more">click here to read more</string>
+<string name="NewMessage">New Message</string>
+
+<!-- Delete player Info -->
+<string name="DeletePlayerInfoTitle">What happens to the data?</string>
+<string name="DeletePlayerInfoMsg">When you delete a player, we permanently delete any and all player identifiers from Square Panda servers.
+This includes the player\'s name, birthday and picture.\n\nSquare Panda anonymizes and retains the player\'s educational activity (i.e. what
+words they spelled, what mistakes they made). We use this information only to help improve our products. For maximum privacy protection, the data
+is not traceable back to your account or other players in your account.</string>
+
+<!--<string name="DeletePlayerInfoConact">If you have additional questions, please contact \nsupport@squarepanda.com</string>-->
+<!--<string name="support_mail">support@squarepanda.com</string>-->
+
+<string name="Grade">Grade</string>
+<string name="Student_id">Student ID</string>
+<string name="ParentEmail">Parent Email</string>
+<string name="IEP">IEP</string>
+<string name="Languages">Languages</string>
+<string name="LastName">Last Name</string>
+<string name="StudentsFirstName">Student\'s First Name</string>
+<string name="StudentsLastName">Student\'s Last Name</string>
+<string name="Yess">Yes</string>
+<string name="No">No</string>
+<string name="Description">Description</string>
+
+<string name="DeletePlayerInfoConact">If you have additional questions, please visit our help area.</string>
+<string name="support_mail">help area</string>
+
+
+<string name="AddPlayer_FirstName">First Name</string>
+<string name="AddPlayer_Birthday">Birthday</string>
+<string name="AddPlayer_Gender">Gender</string>
+<string name="AddPlayer_Girl">Girl</string>
+<string name="AddPlayer_Boy">Boy</string>
+<string name="AddPlayer_Not_Answer">Prefer not to answer</string>
+
+
+<string name="TakeAPicture">Take a picture</string>
+<string name="UploadFromLibrary">Upload from library</string>
+<string name="ChooseAnAvatar">Choose an avatar</string>
+<string name="ADD_PICTURE">ADD PICTURE</string>
+
+<string name="SelectPicture">Select Picture</string>
+
+<!--All set for game ,before going to game screen -->
+<string name="YouAllSet">You\'re all set!</string>
+<string name="YouAllSetMsg">Get ready to jump into Square Panda\'s world of reading readiness.</string>
+<string name="YouAllSetText">With your Square Panda account you can access the Square Panda Playground and check out the skill badges your player(s) will earn!</string>
+<string name="YouAllSettakeToGame">Take me to the game!</string>
+<string name="YouAllSettakeToPlayGround">Take me to the Playground!</string>
+
+<!-- Logout   -->
+<string name="GrownUps">Grown-Ups Only</string>
+<string name="GrownUpsMsg">To access, please enter the numbers:</string>
+
+<!-- Lost Letters -->
+<string name="LostLetters">Lost Letters</string>
+<string name="Lostletters">Lost Letters:</string>
+<string name="LostLettersMsg">Lost a Letter? Let us know and we\'ll play these letters for you in your games!</string>
+<string name="ClearAll">Clear all</string>
+
+<string name="Credits">Credits</string>
+<string name="Help">Help</string>
+<string name="LocationAccept">Accept</string>
+<string name="Deny">Deny</string>
+<string name="Alert">Alert</string>
+<string name="LocationMsg">This application needs your device Location access to search for available playsets nearby.</string>
+
+<!-- teacher portal to browser navigation -->
+<string name="are_you_teacher">Are you a teacher?</string>
+<string name="create_a_teacher">Yes, create a teacher account.</string>
+<string name="not_a_teacher">No, I am not a teacher.</string>
+<string name="app_update_msg">This feature is currently available online at the Square Panda Teacher Playground!</string>
+<string name="click_here_to_continue">Click here to continue...</string>
+<string name="signup_are_you_teacher_account"><u>Are you a teacher? Create a teacher account.</u></string>
+<string name="app_update_link">https://teacher.squarepanda.com</string>
+<string name="parent_zero_player">Your account does not have any player profiles created yet. Would you like to create one now?</string>
+<string name="teacher_zero_player">Your account does not have any student profiles created yet. This feature is available online in the Square Panda Teacher Playground.</string>
+
+<string name="RemberPlayset_off">Off</string>
+<string name="RemberPlayset_on">On</string>
+
+<string name="result_text" translatable="false">Found plain text</string>
+<string name="msg_bulk_mode_scanned" translatable="false">Bulk mode: barcode scanned and saved</string>
+<string name="manually_select">Manually Select a Playset</string>
+<string name="scan_qr_code">Scan QR Code</string>
+<string name="scan_qr_code_playset">Scan the QR Code on your Playset</string>
+
+<string name="JustAMoment">\nJust a Moment\n</string>
+
+<string name="StartScan">Start Scan</string>
+<string name="NeedPermission">Squarepanda Need Permissions</string>
+<string name="GoSettings">Go Settings</string>
+<string name="Grant">Grant</string>
+<string name="PermissionStart">This app needs</string>
+<string name="PermissionEnd">permissions.</string>
 </resources>

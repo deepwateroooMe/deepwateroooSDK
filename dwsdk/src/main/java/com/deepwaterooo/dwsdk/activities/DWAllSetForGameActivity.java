@@ -5,13 +5,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.deepwaterooo.dwsdk.R;
+import com.deepwaterooo.dwsdk.appconfig.Constants;
+import com.deepwaterooo.dwsdk.appconfig.Numerics;
 import com.deepwaterooo.dwsdk.utils.PlayerUtil;
 
 /**
  * Activity used for set before enter to the game
  */
 // 忘记细节了:这里好像是说,设置了两个不透明隐藏的按钮,用来模拟调用返回SDK或是进入游戏 ??? 再检查一下
-public class DWAllSetForGameActivity extends BaseActivity implements OnClickListener {
+public class DWAllSetForGameActivity extends BaseActivity implements View.OnClickListener {
 
     private Button btnTakeToPlayGround;
     private Button btnTakeToGame;
@@ -49,7 +52,7 @@ public class DWAllSetForGameActivity extends BaseActivity implements OnClickList
     public void onClick(View v) {
         if (v.getId() == R.id.btnTakeToPlayGround) {
             btnTakeToPlayGround.setClickable(false);
-            PlayerUtil.startParentalCheckActivity(this, Numerics.ZERO);
+//            PlayerUtil.startParentalCheckActivity(this, Numerics.ZERO);
 
         } else if (v.getId() == R.id.btnTakeToGame) {
             Intent intent = new Intent(DWAllSetForGameActivity.this, DWGameImageActivity.class);
@@ -65,5 +68,15 @@ public class DWAllSetForGameActivity extends BaseActivity implements OnClickList
             PlayerUtil.startPlaygroundActivity(this);
         }
         btnTakeToPlayGround.setClickable(true);
+    }
+
+    @Override
+    public void didFinishSdkUserConfiguration() {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 }
