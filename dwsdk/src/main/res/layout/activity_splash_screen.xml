@@ -5,7 +5,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/orange_bg"
                 android:orientation="vertical"
-                tools:context="com.squarepanda.sdk.activities.SPSplashScreenActivity">
+                tools:context="com.deepwaterooo.dwsdk.activities.DWSplashScreenActivity">
 
 
     <ImageView

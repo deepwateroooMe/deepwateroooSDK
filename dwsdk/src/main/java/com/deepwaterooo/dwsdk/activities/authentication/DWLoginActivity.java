@@ -603,9 +603,4 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
     public void didFinishSdkUserConfiguration() {
 
     }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
-    }
 }

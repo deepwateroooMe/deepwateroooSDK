@@ -6,7 +6,6 @@ import android.os.Handler;
 
 import com.deepwaterooo.dwsdk.R;
 import com.deepwaterooo.dwsdk.activities.authentication.DWLoginActivity;
-import com.deepwaterooo.dwsdk.appconfig.Constants;
 import com.deepwaterooo.dwsdk.appconfig.Numerics;
 import com.deepwaterooo.dwsdk.utils.SharedPrefUtil;
 import com.deepwaterooo.dwsdk.utils.Util;

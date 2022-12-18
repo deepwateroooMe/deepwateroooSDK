@@ -176,11 +176,6 @@ public class DWDialogActivity extends BaseActivity implements View.OnClickListen
 
     }
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
-    }
-
     /**
      * class used to control the web view
      */

@@ -287,9 +287,4 @@ public class DWForgotPasswordActivity extends BaseActivity implements View.OnCli
     public void didFinishSdkUserConfiguration() {
 
     }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
-    }
 }

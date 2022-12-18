@@ -7,7 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.SyncStateContract;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +15,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.deepwaterooo.dwsdk.R;
 import com.deepwaterooo.dwsdk.appconfig.Constants;
@@ -212,10 +210,6 @@ public class BaseActivity extends AppCompatActivity implements DialogInterface.O
     }
     @Override
     public void didFinishSdkUserConfiguration() {
-    }
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
     }
     protected void didfinishSDKscreenflow() {
     }

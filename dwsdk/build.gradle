@@ -6,20 +6,19 @@ apply plugin: 'com.android.library'
 
 android {
     namespace 'com.deepwaterooo.dwsdk'
-    // compileSdk 32
-    compileSdkVersion 32
-    buildToolsVersion '31.0.0'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.0'
     // multiDexEnabled true // added for Bubbles game build 这个有待验证,不相信自己几年前的智商.....
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
+    // compileOptions {
+    //     sourceCompatibility JavaVersion.VERSION_8
+    //     targetCompatibility JavaVersion.VERSION_8
+    // }
     
     defaultConfig {
 //        applicationId "com.deepwaterooo.dwsdk"
         minSdk 25
-        targetSdk 31
+        targetSdk 25
         versionCode 1
         versionName "1.0"
         // testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -38,8 +37,13 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    // implementation 'com.android.support:appcompat-v7:28.0.0'
+    // implementation 'com.android.support:design:28.0.0'
+    // implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:appcompat-v7:25.0.0'
+
+    // implementation 'androidx.appcompat:appcompat:1.5.1'
+    // implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
 // 这里的版本号都还需要再检查一下比较好,参考了先前的项目      
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

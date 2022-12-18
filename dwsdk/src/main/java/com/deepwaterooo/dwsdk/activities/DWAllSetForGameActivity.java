@@ -74,9 +74,4 @@ public class DWAllSetForGameActivity extends BaseActivity implements View.OnClic
     public void didFinishSdkUserConfiguration() {
 
     }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
-    }
 }
