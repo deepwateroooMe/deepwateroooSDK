@@ -1,13 +1,10 @@
 apply plugin: 'com.android.library'
-
-// dependencies { // 如果这个类库还有依赖第三方库的话
-//     implementation fileTree(dir: 'libs', include: ['*.jar'])
-// }
+// apply plugin: 'com.android.application'
 
 android {
-    namespace 'com.deepwaterooo.dwsdk'
-    compileSdkVersion 28
-    buildToolsVersion '28.0.0'
+    namespace 'com.deepwaterooo.sdk'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.1'
     // multiDexEnabled true // added for Bubbles game build 这个有待验证,不相信自己几年前的智商.....
 
     // compileOptions {
@@ -16,11 +13,12 @@ android {
     // }
     
     defaultConfig {
-//        applicationId "com.deepwaterooo.dwsdk"
-        minSdk 25
-        targetSdk 25
+        minSdk 26
+        //noinspection ExpiredTargetSdkVersion
+        targetSdk 26
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         // testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -30,7 +28,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     packagingOptions {
         doNotStrip '*/armeabi-v7a/*.so'
     }
@@ -40,14 +41,16 @@ dependencies {
     // implementation 'com.android.support:appcompat-v7:28.0.0'
     // implementation 'com.android.support:design:28.0.0'
     // implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:appcompat-v7:25.0.0'
+    implementation 'com.android.support:appcompat-v7:26.0.1'
 
+    implementation 'com.android.support:multidex:1.0.3'
+    
     // implementation 'androidx.appcompat:appcompat:1.5.1'
     // implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
 // 这里的版本号都还需要再检查一下比较好,参考了先前的项目      
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation 'com.google.code.gson:gson:2.6.2'
     implementation 'com.squareup.picasso:picasso:2.5.2'

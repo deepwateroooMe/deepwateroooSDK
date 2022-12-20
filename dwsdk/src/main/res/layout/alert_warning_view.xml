@@ -6,11 +6,11 @@
     tools:ignore="MissingPrefix">
 
 
+<!--    android:layout_below="@+id/ivAlertImage" 这个是另一个不必要的-->
     <LinearLayout
         android:id="@+id/llDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivAlertImage"
         android:layout_centerInParent="true"
         android:background="@drawable/edittext_background"
         android:orientation="vertical">

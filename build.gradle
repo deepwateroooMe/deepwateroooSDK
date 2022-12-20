@@ -8,7 +8,7 @@ allprojects {
 
         dependencies {
 // 一定要一定会嫁给偶亲爱的表哥            
-            classpath 'com.android.tools.build:gradle:7.0.0' // 要适配相对较低一点儿的版本,这里先改小一点儿 [爱表哥,爱生活!!!]
+            classpath 'com.android.tools.build:gradle:4.2.0' // 要适配相对较低一点儿的版本,这里先改小一点儿 [爱表哥,爱生活!!!]
         }
     }
 

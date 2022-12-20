@@ -12,12 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.deepwaterooo.dwsdk.activities.BaseActivity;
-import com.deepwaterooo.dwsdk.appconfig.Constants;
-import com.deepwaterooo.dwsdk.appconfig.Numerics;
-import com.deepwaterooo.dwsdk.utils.ApiCallListener;
-import com.deepwaterooo.dwsdk.utils.PlayerUtil;
-import com.deepwaterooo.dwsdk.utils.SharedPrefUtil;
+import com.deepwaterooo.sdk.activities.BaseActivity;
+import com.deepwaterooo.sdk.appconfig.Constants;
+import com.deepwaterooo.sdk.appconfig.Numerics;
+import com.deepwaterooo.sdk.utils.ApiCallListener;
+import com.deepwaterooo.sdk.utils.PlayerUtil;
+import com.deepwaterooo.sdk.utils.SharedPrefUtil;
 
 public class GameActivity extends BaseActivity implements ApiCallListener {
 

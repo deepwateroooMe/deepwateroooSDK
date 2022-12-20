@@ -1,9 +1,8 @@
 package com.deepwaterooo.dw;
 
-import android.os.Bundle;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
@@ -12,14 +11,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.deepwaterooo.dwsdk.activities.BaseActivity;
-import com.deepwaterooo.dwsdk.appconfig.Constants;
-import com.deepwaterooo.dwsdk.appconfig.Logger;
-import com.deepwaterooo.dwsdk.beans.PlayerDO;
-import com.deepwaterooo.dwsdk.networklayer.NetworkUtil;
-import com.deepwaterooo.dwsdk.utils.ApiCallListener;
-import com.deepwaterooo.dwsdk.utils.PlayerImageListener;
-import com.deepwaterooo.dwsdk.utils.PlayerUtil;
+import com.deepwaterooo.sdk.activities.BaseActivity;
+import com.deepwaterooo.sdk.appconfig.Constants;
+import com.deepwaterooo.sdk.beans.PlayerDO;
+import com.deepwaterooo.sdk.networklayer.NetworkUtil;
+import com.deepwaterooo.sdk.utils.ApiCallListener;
+import com.deepwaterooo.sdk.utils.PlayerImageListener;
+import com.deepwaterooo.sdk.utils.PlayerUtil;
+import com.deepwaterooo.sdk.appconfig.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
