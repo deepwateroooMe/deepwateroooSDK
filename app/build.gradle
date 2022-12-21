@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-//    namespace 'com.deepwaterooo.dw'
+    namespace 'com.deepwaterooo.dw'
     compileSdkVersion 26
     buildToolsVersion '26.0.1'
 

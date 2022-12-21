@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/orange_bg"
+                android:orientation="vertical"
+                tools:context="com.squarepanda.sdk.activities.authentication.SpActivateAccountActivity"
+                tools:ignore="MissingPrefix">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            fontPath="fonts/averta.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:padding="@dimen/ten_dip"
+            android:text="@string/YouAllSet"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/thirty_five_sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/twenty_dip"
+            android:layout_marginLeft="@dimen/twenty_dip"
+            android:layout_marginTop="@dimen/twenty_dip"            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:padding="@dimen/ten_dip"
+            android:text="@string/YouAllSetMsg"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/twenty_eight_sp"/>
+
+        <TextView
+            android:id="@+id/tvMailSentTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/twenty_dip"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:padding="@dimen/ten_dip"
+            android:text="@string/YouAllSetText"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/twenty_eight_sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twenty_dip"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnTakeToPlayGround"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/twenty_dip"
+                android:background="@drawable/button_background"
+                android:padding="@dimen/ten_dip"
+                android:text="@string/YouAllSettakeToPlayGround"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/twenty_five_sp"/>
+
+            <Button
+                android:id="@+id/btnTakeToGame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/twenty_dip"
+                android:background="@drawable/button_background"
+                android:padding="@dimen/ten_dip"
+                android:text="@string/YouAllSettakeToGame"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/twenty_five_sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivSPLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/five_dip"
+        android:src="@drawable/orange_panda"/>
+</RelativeLayout>

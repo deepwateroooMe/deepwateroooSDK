@@ -27,18 +27,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 // 这里没有使用数据库,可能也就不得不这么封装吧,可以再参照自己年中的项目再对比理解一下
 public class ApiClient {
-
+// tmp borrow their server for tests......
     /**
      * it is basic URL of our API. We will use this URL for all network requests to an API
      */
-    public static String BASE_URL = "https://services-qa.deepwaterooo.com/";
+    public static String BASE_URL = "https://services-qa.squarepanda.com/";
 
-    public static final String DEV_URL = "https://services-dev.deepwaterooo.com/";
-    public static final String QA_URL = "https://services-qa.deepwaterooo.com/";
-    public static final String PROD_URL = "https://services.deepwaterooo.com/";
+    public static final String DEV_URL = "https://services-dev.squarepanda.com/";
+    public static final String QA_URL = "https://services-qa.squarepanda.com/";
+    public static final String PROD_URL = "https://services.squarepanda.com/";
 
     // Release Build points to this
-    public static final String BUILD_URL = "https://services-qa.deepwaterooo.com/";
+    public static final String BUILD_URL = "https://services-qa.squarepanda.com/";
 
 
     private static Retrofit retrofit = null;

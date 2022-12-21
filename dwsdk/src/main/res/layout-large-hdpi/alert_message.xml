@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="MissingPrefix">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/round_rect_orange_bg"
+        android:padding="@dimen/thirty_dip">
+
+        <ImageView
+            android:id="@+id/ivAlertImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/twenty_dip"
+            android:src="@drawable/alert_image" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivAlertImage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/ten_dip"
+            android:layout_marginLeft="@dimen/ten_dip"
+            android:layout_marginRight="@dimen/ten_dip"
+            android:background="@drawable/edittext_background"
+            android:orientation="vertical"
+            android:padding="@dimen/twenty_dip">
+
+            <TextView
+                android:id="@+id/tvAlertTitle"
+                fontPath="fonts/averta.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/ten_dip"
+                android:text="@string/We_Need_Internet"
+                android:textColor="@color/Orange"
+                android:textSize="@dimen/thirty_sp" />
+
+            <TextView
+                android:id="@+id/tvAlertText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/ten_dip"
+                android:text="@string/Please_Connect_Internet"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/twenty_two_sp" />
+
+            <Button
+                android:id="@+id/btnOk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/ten_dip"
+                android:background="@drawable/button_background"
+                android:text="@string/Ok"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/twenty_five_sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

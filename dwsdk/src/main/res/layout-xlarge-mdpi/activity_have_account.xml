@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/orange_bg"
+    android:orientation="vertical"
+    tools:context="com.squarepanda.sdk.activities.authentication.SpActivateAccountActivity">
+
+    <ImageView
+        android:id="@+id/ivSPLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/five_dip"
+        android:src="@drawable/orange_panda" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/sixty_dip"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:padding="@dimen/ten_dip"
+            android:text="@string/Have_Account"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/thirty_five_sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/twenty_dip"
+                android:background="@drawable/button_background"
+                android:paddingBottom="@dimen/ten_dip"
+                android:paddingLeft="@dimen/sixty_dip"
+                android:paddingRight="@dimen/sixty_dip"
+                android:paddingTop="@dimen/ten_dip"
+                android:text="@string/Yes"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/twenty_five_sp" />
+
+            <Button
+                android:id="@+id/btnNotYetUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/thirty_dip"
+                android:background="@drawable/button_background"
+                android:paddingBottom="@dimen/ten_dip"
+                android:paddingLeft="@dimen/thirty_dip"
+                android:paddingRight="@dimen/thirty_dip"
+                android:paddingTop="@dimen/ten_dip"
+                android:text="@string/Not_Yet_New_User"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/twenty_five_sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

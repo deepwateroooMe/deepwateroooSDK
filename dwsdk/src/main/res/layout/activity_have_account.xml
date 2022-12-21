@@ -3,11 +3,12 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/orange_bg"
                 android:orientation="vertical"
-                tools:context="com.deepwaterooo.dwsdk.activities.authentication.DWActivateAccountActivity">
+                tools:context="com.deepwaterooo.sdk.activities.DWHaveAccountActivity">
+  <!-- android:background="@drawable/orange_bg" -->
+<!-- 上面仍然是背景图片太大了,直接移除了 -->
 
-  <ImageView
+<ImageView
       android:id="@+id/ivSPLogo"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

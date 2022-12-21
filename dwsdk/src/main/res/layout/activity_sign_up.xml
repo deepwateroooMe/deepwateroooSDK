@@ -5,7 +5,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/orange_bg"
-                tools:context="com.deepwaterooo.dwsdk.activities.authentication.DWLoginActivity"
+                tools:context="com.deepwaterooo.sdk.activities.authentication.DWLoginActivity"
                 tools:ignore="MissingPrefix">
 
     <ImageView

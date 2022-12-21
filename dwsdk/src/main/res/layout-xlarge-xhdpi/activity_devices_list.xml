@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/purple_bg"
+    android:gravity="center_horizontal">
+
+    <ImageView
+        android:id="@+id/ivSPLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/five_dip"
+        android:src="@drawable/purple_panda" />
+    <TextView
+        android:id="@+id/title_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/twenty_dip"
+        android:layout_marginTop="@dimen/fifty_dip"
+        android:gravity="center"
+        android:inputType="textNoSuggestions"
+        android:text="@string/SelectaPlayset"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/thirty_five_sp" />
+    <LinearLayout
+        android:layout_below="@+id/title_scan"
+        android:layout_above="@+id/llbuttons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/twenty_dip"
+        android:paddingRight="@dimen/twenty_dip"
+        android:paddingTop="@dimen/twenty_dip"
+        android:layout_margin="@dimen/twenty_dip">
+
+        <LinearLayout
+            android:id="@+id/llSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.squarepanda.sdk.utils.FlowLayout
+                    android:id="@+id/flowLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center" />
+            </ScrollView>
+        </LinearLayout>
+        <include
+            android:id="@+id/llAlert"
+            layout="@layout/alert_turn_on_playset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone" />
+        <LinearLayout
+            android:id="@+id/scanner_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include
+                android:id="@+id/llQRScan"
+                layout="@layout/layout_qrcode_scanning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/help_qr_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/five_dip"
+            android:src="@drawable/qr_code_help" />
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/llbuttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/twenty_dip"
+        android:layout_marginBottom="@dimen/twenty_dip"
+        android:layout_marginRight="@dimen/twenty_dip">
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_round_rect_bg"
+            android:paddingBottom="@dimen/ten_dip"
+            android:paddingLeft="@dimen/fifty_dip"
+            android:paddingRight="@dimen/fifty_dip"
+            android:paddingTop="@dimen/ten_dip"
+            android:text="@string/Back"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twenty_five_sp"
+            android:layout_alignParentStart="true"
+            />
+        <Button
+            android:id="@+id/btn_manual_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_round_rect_bg"
+            android:paddingBottom="@dimen/ten_dip"
+            android:paddingLeft="@dimen/fifty_dip"
+            android:paddingRight="@dimen/fifty_dip"
+            android:paddingTop="@dimen/ten_dip"
+            android:text="@string/manually_select"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twenty_five_sp"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/llUpgradeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/edittext_background"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/twenty_dip">
+
+            <TextView
+                android:id="@+id/tvUpgradeProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/thirty_dip"
+                android:gravity="center"
+                android:text="@string/Updating"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/twenty_five_sp" />
+
+            <TextView
+                android:id="@+id/tvUpdateProgressMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/UpdateProgressMsg"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/twenty_sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

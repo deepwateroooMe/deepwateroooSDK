@@ -4,9 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-  <!-- android:dataExtractionRules="@xml/data_extraction_rules" -->
   <!-- android:theme="@style/Theme.Dw" -->
-  <!-- tools:targetApi="31" -->
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,6 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:theme="@style/AppTheme"
         tools:replace="label">
 
       <!-- android:theme="@style/DWAppTheme.NoActionBar" -->
@@ -21,7 +20,8 @@
             android:name=".DemoActivity"
             android:configChanges="keyboardHidden|orientation"
             android:hardwareAccelerated="false"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/DWAppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlRootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/purple_bg"
+    android:paddingLeft="@dimen/ten_dip"
+    android:paddingRight="@dimen/ten_dip"
+    android:paddingTop="@dimen/ten_dip"
+    tools:ignore="MissingPrefix">
+
+    <ImageView
+        android:id="@+id/ivSPLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/five_dip"
+        android:src="@drawable/purple_panda" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            fontPath="fonts/averta.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/twenty_dip"
+            android:layout_marginTop="@dimen/ten_dip"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:padding="@dimen/ten_dip"
+            android:text="@string/Add_Players"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/thirty_five_sp" />
+
+        <LinearLayout
+            android:id="@+id/llFilters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/fifteen_dip"
+            android:paddingRight="@dimen/fifteen_dip"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvFilterAll"
+                fontPath="fonts/averta_semi_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/five_dip"
+                android:layout_weight="1"
+                android:background="@drawable/filter_bg_white"
+                android:gravity="center"
+                android:padding="@dimen/five_dip"
+                android:text="All"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twenty_dip"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tvFilterABCD"
+                fontPath="fonts/averta_semi_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/five_dip"
+                android:layout_weight="1"
+                android:background="@drawable/filter_bg_white"
+                android:gravity="center"
+                android:padding="@dimen/five_dip"
+                android:text="A•B•C•D"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twenty_dip"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvFilterEFGH"
+                fontPath="fonts/averta_semi_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/five_dip"
+                android:layout_weight="1"
+                android:background="@drawable/filter_bg_white"
+                android:gravity="center"
+                android:padding="@dimen/five_dip"
+                android:text="E•F•G•H"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twenty_dip"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvFilterIJKL"
+                fontPath="fonts/averta_semi_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/five_dip"
+                android:layout_weight="1"
+                android:background="@drawable/filter_bg_white"
+                android:gravity="center"
+                android:padding="@dimen/five_dip"
+                android:text="I•J•K•L"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twenty_dip"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvFilterMNO"
+                fontPath="fonts/averta_semi_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/five_dip"
+                android:layout_weight="1"
+                android:background="@drawable/filter_bg_white"
+                android:gravity="center"
+                android:padding="@dimen/five_dip"
+                android:text="M•N•O"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twenty_dip"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvFilterPQRS"
+                fontPath="fonts/averta_semi_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/five_dip"
+                android:layout_weight="1"
+                android:background="@drawable/filter_bg_white"
+                android:gravity="center"
+                android:padding="@dimen/five_dip"
+                android:text="P•Q•R•S"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twenty_dip"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvFilterTUV"
+                fontPath="fonts/averta_semi_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/five_dip"
+                android:layout_weight="1"
+                android:background="@drawable/filter_bg_white"
+                android:gravity="center"
+                android:padding="@dimen/five_dip"
+                android:text="T•U•V"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twenty_dip"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvFilterWXYZ"
+                fontPath="fonts/averta_semi_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/filter_bg_white"
+                android:gravity="center"
+                android:padding="@dimen/five_dip"
+                android:text="W•X•Y•Z"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twenty_dip"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/five_dip"
+            android:layout_marginRight="@dimen/five_dip"
+            android:layout_marginTop="@dimen/ten_dip"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="@dimen/thirty_dip"
+                android:background="@drawable/white_round_rect_bg"
+                android:gravity="center"
+                android:paddingBottom="@dimen/ten_dip"
+                android:paddingLeft="@dimen/fifty_dip"
+                android:paddingRight="@dimen/fifty_dip"
+                android:paddingTop="@dimen/ten_dip"
+                android:text="@string/Back"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/twenty_five_sp" />
+
+            <TextView
+                android:id="@+id/tvAccountLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/thirty_dip"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:paddingBottom="@dimen/ten_dip"
+                android:paddingLeft="@dimen/fifty_dip"
+                android:paddingRight="@dimen/fifty_dip"
+                android:paddingTop="@dimen/ten_dip"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/twenty_five_sp" />
+
+            <Button
+                android:id="@+id/btnAddPlayer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/thirty_dip"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/white_round_rect_bg"
+                android:gravity="center"
+                android:paddingBottom="@dimen/ten_dip"
+                android:paddingLeft="@dimen/fifty_dip"
+                android:paddingRight="@dimen/fifty_dip"
+                android:paddingTop="@dimen/ten_dip"
+                android:text="@string/Add_Player"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/twenty_five_sp" />
+          
+          <GridView
+              android:id="@+id/gridPlayers"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_gravity="center"
+              android:layout_toLeftOf="@+id/btnAddPlayer"
+              android:layout_toRightOf="@+id/btnBack"
+              android:columnWidth="@dimen/eight_dip"
+              android:gravity="center"
+              android:numColumns="3"
+              android:scrollbars="none"
+              android:stretchMode="columnWidth"></GridView>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/llBottomLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+
+            <Button
+                android:id="@+id/btnEditPlayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/twenty_dip"
+                android:layout_weight="1"
+                android:background="@drawable/white_round_rect_bg"
+                android:gravity="center"
+                android:padding="@dimen/ten_dip"
+                android:text="@string/Edit_Player"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/twenty_sp" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

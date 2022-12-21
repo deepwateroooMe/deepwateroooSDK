@@ -19,17 +19,19 @@ import android.widget.AdapterView;
 import com.deepwaterooo.sdk.R;
 import com.deepwaterooo.sdk.appconfig.Constants;
 import com.deepwaterooo.sdk.appconfig.Numerics;
-import com.deepwaterooo.sdk.utils.LoginListener;
 import com.deepwaterooo.sdk.utils.SharedPrefUtil;
 import com.deepwaterooo.sdk.utils.Util;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Activity used for base class for all activities
  */
 // ACTIVITY基类: 就是把一些必要的会话框及其相关的回调都包装在基类里了.把这个作为安卓SDK端所有活动的基类
-public class BaseActivity extends AppCompatActivity implements DialogInterface.OnDismissListener, LoginListener {
-    private static final String TAG = "BaseActivity";
+public class BaseActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
+    // , LoginListener { // 我觉得这里可能不可以实现这个接口还
+// 那么就还需要一个DWBaseActivity的基类,作为DWUnityActivity的基类    
+    private final String TAG = "BaseActivity";
 
     private ProgressDialog progressDialog;
     public static boolean IS_APP_RUNNING;
@@ -120,13 +122,10 @@ public class BaseActivity extends AppCompatActivity implements DialogInterface.O
     
     @Override
     protected void onResume() {
-        Log.d(TAG, "onResume() start"); 
-        Log.d(TAG, "onResume() bef super.onResume()"); 
+        Log.d(TAG, "onResume()"); 
         super.onResume();
-        Log.d(TAG, "onResume() aft super.onResume()"); 
-        IS_APP_RUNNING = true;
+        IS_APP_RUNNING = true; 
         hideSystemUI();
-        Log.d(TAG, "onResume() end"); 
     }
 
     /**
@@ -206,9 +205,9 @@ public class BaseActivity extends AppCompatActivity implements DialogInterface.O
     }
     @Override
     public void onDismiss(DialogInterface dialogInterface) {
+        Log.d(TAG, "onDismiss() ");
         hideSystemUI();
     }
-    @Override
     public void didFinishSdkUserConfiguration() {
     }
     protected void didfinishSDKscreenflow() {

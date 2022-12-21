@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/thirty_dip"
+                tools:context="com.squarepanda.sdk.activities.bluetooth.SPPlaysetCalibrationActivity"
+                tools:ignore="MissingPrefix">
+
+    <LinearLayout
+        android:id="@+id/llCalibration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/alert_background"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvCalibrationTitle"
+            fontPath="fonts/averta.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fifty_dip"
+            android:gravity="center_horizontal"
+            android:text="@string/Calibration_Title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirty_sp"/>
+
+        <ImageView
+            android:id="@+id/tvCalibrationImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/thirty_dip"
+            android:src="@drawable/clear_tray"/>
+
+        <TextView
+            android:id="@+id/tvCalibrationMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/ten_dip"
+            android:layout_marginBottom="@dimen/thirty_dip"
+            android:gravity="center_horizontal"
+            android:text="@string/Calibration_Message"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twenty_sp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tvCalibrationStillLettersMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/ten_dip"
+            android:layout_marginBottom="@dimen/thirty_dip"
+            android:gravity="center_horizontal"
+            android:text="@string/Calibration_Still_LettersMsg"
+            android:textColor="@color/MediumPurple"
+            android:textSize="@dimen/twenty_sp"/>
+
+        <Button
+            android:id="@+id/btnCalibration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/button_background"
+            android:padding="@dimen/five_dip"
+            android:text="@string/Calibration_Button"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/twenty_sp"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+</RelativeLayout>

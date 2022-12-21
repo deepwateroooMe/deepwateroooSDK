@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="MissingPrefix">
+
+
+    <LinearLayout
+        android:id="@+id/llDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivAlertImage"
+        android:layout_centerInParent="true"
+        android:background="@drawable/round_rect_orange_bg"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/ten_dip"
+        android:paddingBottom="@dimen/twenty_dip"
+        android:paddingLeft="@dimen/ten_dip"
+        android:paddingRight="@dimen/ten_dip"
+        >
+
+        <ImageView
+            android:id="@+id/tvCalibrationImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/ten_dip"
+            android:layout_marginTop="@dimen/twenty_dip"
+            android:src="@drawable/idle_panda"/>
+
+        <LinearLayout
+            android:id="@+id/llIdlePlaysetInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/fifty_dip"
+            android:layout_marginRight="@dimen/fifty_dip"
+            android:background="@drawable/dialog_background"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/ten_dip">
+
+            <TextView
+                android:id="@+id/tvIdlePlaysetTitle"
+                fontPath="fonts/averta.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/twenty_dip"
+                android:gravity="center_horizontal"
+                android:text="@string/Idle_Playset_Title"
+                android:textColor="@color/Orange"
+                android:textSize="@dimen/thirty_sp"/>
+
+            <TextView
+                android:id="@+id/tvIdlePlaysetMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ten_dip"
+                android:paddingLeft="@dimen/twenty_dip"
+                android:paddingRight="@dimen/twenty_dip"
+                android:gravity="center_horizontal"
+                android:text="@string/Idle_Playset_Message"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty_sp"/>
+
+            <Button
+                android:id="@+id/btnIdlePlayset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:paddingTop="@dimen/five_dip"
+                android:paddingBottom="@dimen/five_dip"
+                android:paddingLeft="@dimen/ten_dip"
+                android:paddingRight="@dimen/ten_dip"
+                android:text="@string/Idle_Playset_Button"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/twenty_five_sp"
+                android:layout_margin="@dimen/ten_dip"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

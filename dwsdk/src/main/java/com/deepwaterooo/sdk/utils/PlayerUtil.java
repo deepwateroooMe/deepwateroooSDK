@@ -67,6 +67,7 @@ public class PlayerUtil {
      *
      * @param activity activity
      */
+// 这里好像是游戏端吊起Splash,然后吊起了安卓SDK的整个流程
     public static void startSplashScreenActivity(Activity activity) {
         Log.d(TAG, "startSplashScreenActivity() ");
         Intent intent = new Intent(activity, DWSplashScreenActivity.class);

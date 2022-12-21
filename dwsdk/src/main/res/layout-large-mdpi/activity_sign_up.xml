@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/rlRootView"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/orange_bg"
+                tools:context="com.squarepanda.sdk.activities.authentication.SPLoginActivity"
+                tools:ignore="MissingPrefix">
+
+    <ImageView
+        android:id="@+id/ivSPLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="@dimen/five_dip"
+        android:layout_marginLeft="@dimen/five_dip"
+        android:contentDescription=""
+        android:src="@drawable/tm_logo"/>
+
+    <ImageView
+        android:id="@+id/ivPanda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ivSPLogo"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="@dimen/five_dip"
+        android:background="@android:color/transparent"
+        android:src="@drawable/orange_panda"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fillViewport="true">
+
+
+        <LinearLayout
+            android:id="@+id/ll_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                fontPath="fonts/averta.ttf"
+                android:id="@+id/createAccountLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/forty_dip"
+                android:text="@string/Create_Account"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/thirty_sp"/>
+
+            <EditText
+                android:id="@+id/etFirstName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/twenty_dip"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/Firstname"
+                android:inputType="textCapSentences"
+                android:padding="@dimen/ten_dip"
+                android:singleLine="true"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="@dimen/twenty_sp"/>
+
+            <EditText
+                android:id="@+id/etLastName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/twenty_dip"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/Lastname"
+                android:inputType="textCapSentences"
+                android:padding="@dimen/ten_dip"
+                android:singleLine="true"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="@dimen/twenty_sp"/>
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/twenty_dip"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/Email"
+                android:inputType="textEmailAddress"
+                android:padding="@dimen/ten_dip"
+                android:singleLine="true"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="@dimen/twenty_sp"/>
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/twenty_dip"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/Password"
+                android:inputType="textPassword"
+                android:padding="@dimen/ten_dip"
+                android:singleLine="true"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="@dimen/twenty_sp"
+                android:maxLength="20"/>                
+
+            <EditText
+                android:id="@+id/etReTypePassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/Retype_Password"
+                android:inputType="textPassword"
+                android:padding="@dimen/ten_dip"
+                android:singleLine="true"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="@dimen/twenty_sp"
+                android:maxLength="20"/>
+
+            <CheckBox
+                android:id="@+id/cbStayUpToDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/Stay_Up_To_Date_Msg"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/twenty_five_sp"
+                />
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/twenty_dip"
+                android:layout_marginTop="@dimen/twenty_dip"
+                android:background="@drawable/button_background"
+                android:paddingBottom="@dimen/ten_dip"
+                android:paddingTop="@dimen/ten_dip"
+                android:text="@string/Next"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/twenty_five_sp"/>
+
+
+            <TextView
+                android:id="@+id/tvAlreadyHaveAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/thirty_dip"
+                android:text="@string/User_Have_Account"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/twenty_five_sp"/>
+
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/ten_dip"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbtnEnglish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/english_selector"
+                    android:button="@null"
+                    android:paddingBottom="@dimen/ten_dip"
+                    android:paddingLeft="@dimen/forty_dip"
+                    android:paddingRight="@dimen/forty_dip"
+                    android:paddingTop="@dimen/ten_dip"
+                    android:text="@string/English"
+                    android:textColor="@color/MediumPurple"
+                    android:textSize="@dimen/twenty_five_sp"/>
+
+                <RadioButton
+                    android:id="@+id/rbtnChinese"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/china_selector"
+                    android:button="@null"
+                    android:paddingBottom="@dimen/ten_dip"
+                    android:paddingLeft="@dimen/twenty_dip"
+                    android:paddingRight="@dimen/twenty_dip"
+                    android:paddingTop="@dimen/ten_dip"
+                    android:text="@string/Chinese"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twenty_five_sp"/>
+            </RadioGroup>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

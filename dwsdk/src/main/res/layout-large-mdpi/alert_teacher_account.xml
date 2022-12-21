@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="MissingPrefix">
+    
+    <LinearLayout
+        android:id="@+id/llDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/edittext_background"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvAlertTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/ten_dip"
+            android:gravity="center"
+            android:text="@string/are_you_teacher"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/twenty_five_sp" />
+        <TextView
+            android:id="@+id/tvAlertText1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/ten_dip"
+            android:text="@string/create_a_teacher"
+            android:textColor="@color/MediumPurple"
+            android:textSize="@dimen/twenty_sp" />
+        <TextView
+            android:id="@+id/tvAlertText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fifteen_dip"
+            android:gravity="center"
+            android:padding="@dimen/ten_dip"
+            android:text="@string/not_a_teacher"
+            android:textColor="@color/MediumPurple"
+            android:textSize="@dimen/twenty_sp" />
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/rect_purple_btn_bg"
+            android:paddingBottom="@dimen/ten_dip"
+            android:paddingTop="@dimen/ten_dip"
+            android:text="@string/Back"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/twenty_five_sp" />
+    </LinearLayout>
+
+</RelativeLayout>

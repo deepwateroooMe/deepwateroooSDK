@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:background="@drawable/edittext_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:context=".activities.players.SPAddEditPlayerActivity"
+        tools:ignore="MissingPrefix">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/five_dip"
+            android:gravity="center"
+            android:padding="@dimen/five_dip"
+            android:text="@string/DeletePlayerInfoTitle"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty_three_sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/ten_dip"
+            android:background="@color/LightGrey" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ten_dip"
+            android:layout_marginRight="@dimen/five_dip"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/five_dip"
+            android:padding="@dimen/five_dip"
+            android:text="@string/DeletePlayerInfoMsg"
+            android:textColor="@color/black"
+            android:textSize="@dimen/nineteen_dip" />
+
+        <TextView
+            android:id="@+id/tvContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ten_dip"
+            android:layout_marginRight="@dimen/five_dip"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/five_dip"
+            android:padding="@dimen/five_dip"
+            android:text="@string/DeletePlayerInfoConact"
+            android:textColor="@color/black"
+            android:textSize="@dimen/nineteen_dip" />
+
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/ten_dip"
+            android:drawableTop="@drawable/back_circle"
+            android:padding="@dimen/ten_dip"
+            android:text="@string/Back"
+            android:textColor="@color/MediumPurple"
+            android:textSize="@dimen/twenty_five_sp" />
+    </LinearLayout>
+</RelativeLayout>

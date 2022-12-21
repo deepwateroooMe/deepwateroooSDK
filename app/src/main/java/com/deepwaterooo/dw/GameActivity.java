@@ -20,6 +20,7 @@ import com.deepwaterooo.sdk.utils.PlayerUtil;
 import com.deepwaterooo.sdk.utils.SharedPrefUtil;
 
 public class GameActivity extends BaseActivity implements ApiCallListener {
+    private final String TAG = "GameActivity";
 
     private LinearLayout llLetters;
     private Button btnClose;
@@ -36,7 +37,7 @@ public class GameActivity extends BaseActivity implements ApiCallListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d(TAG, "onCreate() ");
         setContentView(R.layout.activity_game);
 
         llLetters = (LinearLayout) findViewById(R.id.llLetters);
@@ -65,6 +66,7 @@ public class GameActivity extends BaseActivity implements ApiCallListener {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume() ");
 
 //        if (PlayerUtil.getSelectedPlayer(this) != null) {
 //            tvSelChild.setText("Selected Child: " + PlayerUtil.getSelectedPlayer(this).getFirstName());
@@ -223,13 +225,13 @@ public class GameActivity extends BaseActivity implements ApiCallListener {
     }
     protected void didNavigatesToMainMenu() {
 //        Toast.makeText(this, "didNavigatesToMainMenu", Toast.LENGTH_LONG).show();
-        Log.d("MainActivity", ":didNavigatesToMainMenu called");
+        Log.d("GameActivity", ":didNavigatesToMainMenu called");
     }
     @Override
     public void didFinishSdkUserConfiguration() {
         super.didFinishSdkUserConfiguration();
 //        Toast.makeText(this, "didFinishSdkUserConfiguration", Toast.LENGTH_LONG).show();
-        Log.d("MainActivity", ":didFinishSdkUserConfiguration called");
+        Log.d("GameActivity", ":didFinishSdkUserConfiguration called");
     }
     @Override
     protected void onDestroy() {

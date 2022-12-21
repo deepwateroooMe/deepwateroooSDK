@@ -46,7 +46,6 @@ import com.deepwaterooo.sdk.beans.LoginUserDO;
 import com.deepwaterooo.sdk.networklayer.ApiClient;
 import com.deepwaterooo.sdk.networklayer.NetworkUtil;
 import com.deepwaterooo.sdk.utils.LoginListener;
-import com.deepwaterooo.sdk.utils.PlayerUtil;
 import com.deepwaterooo.sdk.utils.SharedPrefUtil;
 import com.deepwaterooo.sdk.utils.Util;
 import com.google.gson.Gson;
@@ -101,9 +100,9 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState!=null){
+        Log.d(TAG, "onCreate() ");
+        if (savedInstanceState != null)
             Util.getDeviceDimensions(this);
-        }
         intUI();
         NetworkUtil.callGetAppUpdate(this);
         sharedPrefUtil = new SharedPrefUtil(this);
@@ -113,11 +112,10 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
      * initialising the views used in this activity
      */
     private void intUI() {
+        Log.d(TAG, "intUI() ");
         setContentView(R.layout.activity_login);
         mDecorView = getWindow().getDecorView();
-        contentContainer =
-            (ViewGroup) this.findViewById(android.R.id.content);
-
+        contentContainer = (ViewGroup) this.findViewById(android.R.id.content);
         listener = new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {

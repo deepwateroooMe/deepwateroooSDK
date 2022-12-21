@@ -26,6 +26,7 @@ import java.io.IOException;
 
 // 这个类的大致意思是说: 模拟几个游戏中会调用到要SDK中方法的按钮,回调SDK中需要启动的活动
 public class DemoActivity extends BaseActivity implements ApiCallListener, PlayerImageListener {
+    private final String TAG = "DemoActivity";
 
     private LinearLayout llLetters;
     private Button btnManagePlayset;
@@ -44,7 +45,7 @@ public class DemoActivity extends BaseActivity implements ApiCallListener, Playe
     private ImageView ivSelChild;
     private boolean isClicked = false;
     private final String UPLOAD_FILE_NAME = "sp_game_upload_file.txt";
-    private static final String TAG = DemoActivity.class.getName();
+//    private static final String TAG = DemoActivity.class.getName();
     private boolean isScreenLocked = false;
     private boolean isPlayerClicked = false;
     private boolean isLogout = false;
