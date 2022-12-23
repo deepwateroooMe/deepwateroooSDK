@@ -1,7 +1,5 @@
 package com.deepwaterooo.sdk.appconfig;
 
-import java.util.UUID;
-
 /**
  * Class used to place application constant variables and we can use anywhere in the application
  */
@@ -21,6 +19,7 @@ public class Constants {
     public static final String SDK_VERSION = "3.2";
 
     public static final String ERROR_EXCEPTION = "Exception";
+    public static final String AUDIO_SELECT_PLAYER = "sounds/dia_select_player.wav";
     private static int deviceWidth;
     private static int deviceHeight;
 

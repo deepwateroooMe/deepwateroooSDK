@@ -1,6 +1,7 @@
 package com.deepwaterooo.dw;
 
 // 也相当于是一个游戏端的模拟,模拟游戏中必须的内容,两个类之间实现必要的交互 ?
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,14 +13,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.deepwaterooo.sdk.activities.BaseActivity;
+import com.deepwaterooo.sdk.activities.DWBaseActivity;
 import com.deepwaterooo.sdk.appconfig.Constants;
-import com.deepwaterooo.sdk.appconfig.Numerics;
 import com.deepwaterooo.sdk.utils.ApiCallListener;
 import com.deepwaterooo.sdk.utils.PlayerUtil;
 import com.deepwaterooo.sdk.utils.SharedPrefUtil;
 
-public class GameActivity extends BaseActivity implements ApiCallListener {
+public class GameActivity extends DWBaseActivity implements ApiCallListener {
     private final String TAG = "GameActivity";
 
     private LinearLayout llLetters;

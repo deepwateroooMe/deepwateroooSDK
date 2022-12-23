@@ -1,18 +1,17 @@
 package com.deepwaterooo.sdk.activities;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.bluetooth.BluetoothAdapter;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -21,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 
 import com.deepwaterooo.sdk.R;
+import com.deepwaterooo.sdk.activities.authentication.DWLoginActivity;
 import com.deepwaterooo.sdk.appconfig.Constants;
 import com.deepwaterooo.sdk.appconfig.Numerics;
 import com.deepwaterooo.sdk.beans.PlayerDO;
@@ -33,13 +33,14 @@ import com.deepwaterooo.sdk.utils.Util;
 public abstract class DWBaseActivity extends AppCompatActivity
     implements LoginListener,
     DialogInterface.OnDismissListener {
+// Bluetooth: 因为公司是卖蓝牙产品的儿童玩具,所以涉入公司玩具产品蓝牙硬件与手机平板等安卓系统上的蓝牙连接,作为手机平板上游戏应用开玩之前的前提准备
+// 所以关于蓝牙: 初始化,连接,连接状态监听等,产品与手机平板的连接连接状态等等,可以全部滤掉
+    private final String TAG = "DWBaseActivity";
 
     private ProgressDialog progressDialog;
     private SharedPrefUtil sharedPrefUtil;
     private View mDecorView;
-    private static PlaysetConnectionListener playsetConnectionListener;
     private boolean isScreenLocked = true;
-    private BluetoothStateReceiver bluetoothStateReceiver;
 
     public static final int PERMISSION_CALLBACK_CONSTANT = 100;
     public static final int REQUEST_PERMISSION_SETTING = 101;
@@ -48,25 +49,13 @@ public abstract class DWBaseActivity extends AppCompatActivity
     Runnable _idleRunnable = new Runnable() {
             @Override
             public void run() {
-                if (!Util.IS_APP_RUNNING && !BaseActivity.IS_APP_RUNNING &&
-                    !BluetoothUtil.isFirmwareUpdateInProgress() && !BluetoothUtil.isBootModeEnabled()) {
-                    PlayerUtil.setSelectedPlayer(BluetoothBaseActivity.this, null);
-                    if (BluetoothUtil.isPlaysetConnected()) {
-                        Util.playSound(BluetoothBaseActivity.this, Constants.AUDIO_DISCONNECT);
-                        BluetoothUtil.disconnectPlayset(Numerics.ZERO);
-                    }
+                if (!Util.IS_APP_RUNNING && !BaseActivity.IS_APP_RUNNING) {
+                    PlayerUtil.setSelectedPlayer(DWBaseActivity.this, null);
                     try {
                         Class classs = Class.forName(getString(R.string.game_activity));
-                        if (!(BluetoothBaseActivity.this).getClass().equals(classs)) {
-                            if (playsetConnectionListener != null) {
-                                playsetConnectionListener.gamePaused(isScreenLocked);
-                            }
+                        if (!(DWBaseActivity.this).getClass().equals(classs)) {
                             setResult(Constants.RESULT_FINISH_APP);
                             finish();
-                        } else {
-                            if (playsetConnectionListener != null) {
-                                playsetConnectionListener.gamePaused(false);
-                            }
                         }
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
@@ -78,31 +67,31 @@ public abstract class DWBaseActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate() ");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mDecorView = getWindow().getDecorView();
         hideSystemUI();
         Util.IS_APP_RUNNING = true;
-        bluetoothStateReceiver = new BluetoothStateReceiver();
-        if (!BluetoothUtil.isInitialized()) {
-            BluetoothUtil.initialize(getApplicationContext());
-        }
-        BluetoothUtil.setListener(this);
+        // getApplicationContext(): DWUnityActivity中应该是可以拿到这个上下文的,把这个上下文作为安卓SDK的上下文 ?
+//        bluetoothStateReceiver = new BluetoothStateReceiver();
+        // if (!BluetoothUtil.isInitialized()) 
+        //     BluetoothUtil.initialize(getApplicationContext()); // <<<<<<<<<<<<<<<<<<<< 这里会拿到应用层级的上下文,返回的是 ==> ContextWrapper extends Context
+//        BluetoothUtil.setListener(this);
         sharedPrefUtil = new SharedPrefUtil(this);
+        Log.d(TAG, "onCreate() (progressDialog == null): " + (progressDialog == null));
         if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this, R.style.SPProgressDialogTheme);
+            progressDialog = new ProgressDialog(this, R.style.DWProgressDialogTheme);
             progressDialog.setOnDismissListener(this);
         }
-
-        if (Constants.getDeviceWidth() == Numerics.ZERO) {
-            Util.getDeviceDimensions(BluetoothBaseActivity.this);
-        }
-
+        Log.d(TAG, "(Constants.getDeviceWidth() == Numerics.ZERO): " + (Constants.getDeviceWidth() == Numerics.ZERO));
+        if (Constants.getDeviceWidth() == Numerics.ZERO) 
+            Util.getDeviceDimensions(DWBaseActivity.this);
         new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ViewGroup viewGroup = (ViewGroup) ((ViewGroup) BluetoothBaseActivity.this
+                    ViewGroup viewGroup = (ViewGroup) ((ViewGroup) DWBaseActivity.this
                                                        .findViewById(android.R.id.content)).getChildAt(0);
                     setupUI(viewGroup);
                 }
@@ -141,7 +130,7 @@ public abstract class DWBaseActivity extends AppCompatActivity
             view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        BaseActivity.hideSoftKeyboard(BluetoothBaseActivity.this);
+                        BaseActivity.hideSoftKeyboard(DWBaseActivity.this);
                     }
                 });
         } else {
@@ -194,8 +183,9 @@ public abstract class DWBaseActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d(TAG, "onPause() ");
         Util.IS_APP_RUNNING = false;
-        unregisterReceiver(bluetoothStateReceiver);
+//        unregisterReceiver(bluetoothStateReceiver);
         if (onPauseHandler != null) {
             onPauseHandler.removeCallbacks(_idleRunnable);
             onPauseHandler = null;
@@ -210,17 +200,17 @@ public abstract class DWBaseActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        LocaleHelper.setLocale(this, LocaleHelper.getLanguage(this));
-        IntentFilter bluetooth = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-        registerReceiver(bluetoothStateReceiver, bluetooth);
-        BluetoothUtil.setListener(this);
+        Log.d(TAG, "onResume() ");
+//        LocaleHelper.setLocale(this, LocaleHelper.getLanguage(this));
+//        IntentFilter bluetooth = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+//        registerReceiver(bluetoothStateReceiver, bluetooth);
+//        BluetoothUtil.setListener(this);
         Util.IS_APP_RUNNING = true;
         try {
             Class classs = Class.forName(getString(R.string.game_activity));
-            if (((BluetoothBaseActivity) this).getClass().equals(classs)) {
-                SPLoginActivity.setListener(this);
-                SPManagePlayerActivity.setListener(this);
-                setplaysetConnectionListener(this);
+            if (((DWBaseActivity) this).getClass().equals(classs)) {
+                DWLoginActivity.setListener(this);
+                // DWManagePlayerActivity.setListener(this); // 对当前玩家的管理: 主要是想要监听这里的登录状态,谁是当前玩家等.观察者模式
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -235,128 +225,12 @@ public abstract class DWBaseActivity extends AppCompatActivity
 
     /**
      * this method used to show alert for battery level
-     *
+     * 这里监听的是公司产品玩具的电池电量状态,而我需要监听的是手机的电量状态,我可以不必监听手机电量状态,但对玩家友好,必要情况下,游戏过程中的电量提醒是可以有的
      * @param level battery level
      */
-    @Override
-    public void bleBatteryLevel(String level) {
-        if (playsetConnectionListener != null) {
-            playsetConnectionListener.batteryLevel(level);
-        }
-        int batLevel = Util.parseInt(level);
-        if (batLevel < Numerics.TEN) {
-            Util.showAlert(this, getString(R.string.Oops), getString(R.string.LowBatteryMsg).replace("X", (batLevel == 0 ? "1" : level)),
-                           getString(R.string.Ok), null);
-        }
-    }
-
-    @Override
-    public void bleAvailableServices() {
-        if (playsetConnectionListener != null) {
-            playsetConnectionListener.availableServices();
-        }
-    }
-
-    @Override
-    public void availableServices() {
-    }
-
-    @Override
-    public void bleDisconnectedPlayset() {
-        if (playsetConnectionListener != null) {
-            playsetConnectionListener.disconnectedPlayset();
-        }
-        if (!BluetoothUtil.getFirmwareUpdateState() && !(this instanceof SPPlaysetScanActivity)) {
-
-            if (Util.IS_APP_RUNNING || BaseActivity.IS_APP_RUNNING) {
-                Util.playSound(this, Constants.AUDIO_DISCONNECT);
-                try {
-                    Class classs = Class.forName(getString(R.string.game_activity));
-                    if (!((BluetoothBaseActivity) this).getClass().equals(classs)) {
-                        setResult(Constants.RESULT_PLAYSET_DISCONNECTED);
-                        finish();
-                    } else {
-                        PlayerUtil.startPlaysetScanActivity(this);
-                    }
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }
-    }
-
-    @Override
-    public void blePlaysetModelNumber(String modelNumber) {
-        if (playsetConnectionListener != null) {
-            playsetConnectionListener.playsetModelNumber(modelNumber);
-        }
-        sharedPrefUtil.setString(SharedPrefUtil.PREF_PLAYSET_MODEL, modelNumber);
-    }
-
-    @Override
-    public void blePlaysetManufacturerName(String manufacturerName) {
-        if (playsetConnectionListener != null) {
-            playsetConnectionListener.playsetManufacturerName(manufacturerName);
-        }
-        sharedPrefUtil.setString(SharedPrefUtil.PREF_PLAYSET_MANUFACTURER, manufacturerName);
-    }
-
-    @Override
-    public void blePlaysetHardwareRevision(String hardwareRivision) {
-        if (playsetConnectionListener != null) {
-            playsetConnectionListener.playsetHardwareRevision(hardwareRivision);
-        }
-        sharedPrefUtil.setString(SharedPrefUtil.PREF_HARDWARE_RIVISION, hardwareRivision);
-    }
-
-    @Override
-    public void blePlaysetFirmwareRevision(String rivision) {
-        if (playsetConnectionListener != null) {
-            playsetConnectionListener.playsetFirmwareRevision(rivision);
-        }
-        sharedPrefUtil.setString(SharedPrefUtil.PREF_FIRMWARE_RIVISION, rivision);
-    }
-
-    @Override
-    public void bleLettersFromPlayset(String letters, byte[] hexData) {
-        if (playsetConnectionListener != null) {
-            playsetConnectionListener.lettersFromPlayset(letters, hexData);
-            letters = letters.trim();
-            if (letters.length() == Numerics.ZERO) {
-                playsetConnectionListener.didClearTheCharctersOnBoard();
-            }
-        }
-    }
-
-    @Override
-    public void bleLcdsStates(byte[] status) {
-        if (playsetConnectionListener != null) {
-            playsetConnectionListener.lcdsStates(status);
-        }
-    }
-
-    @Override
-    public void bleConnectedPlayset() {
-        if (playsetConnectionListener != null) {
-            playsetConnectionListener.connectedPlayset();
-        }
-    }
-
-    @Override
-    public void bleFirmwareUpdateStatus(int progress) {
-        if (playsetConnectionListener != null) {
-            playsetConnectionListener.firmwareUpdateStatus(progress);
-        }
-    }
-
-    @Override
-    public void blePlaysetName(String name) {
-        if (playsetConnectionListener != null) {
-            playsetConnectionListener.playsetName(name);
-        }
-    }
-
+// 方法是定义在某个接口中的,我需要把哪些方法提取到哪个接口会比较好呢?
+    public void bleBatteryLevel(String level) { }
+    public void availableServices() { }
 
     /**
      * this used to apply the custom font over the app from assets
@@ -384,6 +258,7 @@ public abstract class DWBaseActivity extends AppCompatActivity
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult() ");
         super.onActivityResult(requestCode, resultCode, data);
         if (onPauseHandler != null) {
             onPauseHandler.removeCallbacks(_idleRunnable);
@@ -392,7 +267,7 @@ public abstract class DWBaseActivity extends AppCompatActivity
         if (resultCode == Constants.RESULT_FINISH_APP) {
             try {
                 Class classs = Class.forName(getString(R.string.game_activity));
-                if (!((BluetoothBaseActivity) this).getClass().equals(classs)) {
+                if (!((DWBaseActivity) this).getClass().equals(classs)) {
                     setResult(resultCode, data);
                     finish();
                 }
@@ -400,16 +275,16 @@ public abstract class DWBaseActivity extends AppCompatActivity
                 e.printStackTrace();
             }
 
-        } else if (resultCode == Constants.RESULT_LOGOUT ||
-                   resultCode == Constants.RESULT_PLAYSET_DISCONNECTED) {
+        } else if (resultCode == Constants.RESULT_LOGOUT) {
             try {
                 Class classs = Class.forName(getString(R.string.game_activity));
-                if (!((BluetoothBaseActivity) this).getClass().equals(classs)) {
+                if (!((DWBaseActivity) this).getClass().equals(classs)) {
                     setResult(resultCode, data);
                     finish();
-                } else if (resultCode == Constants.RESULT_PLAYSET_DISCONNECTED && ((BluetoothBaseActivity) this).getClass().equals(classs)) {
-                    PlayerUtil.startPlaysetScanActivity(this);
                 }
+//                else if (resultCode == Constants.RESULT_PLAYSET_DISCONNECTED && ((DWBaseActivity) this).getClass().equals(classs)) {
+//                    PlayerUtil.startPlaysetScanActivity(this);
+//                }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -417,7 +292,7 @@ public abstract class DWBaseActivity extends AppCompatActivity
                    && resultCode == Constants.RESULT_PARENTAL_CHECK_SUCCESS) {
             try {
                 Class classs = Class.forName(getString(R.string.game_activity));
-                if (((BluetoothBaseActivity) this).getClass().equals(classs)) {
+                if (((DWBaseActivity) this).getClass().equals(classs)) {
                     onSuccessLogoutEvent(); // 上面两个条件都满足时，就会触发这个回调
                     PlayerUtil.logoutParent(this); // 登出父母
                 }
@@ -428,7 +303,7 @@ public abstract class DWBaseActivity extends AppCompatActivity
 
             try {
                 Class classs = Class.forName(getString(R.string.game_activity));
-                if (!((BluetoothBaseActivity) this).getClass().equals(classs)) {
+                if (!((DWBaseActivity) this).getClass().equals(classs)) {
                     setResult(resultCode, data);
                     finish();
                 } else if (data != null && data.hasExtra(Constants.EXTRA_FROM_MENU)) {
@@ -442,11 +317,11 @@ public abstract class DWBaseActivity extends AppCompatActivity
 
         } else if (requestCode == Constants.REQUEST_CODE_CHILD_ADD_TEACHER &&
                    resultCode == Constants.RESULT_PARENTAL_CHECK_SUCCESS) {
-            PlayerUtil.loadTeacherPortalUrl(this, true);
+//            PlayerUtil.loadTeacherPortalUrl(this, true); // 这块儿暂时不管
         }/*else if (resultCode != Constants.RESULT_PARENTAL_CHECK_SUCCESS) {
            try {
            Class classs = Class.forName(getString(R.string.game_activity));
-           if (((BluetoothBaseActivity) this).getClass().equals(classs)) {
+           if (((DWBaseActivity) this).getClass().equals(classs)) {
            didNavigatesToMainMenu();
            }
            } catch (ClassNotFoundException e) {
@@ -477,14 +352,12 @@ public abstract class DWBaseActivity extends AppCompatActivity
     public void onBackPressed() {
     }
 
-    @Override
     public void didSelectedChild(PlayerDO playerDO) {
     }
 
     protected void onSuccessLogoutEvent() {
     }
 
-    @Override
     public void didClearTheCharctersOnBoard() {
 
     }
@@ -509,10 +382,6 @@ public abstract class DWBaseActivity extends AppCompatActivity
         hideSystemUI();
     }
 
-    public static void setplaysetConnectionListener(PlaysetConnectionListener playsetConnectionListener) {
-        BluetoothBaseActivity.playsetConnectionListener = playsetConnectionListener;
-    }
-
     @Override
     protected void onUserLeaveHint() {
         super.onUserLeaveHint();
@@ -523,70 +392,33 @@ public abstract class DWBaseActivity extends AppCompatActivity
 
         String msg = sharedPrefUtil.getString(SharedPrefUtil.PREF_UPDATE_MSG);
         msg = msg != null ? msg : getString(R.string.app_update_msg);
-
-        Util.showAlertTeacherAccount(this, "",
-                                     msg, getString(R.string.click_here_to_continue),
-                                     getString(R.string.Back), null, new View.OnClickListener() {
-                                             @Override
-                                             public void onClick(View v) {
-                                                 ((Dialog) v.getTag()).dismiss();
-                                                 PlayerUtil.startParentalCheckActivity(BluetoothBaseActivity.this, Constants.REQUEST_CODE_CHILD_ADD_TEACHER);
-                                             }
-                                         }, listener);
+//        Util.showAlertTeacherAccount(this, "",
+//                                     msg, getString(R.string.click_here_to_continue),
+//                                     getString(R.string.Back), null, new View.OnClickListener() {
+//                                             @Override
+//                                             public void onClick(View v) {
+//                                                 ((Dialog) v.getTag()).dismiss();
+//                                                 PlayerUtil.startParentalCheckActivity(DWBaseActivity.this, Constants.REQUEST_CODE_CHILD_ADD_TEACHER);
+//                                             }
+//                                         }, listener);
     }
 
     public void callZeroPlayerContinue(View.OnClickListener listener, final boolean isTeacher) {
 
         String msg = isTeacher ? getString(R.string.teacher_zero_player) : getString(R.string.parent_zero_player);
-
-
-        Util.showAlertTeacherAccount(this, "",
-                                     msg, isTeacher ? getString(R.string.click_here_to_continue) : getString(R.string.Yes),
-                                     getString(R.string.Back), null, new View.OnClickListener() {
-                                             @Override
-                                             public void onClick(View v) {
-                                                 ((Dialog) v.getTag()).dismiss();
-                                                 if (isTeacher)
-                                                     PlayerUtil.startParentalCheckActivity(BluetoothBaseActivity.this, Constants.REQUEST_CODE_CHILD_ADD_TEACHER);
-                                                 else {
-                                                     PlayerUtil.startManagePlayerActivity(BluetoothBaseActivity.this, Numerics.ZERO);
-                                                 }
-                                             }
-                                         }, listener);
-    }
-
-    public class BluetoothStateReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(final Context context, Intent intent) {
-
-            if (intent.getAction().equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
-                final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,
-                                                     BluetoothAdapter.ERROR);
-                switch (state) {
-                case BluetoothAdapter.STATE_OFF:
-                    new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (!Util.isBtEnableActivityShowing()) {
-                                    Intent intent1 = new Intent(context, SPEnableBluetoothActivity.class);
-                                    intent1.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-
-                                    if(BluetoothUtil.isPlaysetConnected()) {
-                                        BluetoothUtil.disconnectPlayset(0l);
-                                    }else {
-                                        ((Activity) context).startActivityForResult(intent1, Numerics.ZERO);
-                                    }
-                                }
-                            }
-                        }, Numerics.FIVE * Numerics.HUNDRED);
-                    break;
-                case BluetoothAdapter.STATE_ON:
-                    Util.keepAppAlive();
-                    break;
-                }
-            }
-        }
+//        Util.showAlertTeacherAccount(this, "",
+//                                     msg, isTeacher ? getString(R.string.click_here_to_continue) : getString(R.string.Yes),
+//                                     getString(R.string.Back), null, new View.OnClickListener() {
+//                                             @Override
+//                                             public void onClick(View v) {
+//                                                 ((Dialog) v.getTag()).dismiss();
+//                                                 if (isTeacher)
+//                                                     PlayerUtil.startParentalCheckActivity(DWBaseActivity.this, Constants.REQUEST_CODE_CHILD_ADD_TEACHER);
+//                                                 else {
+//                                                     PlayerUtil.startManagePlayerActivity(DWBaseActivity.this, Numerics.ZERO);
+//                                                 }
+//                                             }
+//                                         }, listener);
     }
 
     public void showPermissionInfo(final Activity activity, final String[] permissions,

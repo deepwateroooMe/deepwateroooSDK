@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Handler;
@@ -21,12 +22,14 @@ import android.widget.TextView;
 
 import com.deepwaterooo.sdk.R;
 import com.deepwaterooo.sdk.activities.BaseActivity;
+import com.deepwaterooo.sdk.activities.DWBaseActivity;
 import com.deepwaterooo.sdk.appconfig.Constants;
 import com.deepwaterooo.sdk.appconfig.Logger;
 import com.deepwaterooo.sdk.appconfig.Numerics;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -327,5 +330,101 @@ public class Util {
         display.getSize(point);
         Constants.setDeviceWidth(point.x);
         Constants.setDeviceHeight(point.y);
+    }
+
+    /**
+     * Show the teacher account Alert dialog to the user for message
+     */
+    public static void showAlertTeacherAccount(final Context context, String title, String message1,
+                                               String message2, String btnText,
+                                               View.OnClickListener listener1, View.OnClickListener listener2, View.OnClickListener listener3) {
+        final Dialog dialog = new Dialog(context, R.style.MyTheme_Black_Transparent);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.setContentView(R.layout.alert_teacher_account);
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+
+        LinearLayout llDialog = (LinearLayout) dialog.findViewById(R.id.llDialog);
+        ViewGroup.LayoutParams params = llDialog.getLayoutParams();
+        params.width = (int) (Constants.getDeviceWidth() * 0.35);
+        llDialog.setLayoutParams(params);
+        TextView tvAlertTitle = (TextView) dialog.findViewById(R.id.tvAlertTitle);
+        TextView tvAlertText1 = (TextView) dialog.findViewById(R.id.tvAlertText1);
+        TextView tvAlertText2 = (TextView) dialog.findViewById(R.id.tvAlertText2);
+
+        Button btnBack = (Button) dialog.findViewById(R.id.btnBack);
+
+        tvAlertTitle.setText(title);
+        tvAlertText1.setText(message1);
+        tvAlertText2.setText(message2);
+
+        tvAlertText1.setTag(dialog);
+        tvAlertText2.setTag(dialog);
+
+        if (message1.equals(context.getString(R.string.create_a_teacher))) {
+            tvAlertText1.setPaintFlags(tvAlertText1.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        } else {
+            tvAlertText1.setTextColor(context.getResources().getColor(R.color.Gray));
+        }
+
+        if (message2.equals(context.getString(R.string.not_a_teacher))) {
+            tvAlertText2.setPaintFlags(tvAlertText2.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        }
+
+        btnBack.setText(btnText);
+        btnBack.setTag(dialog);
+        if (listener3 == null) {
+            btnBack.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+        } else {
+            btnBack.setOnClickListener(listener3);
+        }
+
+        if (listener1 != null) {
+            tvAlertText1.setOnClickListener(listener1);
+        }
+
+        if (listener2 != null) {
+            tvAlertText2.setOnClickListener(listener2);
+        }
+
+        dialog.setCancelable(false);
+
+        if (context instanceof BaseActivity) {
+            dialog.setOnDismissListener((BaseActivity) context);
+        } else if (context instanceof DWBaseActivity) {
+            dialog.setOnDismissListener((DWBaseActivity) context);
+        }
+
+        if (!((Activity) context).isFinishing() && !((Activity) context).isDestroyed()) {
+            dialog.show();
+        }
+    }
+
+    /**
+     * This method used to get the Login user players info in offline.
+     * If user info already exist.
+     *
+     * @param context context
+     * @return json string from the file
+     */
+    public static String getPlayersListFromFile(Context context) {
+        try {
+            File file = new File(context.getFilesDir().getPath() + "/" + Constants.OFF_LINE_LOGIN_USER_INFO);
+            //check whether file exists
+            FileInputStream fileInputStream = new FileInputStream(file);
+            int size = fileInputStream.available();
+            byte[] buffer = new byte[size];
+            fileInputStream.read(buffer);
+            fileInputStream.close();
+            return new String(buffer);
+        } catch (IOException e) {
+            Log.e("LoginUserInfoFromFile", "Error in Reading: " + e.getLocalizedMessage());
+            return null;
+        }
     }
 }

@@ -6,5 +6,5 @@ public enum ApiCallType {
     B,
     C,
     D,
-    E
+    ADD_PLAYER, EDIT_STUDENT, EDIT_PLAYER, DELETE_PLAYER, E
 }

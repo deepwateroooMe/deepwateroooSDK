@@ -1,6 +1,7 @@
 package com.deepwaterooo.sdk.activities;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,8 +18,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 
 import com.deepwaterooo.sdk.R;
+import com.deepwaterooo.sdk.activities.authentication.DWSignUpActivity;
 import com.deepwaterooo.sdk.appconfig.Constants;
 import com.deepwaterooo.sdk.appconfig.Numerics;
+import com.deepwaterooo.sdk.utils.LocaleHelper;
+import com.deepwaterooo.sdk.utils.PlayerUtil;
 import com.deepwaterooo.sdk.utils.SharedPrefUtil;
 import com.deepwaterooo.sdk.utils.Util;
 
@@ -28,9 +32,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Activity used for base class for all activities
  */
 // ACTIVITY基类: 就是把一些必要的会话框及其相关的回调都包装在基类里了.把这个作为安卓SDK端所有活动的基类
-public class BaseActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
-    // , LoginListener { // 我觉得这里可能不可以实现这个接口还
 // 那么就还需要一个DWBaseActivity的基类,作为DWUnityActivity的基类    
+public class BaseActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
     private final String TAG = "BaseActivity";
 
     private ProgressDialog progressDialog;
@@ -39,11 +42,39 @@ public class BaseActivity extends AppCompatActivity implements DialogInterface.O
     private SharedPrefUtil sharedPrefUtil;
 
     @Override
+    protected void onPause() {
+        Log.d(TAG, "onPause() start");
+        super.onPause();
+        IS_APP_RUNNING = false;
+        Log.d(TAG, "onPause() IS_APP_RUNNING: " +  IS_APP_RUNNING); 
+        Log.d(TAG, "onPause() end"); 
+    }
+    
+    @Override
+    protected void onResume() {
+        Log.d(TAG, "onResume()"); 
+        super.onResume();
+        IS_APP_RUNNING = true; 
+        hideSystemUI();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop() ");
+    }
+   @Override
+   protected void onDestroy() {
+       super.onDestroy();
+       Log.d(TAG, "onDestroy() ");
+   }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate() ");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         sharedPrefUtil = new SharedPrefUtil(this); 
         super.onCreate(savedInstanceState);
-//        LocaleHelper.setLocale(this, LocaleHelper.getLanguage(this));
+       LocaleHelper.setLocale(this, LocaleHelper.getLanguage(this));
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mDecorView = getWindow().getDecorView();
         IS_APP_RUNNING = true;
@@ -109,23 +140,6 @@ public class BaseActivity extends AppCompatActivity implements DialogInterface.O
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    protected void onPause() {
-        Log.d(TAG, "onPause() start");
-        super.onPause();
-        IS_APP_RUNNING = false;
-        Log.d(TAG, "onPause() IS_APP_RUNNING: " +  IS_APP_RUNNING); 
-        Log.d(TAG, "onPause() end"); 
-    }
-    
-    @Override
-    protected void onResume() {
-        Log.d(TAG, "onResume()"); 
-        super.onResume();
-        IS_APP_RUNNING = true; 
-        hideSystemUI();
     }
 
     /**
@@ -208,8 +222,62 @@ public class BaseActivity extends AppCompatActivity implements DialogInterface.O
         Log.d(TAG, "onDismiss() ");
         hideSystemUI();
     }
-    public void didFinishSdkUserConfiguration() {
+    public void didFinishSdkUserConfiguration() { }
+    protected void didfinishSDKscreenflow() { }
+    protected void callTeacherAlert(final boolean isFromLogin) {
+        Util.showAlertTeacherAccount(this, getString(R.string.are_you_teacher),
+                                     getString(R.string.create_a_teacher), getString(R.string.not_a_teacher),
+                                     getString(R.string.Back), new View.OnClickListener() {
+                                             @Override
+                                             public void onClick(View v) {
+                                                 ((Dialog) v.getTag()).dismiss();
+                                                 callTeacherContinue();
+                                             }
+                                         }, new View.OnClickListener() {
+                                                 @Override
+                                                 public void onClick(View v) {
+                                                     ((Dialog) v.getTag()).dismiss();
+                                                     Intent intent = new Intent(BaseActivity.this, DWSignUpActivity.class);
+                                                     if (isFromLogin) {
+                                                         intent.putExtra(Constants.EXTRA_IS_FROM_LOGIN, true);
+                                                     } else {
+                                                         sharedPrefUtil.setBoolean(SharedPrefUtil.PREF_DO_YOU_HAVE_ACC, true);
+                                                     }
+                                                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                                     startActivityForResult(intent, Numerics.ZERO);
+                                                 }
+                                             }, null);
     }
-    protected void didfinishSDKscreenflow() {
+
+    protected void callTeacherContinue() {
+
+        String msg = sharedPrefUtil.getString(SharedPrefUtil.PREF_UPDATE_MSG);
+        msg = msg != null ? msg : getString(R.string.app_update_msg);
+
+        Util.showAlertTeacherAccount(this, "",
+                                     msg, getString(R.string.click_here_to_continue),
+                                     getString(R.string.Back), null, new View.OnClickListener() {
+                                             @Override
+                                             public void onClick(View v) {
+                                                 ((Dialog) v.getTag()).dismiss();
+                                                 PlayerUtil.startParentalCheckActivity(BaseActivity.this, 0);
+                                             }
+                                         }, null);
+    }
+
+    protected void callTeacherContinue(View.OnClickListener listener) {
+
+        String msg = sharedPrefUtil.getString(SharedPrefUtil.PREF_UPDATE_MSG);
+        msg = msg != null ? msg : getString(R.string.app_update_msg);
+
+        Util.showAlertTeacherAccount(this, "",
+                                     msg, getString(R.string.click_here_to_continue),
+                                     getString(R.string.Back), null, new View.OnClickListener() {
+                                             @Override
+                                             public void onClick(View v) {
+                                                 ((Dialog) v.getTag()).dismiss();
+                                                 PlayerUtil.startParentalCheckActivity(BaseActivity.this, 0);
+                                             }
+                                         }, listener);
     }
 }

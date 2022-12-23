@@ -3,8 +3,9 @@
   <string name="app_name" translatable="false">SPSDK</string>
   <string name="LoBatteryTitle">Low Battery</string>
   <string name="LowBatteryMsg">Approximately X% of battery remaining.</string>
-  <string name="game_activity" translatable="false">com.deepwaterooo.dwsdk.activities.BaseActivity</string>
+  <string name="game_activity" translatable="false">com.deepwaterooo.sdk.activities.DemoActivity</string>
   <string name="Enable_Production" translatable="false">false</string>
+  <string name="PARENT">PARENT</string>
 
   <!--Have a DW account  -->
   <string name="Have_Account">Do you have a Square Panda account?</string>

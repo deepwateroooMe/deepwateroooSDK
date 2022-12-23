@@ -2,6 +2,7 @@ package com.deepwaterooo.sdk.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +11,8 @@ import java.util.Set;
  * Class containing static utility methods for shared preferences
  */
 public class SharedPrefUtil {
+    private final String TAG = "SharedPrefUtil";
+
     private static final String SHARED_PREF_NAME = "Deepwaterooo";
     public static final String PREF_USER_NAME = "USER_NAME";
     public static final String PREF_USER_PASSWORD = "USER_PASSWORD";
@@ -49,6 +52,7 @@ public class SharedPrefUtil {
     private SharedPreferences.Editor editor;
 
     public SharedPrefUtil(Context context) {
+        Log.d(TAG, "SharedPrefUtil() ");
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }

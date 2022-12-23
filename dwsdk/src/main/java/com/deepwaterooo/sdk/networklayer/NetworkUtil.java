@@ -4,20 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
-import android.provider.SyncStateContract;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
 import com.deepwaterooo.sdk.R;
 import com.deepwaterooo.sdk.activities.BaseActivity;
+import com.deepwaterooo.sdk.activities.DWBaseActivity;
 import com.deepwaterooo.sdk.activities.authentication.DWForgotPasswordActivity;
 import com.deepwaterooo.sdk.appconfig.Constants;
 import com.deepwaterooo.sdk.appconfig.JSONConstants;
 import com.deepwaterooo.sdk.beans.AppUpdatesDO;
 import com.deepwaterooo.sdk.utils.ApiCallListener;
 import com.deepwaterooo.sdk.utils.DWActivityUtil;
-import com.deepwaterooo.sdk.utils.PlayerUtil;
 import com.deepwaterooo.sdk.utils.SharedPrefUtil;
 import com.deepwaterooo.sdk.utils.Util;
 import com.google.gson.Gson;
@@ -31,7 +30,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.logging.Logger;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -141,7 +139,7 @@ public class NetworkUtil {
      * @param fileData This parameter accepts file data in byte array
      * @param fileName upload file name
      */
-    public static void uploadFile(final BaseActivity activity, final ApiCallListener listener, byte[] fileData, String fileName) {
+    public static void uploadFile(final DWBaseActivity activity, final ApiCallListener listener, byte[] fileData, String fileName) {
         if (NetworkUtil.checkInternetConnection(activity)) {
             new UploadFileTask(activity, listener, null, fileData, fileName).execute();
         } else {
@@ -161,7 +159,7 @@ public class NetworkUtil {
      * @param filepath upload file path
      * @param fileName upload file name
      */
-    public static void uploadFile(final BaseActivity activity, final ApiCallListener listener, String filepath, String fileName) {
+    public static void uploadFile(final DWBaseActivity activity, final ApiCallListener listener, String filepath, String fileName) {
         if (NetworkUtil.checkInternetConnection(activity)) {
             new UploadFileTask(activity, listener, filepath, null, fileName).execute();
         } else {
@@ -175,12 +173,12 @@ public class NetworkUtil {
     }
     public static class UploadFileTask extends AsyncTask<Void, Void, String> {
         private ApiCallListener listener;
-        private BaseActivity activity;
+        private DWBaseActivity activity;
         private String filepath;
         private String fileName;
         private byte[] fileData;
         private SharedPrefUtil sharedPrefUtil;
-        public UploadFileTask(BaseActivity activity, ApiCallListener listener, String filepath, byte[] fileData, String fileName) {
+        public UploadFileTask(DWBaseActivity activity, ApiCallListener listener, String filepath, byte[] fileData, String fileName) {
             this.activity = activity;
             this.listener = listener;
             this.filepath = filepath;
@@ -219,7 +217,7 @@ public class NetworkUtil {
             super.onPostExecute(base64);
             if (base64 != null) {
                 try {
-                    ApiClient.getApiInterface((DWForgotPasswordActivity) activity).uploadFile(JSONConstants.AUTHORIZATION_BEARER +
+                    ApiClient.getApiInterface(activity).uploadFile(JSONConstants.AUTHORIZATION_BEARER +
                                                                    sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_TOKEN),
                                                                    fileName, base64).enqueue(new Callback<ResponseBody>() {
                                                                            @Override
@@ -278,7 +276,7 @@ public class NetworkUtil {
      * @param fileName file name to download.
      * @return
      */
-    public static void downloadFile(final BaseActivity activity, final ApiCallListener listener, final String fileName) {
+    public static void downloadFile(final DWBaseActivity activity, final ApiCallListener listener, final String fileName) {
         if (NetworkUtil.checkInternetConnection(activity)) {
 //            activity.showProgressDialog(activity.getString(R.string.Please_Wait));
             try {
@@ -286,7 +284,7 @@ public class NetworkUtil {
                 SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(activity);
                 String url = sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_BUCKET_URL);
                 if (url != null && !url.isEmpty()) {
-                    ApiClient.getApiInterface((DWForgotPasswordActivity) activity).downloadFileWithURL(url + "games/" + fileName).enqueue(new Callback<ResponseBody>() {
+                    ApiClient.getApiInterface(activity).downloadFileWithURL(url + "games/" + fileName).enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 //                        activity.dismissProgressDialog();

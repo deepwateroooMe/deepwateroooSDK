@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -20,22 +21,10 @@ import com.deepwaterooo.sdk.activities.BaseActivity;
 import com.deepwaterooo.sdk.appconfig.Constants;
 import com.deepwaterooo.sdk.appconfig.JSONConstants;
 import com.deepwaterooo.sdk.appconfig.Numerics;
-import com.deepwaterooo.sdk.networklayer.ApiClient;
-import com.deepwaterooo.sdk.networklayer.NetworkUtil;
-import com.deepwaterooo.sdk.utils.ApiCallListener;
-import com.deepwaterooo.sdk.utils.PlayerUtil;
 import com.deepwaterooo.sdk.utils.SharedPrefUtil;
-import com.deepwaterooo.sdk.utils.Util;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.shockwave.pdfium.PdfDocument;
-
-import org.json.JSONObject;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Activity used for User Privacy policy and Terms & Conditions
@@ -60,8 +49,25 @@ public class DWDialogActivity extends BaseActivity implements View.OnClickListen
     private boolean isPlaysetConnected;
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause() ");
+//        if (!(isFromSignUp || isFromLogin) && isPlaysetConnected && BluetoothUtil.isPlaysetConnected() &&
+//            !BluetoothUtil.isFirmwareUpdateInProgress() && !BluetoothUtil.isBootModeEnabled()) {
+//            Util.IS_APP_RUNNING = false;
+//            Util.playSound(DWDialogActivity.this, Constants.AUDIO_DISCONNECT);
+//            BluetoothUtil.restartPlayset();
+//        }
+        Log.d(TAG, "onPause() (getIntent().hasExtra(Constants.EXTRA_IS_FROM_GAME)): " + (getIntent().hasExtra(Constants.EXTRA_IS_FROM_GAME)));
+        if (getIntent().hasExtra(Constants.EXTRA_IS_FROM_GAME)){
+            finish();
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate() ");
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
         setContentView(R.layout.activity_dialog);
@@ -276,20 +282,4 @@ public class DWDialogActivity extends BaseActivity implements View.OnClickListen
 //    protected void attachBaseContext(Context newBase) {
 //        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 //    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-//        if (!(isFromSignUp || isFromLogin) && isPlaysetConnected && BluetoothUtil.isPlaysetConnected() &&
-//            !BluetoothUtil.isFirmwareUpdateInProgress() && !BluetoothUtil.isBootModeEnabled()) {
-//            Util.IS_APP_RUNNING = false;
-//            Util.playSound(DWDialogActivity.this, Constants.AUDIO_DISCONNECT);
-//            BluetoothUtil.restartPlayset();
-//        }
-        if(getIntent().hasExtra(Constants.EXTRA_IS_FROM_GAME)){
-            finish();
-        }
-
-    }
 }

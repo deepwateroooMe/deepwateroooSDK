@@ -107,6 +107,27 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
         NetworkUtil.callGetAppUpdate(this);
         sharedPrefUtil = new SharedPrefUtil(this);
     }
+ 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause() ");
+        if (viewTreeObserver.isAlive()) {
+            viewTreeObserver.removeOnGlobalLayoutListener(listener);
+        }
+    }
+
+    @Override
+    protected  void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy() ");
+        rootView = null;
+        contentContainer = null;
+        viewTreeObserver = null;
+        if (dialogHelpArea != null && dialogHelpArea.isShowing()) {
+            dialogHelpArea.dismiss();
+        }
+    }
 
     /**
      * initialising the views used in this activity
@@ -558,25 +579,6 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
             rbtnChinese.setTextColor(getResources().getColor(R.color.MediumPurple));
             rbtnEnglish.setTextColor(getResources().getColor(R.color.white));
 //        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (viewTreeObserver.isAlive()) {
-            viewTreeObserver.removeOnGlobalLayoutListener(listener);
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        rootView = null;
-        contentContainer = null;
-        viewTreeObserver = null;
-        if (dialogHelpArea != null && dialogHelpArea.isShowing()) {
-            dialogHelpArea.dismiss();
-        }
     }
 
     private void possiblyResizeChildOfContent() {

@@ -2,13 +2,15 @@ package com.deepwaterooo.sdk.beans;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.google.gson.annotations.SerializedName;
+
 import com.deepwaterooo.sdk.appconfig.JSONConstants;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Class used to get the PlayerDO attributes from server Login API response
  */
 public class PlayerDO implements Parcelable {
+
 
     public static final Creator<PlayerDO> CREATOR = new Creator<PlayerDO>() {
             @Override
@@ -31,10 +33,10 @@ public class PlayerDO implements Parcelable {
     private String gender;
     @SerializedName(JSONConstants.GRADE)
     private String grade;
-//    @SerializedName(JSONConstants.PARENT_EMAIL)
-//    private String parentEmail;
-//    @SerializedName(JSONConstants.STUDENT_ID)
-//    private String studentID;
+    @SerializedName(JSONConstants.PARENT_EMAIL)
+    private String parentEmail;
+    @SerializedName(JSONConstants.STUDENT_ID)
+    private String studentID;
     @SerializedName(JSONConstants.IEP)
     private String IEP;
     @SerializedName(JSONConstants.LANGUAGE)
@@ -72,6 +74,8 @@ public class PlayerDO implements Parcelable {
         dateofBirth = in.readString();
         gender = in.readString();
         grade = in.readString();
+        parentEmail = in.readString();
+        studentID = in.readString();
         IEP = in.readString();
         language = in.readString();
         IEPDescription = in.readString();
@@ -96,8 +100,8 @@ public class PlayerDO implements Parcelable {
         dest.writeString(dateofBirth);
         dest.writeString(gender);
         dest.writeString(grade);
-//        dest.writeString(parentEmail);
-//        dest.writeString(studentID);
+        dest.writeString(parentEmail);
+        dest.writeString(studentID);
         dest.writeString(IEP);
         dest.writeString(language);
         dest.writeString(IEPDescription);
@@ -160,21 +164,21 @@ public class PlayerDO implements Parcelable {
         this.grade = grade;
     }
 
-//    public String getParentEmail() {
-//        return parentEmail;
-//    }
-//
-//    public void setParentEmail(String parentEmail) {
-//        this.parentEmail = parentEmail;
-//    }
-//
-//    public String getStudentID() {
-//        return studentID;
-//    }
-//
-//    public void setStudentID(String studentID) {
-//        this.studentID = studentID;
-//    }
+    public String getParentEmail() {
+        return parentEmail;
+    }
+
+    public void setParentEmail(String parentEmail) {
+        this.parentEmail = parentEmail;
+    }
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
+    }
 
     public String getIEP() {
         return IEP;
@@ -182,6 +186,10 @@ public class PlayerDO implements Parcelable {
 
     public void setIEP(String IEP) {
         this.IEP = IEP;
+    }
+
+    public String getLanguage() {
+        return language;
     }
 
     public void setLanguage(String language) {

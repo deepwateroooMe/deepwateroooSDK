@@ -2,10 +2,15 @@ package com.deepwaterooo.sdk.networklayer;
 
 import com.deepwaterooo.sdk.appconfig.JSONConstants;
 import com.deepwaterooo.sdk.beans.AppUpdatesDO;
+import com.deepwaterooo.sdk.beans.AvatarsDO;
 import com.deepwaterooo.sdk.beans.LoginUserDO;
+import com.deepwaterooo.sdk.beans.PlayerDO;
+
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -190,4 +195,122 @@ public interface ApiInterface {
                                     @Field(JSONConstants.SDK_VERSION) String sdkVersion,
                                     @Field(JSONConstants.GAME_VERSION) String gameVersion,
                                     @Field(JSONConstants.PLATFORM) String plotform);
+
+    /**
+     * API used to submit Privacy policy description
+     *
+     * @return
+     */
+    @GET("avatar/{parent_id}/get-avatars")
+    Call<List<AvatarsDO>> getGenericAvatars(@Header(JSONConstants.AUTHORIZATION_TOKEN) String authorization,
+                                            @Path("parent_id") String parentId);
+
+    /**
+     * API used to Adding child for game
+     *
+     * @param firstName   user first name
+     * @param dateofBirth user date of birth
+     * @param gender      user gender
+     * @param avatar      user avatar
+     * @param profileURL  user profile image URL
+     * @param imgbase64   user image in base 64
+     * @param game        user game id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("user/{parent_id}/child/")
+    Call<ResponseBody> addChildAPI(@Header(JSONConstants.AUTHORIZATION_TOKEN) String authorization,
+                                   @Path("parent_id") String parentId,
+                                   @Field(JSONConstants.FIRST_NAME) String firstName,
+                                   @Field(JSONConstants.DATE_OF_BIRTH) String dateofBirth,
+                                   @Field(JSONConstants.GENDER) String gender,
+                                   @Field(JSONConstants.AVATAR) String avatar,
+                                   @Field(JSONConstants.PROFILE_URL) String profileURL,
+                                   @Field(JSONConstants.IMG_BASE_64) String imgbase64,
+                                   @Field(JSONConstants.GAME) String game);
+
+    /**
+     * API used to editing child for game
+     *
+     * @param firstName   user first name
+     * @param dateofBirth user date of birth
+     * @param gender      user gender
+     * @param avatar      user avatar
+     * @param profileURL  user profile image URL
+     * @param imgbase64   user image in base 64
+     * @return
+     */
+    @FormUrlEncoded
+    @PUT("user/{parent_id}/child/{child_id}/edit")
+    Call<ResponseBody> editChildAPI(@Header(JSONConstants.AUTHORIZATION_TOKEN) String authorization,
+                                    @Path("parent_id") String parentId,
+                                    @Path("child_id") String childId,
+                                    @Field(JSONConstants.FIRST_NAME) String firstName,
+                                    @Field(JSONConstants.DATE_OF_BIRTH) String dateofBirth,
+                                    @Field(JSONConstants.GENDER) String gender,
+                                    @Field(JSONConstants.AVATAR) String avatar,
+                                    @Field(JSONConstants.PROFILE_URL) String profileURL,
+                                    @Field(JSONConstants.IMG_BASE_64) String imgbase64);
+
+    /**
+     * API used to delete child
+     *
+     * @return
+     */
+    @DELETE("user/{parent_id}/child/{child_id}")
+    Call<ResponseBody> deleteChildAPI(@Header(JSONConstants.AUTHORIZATION_TOKEN) String authorization,
+                                      @Path("parent_id") String parentId,
+                                      @Path("child_id") String childId);
+
+    /**
+     * Api used to update the Teacher student details
+     *
+     * @param authorization   authorization token
+     * @param teacherId       teacher id
+     * @param studentId       student id
+     * @param firstName       user first name
+     * @param lastName        user last name
+     * @param dateofBirth     user Date of birth
+     * @param gender          user gender
+     * @param grade           user grade
+     * @param parentEmail     user parent email
+     * @param iep             user IEP
+     * @param language        user known languages
+     * @param iep_description user IEP description
+     * @param imgbase64       user image in base 64
+     * @param avatar          user avatar
+     * @param profileURL      user profile image URL
+     * @return
+     */
+
+    @FormUrlEncoded
+    @PUT("user/v2/{teacherId}/student/{studentId}/edit")
+    Call<ResponseBody> editStudentAPI(@Header(JSONConstants.AUTHORIZATION_TOKEN) String authorization,
+                                      @Path("teacherId") String teacherId,
+                                      @Path("studentId") String studentId,
+                                      @Field(JSONConstants.FIRST_NAME) String firstName,
+                                      @Field(JSONConstants.LAST_NAME) String lastName,
+                                      @Field(JSONConstants.DATE_OF_BIRTH) String dateofBirth,
+                                      @Field(JSONConstants.GENDER) String gender,
+                                      @Field(JSONConstants.PARENT_EMAIL) String parentEmail,
+                                      @Field(JSONConstants.GRADE) String grade,
+                                      @Field(JSONConstants.STUDENT_ID) String student_id,
+                                      @Field(JSONConstants.IEP) String iep,
+                                      @Field(JSONConstants.LANGUAGE) String language,
+                                      @Field(JSONConstants.IEP_DESCRIPTION) String iep_description,
+                                      @Field(JSONConstants.AVATAR) String avatar,
+                                      @Field(JSONConstants.PROFILE_URL) String profileURL,
+                                      @Field(JSONConstants.IMG_BASE_64) String imgbase64);
+
+    /**
+     * API used to to get child/player details
+     *
+     * @return
+     */
+    @GET("user/{parent_id}/child")
+    Call<List<PlayerDO>> getChildAPI(@Header(JSONConstants.AUTHORIZATION_TOKEN) String authorization,
+                                     @Header(JSONConstants.GAME_ID) String gameId,
+                                     @Path("parent_id") String parentId);
+
+
 }

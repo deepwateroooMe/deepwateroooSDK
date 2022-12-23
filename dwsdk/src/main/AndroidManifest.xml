@@ -24,7 +24,7 @@
   <!-- <uses-feature -->
   <!--     android:name="android.hardware.camera.flash" -->
   <!--     android:required="false"/> -->
-  <uses-feature android:name="android.hardware.screen.landscape"/>
+  <!-- <uses-feature android:name="android.hardware.screen.landscape"/> -->
 
   <!--       android:name=".DWApplication"-->
   <application
@@ -37,11 +37,13 @@
         android:theme="@style/DWAppTheme.NoActionBar.keyboard"
         android:exported="true"
         android:windowSoftInputMode="stateHidden|adjustResize"/>
+
     <activity
         android:name=".activities.authentication.DWSignUpActivity"
         android:exported="true"
         android:theme="@style/DWAppTheme.NoActionBar.keyboard"
         android:windowSoftInputMode="stateHidden|adjustResize"/>
+
     <activity
         android:name=".activities.authentication.DWDialogActivity"
         android:exported="true"
@@ -50,14 +52,17 @@
         android:name=".activities.BaseActivity"
         android:exported="true"
         android:theme="@style/DWAppTheme.NoActionBar"/>
+
     <activity
         android:name=".activities.authentication.DWActivateAccountActivity"
         android:exported="true"
         android:theme="@style/DWAppTheme.NoActionBar"/>
+
     <activity
         android:name=".activities.DWHaveAccountActivity"
         android:exported="true"
         android:theme="@style/DWAppTheme.NoActionBar"/>
+
     <activity
         android:name=".activities.authentication.DWForgotPasswordActivity"
         android:exported="true"
@@ -68,27 +73,30 @@
         android:name=".activities.DWSplashScreenActivity"
         android:exported="true"
         android:theme="@style/DWAppTheme.NoActionBar"/>
+
     <activity
         android:name=".activities.DWAllSetForGameActivity"
         android:exported="true"
         android:theme="@style/DWAppTheme.NoActionBar"/>
+
     <activity
         android:name=".activities.authentication.DWParentalCheckActivity"
         android:exported="true"
         android:theme="@style/ParentalCheck.Transparent"/>
+
     <activity
         android:name=".activities.CustomWebViewActivity"
         android:exported="true"
         android:theme="@style/DWAppTheme.NoActionBar"/>
-    <activity
-        android:name="com.soundcloud.android.crop.CropImageActivity"
-        android:exported="true"
-        android:theme="@style/Base.Theme.AppCompat"/>
-    <receiver android:name=".utils.NetworkChangeReceiver"
-              android:exported="true">
-      <intent-filter>
-        <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-      </intent-filter>
-    </receiver>
+    <!-- <activity -->
+    <!--     android:name="com.soundcloud.android.crop.CropImageActivity" -->
+    <!--     android:exported="true" -->
+    <!--     android:theme="@style/Base.Theme.AppCompat"/> -->
+    <!-- <receiver android:name=".utils.NetworkChangeReceiver" -->
+    <!--           android:exported="true"> -->
+    <!--   <intent-filter> -->
+    <!--     <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/> -->
+    <!--   </intent-filter> -->
+    <!-- </receiver> -->
   </application>
 </manifest>

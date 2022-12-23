@@ -5,13 +5,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.deepwaterooo.sdk.activities.BaseActivity;
+import com.deepwaterooo.sdk.R;
 import com.deepwaterooo.sdk.activities.DWAllSetForGameActivity;
+import com.deepwaterooo.sdk.activities.DWBaseActivity;
 import com.deepwaterooo.sdk.activities.DWSplashScreenActivity;
+import com.deepwaterooo.sdk.activities.authentication.DWLoginActivity;
+import com.deepwaterooo.sdk.activities.authentication.DWParentalCheckActivity;
 import com.deepwaterooo.sdk.appconfig.Constants;
 import com.deepwaterooo.sdk.appconfig.Numerics;
 import com.deepwaterooo.sdk.beans.ParentInfoDO;
@@ -19,7 +23,6 @@ import com.deepwaterooo.sdk.beans.PlayerDO;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-import com.deepwaterooo.sdk.R;
 
 /**
  * Utility class for player activities
@@ -56,7 +59,7 @@ public class PlayerUtil {
      *
      * @param activity activity
      */
-    public static void logoutUser(BaseActivity activity) {
+    public static void logoutUser(DWBaseActivity activity) {
         // 把这里的桥折了,直接调用网络请求        
         // startParentalCheckActivity(activity, Constants.REQUEST_CODE_PARENTAL_CHECK);
         // 这里就是直接换成是网络请求登出用户呀
@@ -123,7 +126,7 @@ public class PlayerUtil {
      * @return Bitmap -  profile image bitmap
      */
     static Bitmap profileBitmap = null;
-    public static void getProfileImageURLString(final BaseActivity bluetoothBaseActivity, final PlayerImageListener listener,
+    public static void getProfileImageURLString(final DWBaseActivity bluetoothBaseActivity, final PlayerImageListener listener,
                                                 String profileURL) {
         profileBitmap = null;
 //        bluetoothBaseActivity.showProgressDialog(null);
@@ -162,5 +165,62 @@ public class PlayerUtil {
                 }
             });
 
+    }
+
+    /**
+     * This method is to save the selected player details.
+     * 只在启蒙模式下,可能需要父母监护的情况下使用,默认为登录的唯一用户
+     * @param activity - Context of the Activity
+     * @param playerDO - Selected player information object
+     */
+    public static void setSelectedPlayer(Activity activity, PlayerDO playerDO) {
+        SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(activity);
+        if (playerDO != null) {
+            sharedPrefUtil = new SharedPrefUtil(activity);
+            Gson gson = new Gson();
+            String json = gson.toJson(playerDO);
+            sharedPrefUtil.setString(SharedPrefUtil.PREF_SELECTED_PLAYER, json);
+        } else {
+            sharedPrefUtil.deleteFromDW(SharedPrefUtil.PREF_SELECTED_PLAYER);
+        }
+    }
+
+    public static void logoutParent(DWBaseActivity activity) {
+        SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(activity);
+        sharedPrefUtil.deleteFromDW(SharedPrefUtil.PREF_LOGIN_USER_STATUS);
+        sharedPrefUtil.deleteFromDW(SharedPrefUtil.PREF_LOGIN_USER_ID);
+        sharedPrefUtil.deleteFromDW(SharedPrefUtil.PREF_LOGIN_USER_TOKEN);
+        PlayerUtil.setSelectedPlayer(activity, null);
+//        if(BluetoothUtil.isPlaysetConnected()){
+//            BluetoothUtil.disconnectPlayset(Numerics.ZERO);
+//        }
+        Intent intent = new Intent(activity, DWLoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        activity.startActivityForResult(intent, Numerics.ZERO);
+        activity.setResult(Constants.RESULT_LOGOUT);
+        DWLoginActivity.setListener(activity);
+    }
+
+    /**
+     * call the parental check  activity
+     *
+     * @param activity    activity
+     * @param requestCode request code
+     */
+    public static void startParentalCheckActivity(Activity activity, int requestCode) {
+        Intent intent = new Intent(activity, DWParentalCheckActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        activity.startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * This method loads the playground help url
+     *
+     * @param activity activity
+     */
+    public static void startHelpActivity(Activity activity) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.HELP_URL));
+        //activity.startActivityForResult(browserIntent, Numerics.ZERO);
+        activity.startActivity(browserIntent);
     }
 }

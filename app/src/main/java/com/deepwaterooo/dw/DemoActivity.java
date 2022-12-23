@@ -11,21 +11,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.deepwaterooo.sdk.activities.BaseActivity;
+import com.deepwaterooo.sdk.activities.DWBaseActivity;
 import com.deepwaterooo.sdk.appconfig.Constants;
+import com.deepwaterooo.sdk.appconfig.Logger;
 import com.deepwaterooo.sdk.beans.PlayerDO;
 import com.deepwaterooo.sdk.networklayer.NetworkUtil;
 import com.deepwaterooo.sdk.utils.ApiCallListener;
 import com.deepwaterooo.sdk.utils.PlayerImageListener;
 import com.deepwaterooo.sdk.utils.PlayerUtil;
-import com.deepwaterooo.sdk.appconfig.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 // 这个类的大致意思是说: 模拟几个游戏中会调用到要SDK中方法的按钮,回调SDK中需要启动的活动
-public class DemoActivity extends BaseActivity implements ApiCallListener, PlayerImageListener {
+public class DemoActivity extends DWBaseActivity implements ApiCallListener, PlayerImageListener {
     private final String TAG = "DemoActivity";
 
     private LinearLayout llLetters;

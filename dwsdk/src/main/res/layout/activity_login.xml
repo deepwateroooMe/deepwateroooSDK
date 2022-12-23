@@ -4,10 +4,9 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/orange_bg"
                 tools:context="com.deepwaterooo.sdk.activities.authentication.DWLoginActivity"
                 tools:ignore="MissingPrefix">
-
+  <!--    android:background="@drawable/orange_bg"-->
 
     <ImageView
         android:id="@+id/ivPanda"
@@ -51,6 +50,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/forty_dip"
                 android:text="@string/Log_In"
+                tools:ignore="MissingPrefix"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/thirty_five_sp"/>
 
@@ -144,7 +144,7 @@
                     android:paddingLeft="@dimen/twenty_dip"
                     android:paddingRight="@dimen/twenty_dip"
                     android:paddingTop="@dimen/ten_dip"
-                    android:text="@string/Chinese"
+                    android:text="Chinese"
                     android:textColor="@color/white"
                     android:textSize="@dimen/twenty_five_sp"/>
             </RadioGroup>

@@ -258,7 +258,7 @@ public class DWForgotPasswordActivity extends BaseActivity implements View.OnCli
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         rootView = null;
         contentContainer = null;
