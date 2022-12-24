@@ -11,6 +11,10 @@ public class Constants {
     public static final String PARENT_PLAYGROUND_URL_DEV = "https://playground-dev.deepwaterooo.com/";
     public static final String PARENT_PLAYGROUND_URL_QA = "https://playground-qa.deepwaterooo.com/";
     public static final String PARENT_PLAYGROUND_URL_PRODUCTION = "https://playground.deepwaterooo.com/";
+    //For Teacher playground
+    public static final String TEACHER_PLAYGROUND_URL_DEV = "https://teacher-dev.squarepanda.com/";
+    public static final String TEACHER_PLAYGROUND_URL_QA = "https://teacher-qa.squarepanda.com/";
+    public static final String TEACHER_PLAYGROUND_URL_PRODUCTION = "https://teacher.squarepanda.com/";
 
     //https://support.deepwaterooo.com
     //https://deepwaterooo.com/pages/faqs

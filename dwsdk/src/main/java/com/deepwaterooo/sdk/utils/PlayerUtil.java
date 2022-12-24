@@ -11,15 +11,19 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.deepwaterooo.sdk.R;
-import com.deepwaterooo.sdk.activities.DWAllSetForGameActivity;
 import com.deepwaterooo.sdk.activities.DWBaseActivity;
 import com.deepwaterooo.sdk.activities.DWSplashScreenActivity;
+import com.deepwaterooo.sdk.activities.authentication.DWDialogActivity;
 import com.deepwaterooo.sdk.activities.authentication.DWLoginActivity;
 import com.deepwaterooo.sdk.activities.authentication.DWParentalCheckActivity;
+import com.deepwaterooo.sdk.activities.players.DWManagePlayerActivity;
 import com.deepwaterooo.sdk.appconfig.Constants;
+import com.deepwaterooo.sdk.appconfig.JSONConstants;
 import com.deepwaterooo.sdk.appconfig.Numerics;
 import com.deepwaterooo.sdk.beans.ParentInfoDO;
 import com.deepwaterooo.sdk.beans.PlayerDO;
+import com.deepwaterooo.sdk.networklayer.ApiClient;
+import com.deepwaterooo.sdk.networklayer.NetworkUtil;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -51,7 +55,39 @@ public class PlayerUtil {
         }
     }
 // 改写成给游戏评分呀
-    public static void startPlaygroundActivity(DWAllSetForGameActivity dwAllSetForGameActivity) {
+    /**
+     * loads the playground url
+     *
+     * @param activity activity
+     */
+    public static void startPlaygroundActivity(Activity activity) {
+        Intent browserIntent;
+
+        // comment for review, for SPPlayground image click browser URL bug fix
+        ParentInfoDO parentInfoDO = getParentInfo(activity);
+
+        if (parentInfoDO == null) {
+            browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.PLAYGROUND_URL));
+        } else if (parentInfoDO.getRole().equalsIgnoreCase(activity.getString(R.string.PARENT))) {
+            if (ApiClient.BASE_URL.equals(ApiClient.PROD_URL)) {
+                browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.PARENT_PLAYGROUND_URL_PRODUCTION));
+            } else if (ApiClient.BASE_URL.equals(ApiClient.QA_URL)) {
+                browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.PARENT_PLAYGROUND_URL_QA));
+            } else {
+                browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.PARENT_PLAYGROUND_URL_DEV));
+            }
+        } else {
+            if (ApiClient.BASE_URL.equals(ApiClient.PROD_URL)) {
+                browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TEACHER_PLAYGROUND_URL_PRODUCTION));
+            } else if (ApiClient.BASE_URL.equals(ApiClient.QA_URL)) {
+                browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TEACHER_PLAYGROUND_URL_QA));
+            } else {
+                browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TEACHER_PLAYGROUND_URL_DEV));
+            }
+        }
+        //activity.startActivityForResult(browserIntent, Numerics.ZERO);
+        activity.startActivity(browserIntent);
+        Util.keepAppAlive();
     }
 
     /**
@@ -78,6 +114,62 @@ public class PlayerUtil {
         activity.startActivityForResult(intent, Numerics.ZERO);
     }
 
+    
+    /**
+     * call the manage player activity
+     * 用于目前游戏端在安卓SDK 准备好之后的,测试,比如想要打开SDK画面,换一个玩家
+     * @param activity    activity
+     * @param requestCode requset code
+     */
+    public static void startManagePlayerActivity(Activity activity, int requestCode) {
+        ParentInfoDO parentInfo = getParentInfo(activity);
+        if (parentInfo != null) {
+            // if (parentInfo.getRole().equalsIgnoreCase(activity.getString(R.string.PARENT))) {
+            Intent intent = new Intent(activity, DWManagePlayerActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            activity.startActivityForResult(intent, requestCode);
+            /* } else {
+               ((BluetoothBaseActivity) activity).callTeacherContinue(null);
+               }*/
+        } else {
+            Intent i = new Intent(activity, DWLoginActivity.class);
+            activity.startActivityForResult(i, Numerics.ZERO);
+        }
+    }
+
+    /**
+     * call the manage player activity
+     *
+     * @param activity    activity
+     * @param requestCode request code
+     */
+    @Deprecated
+    public static void startSelectPlayerActivity(Activity activity, int requestCode) {
+        Intent intent = new Intent(activity, DWManagePlayerActivity.class);
+        intent.putExtra(Constants.EXTRA_SELECT_PLAYER, true);
+        intent.putExtra(Constants.EXTRA_IS_FROM_GAME, true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        activity.startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * call the manage player activity
+     *
+     * @param activity    activity
+     * @param isFirstTime - Need to pass true when game activity creates first time. In other cases pass false
+     * @param requestCode request code
+     */
+    public static void startSelectPlayerActivity(Activity activity, boolean isFirstTime, int requestCode) {
+        Intent intent = new Intent(activity, DWManagePlayerActivity.class);
+        intent.putExtra(Constants.EXTRA_SELECT_PLAYER, true);
+        intent.putExtra(Constants.EXTRA_IS_FROM_GAME, true);
+        if (isFirstTime) {
+            intent.putExtra(Constants.EXTRA_IS_FIRST_TIME, isFirstTime);
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        activity.startActivityForResult(intent, requestCode);
+    }
+    
     /**
      * This method is to get the selected player information
      *
@@ -243,5 +335,75 @@ public class PlayerUtil {
         if (isKeepAppAlive) {
             // Util.keepAppAlive();
         }
+    }
+    
+    /**
+     * displays the Terms and Conditions
+     *
+     * @param activity activity
+     */
+    public static void showTermsNconditions(Activity activity) {
+        if (NetworkUtil.checkInternetConnection(activity)) {
+            ParentInfoDO parentInfo = getParentInfo(activity);
+            if (parentInfo != null) {
+                Intent intent = new Intent(activity, DWDialogActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra(JSONConstants.PRIVACY, false);
+                intent.putExtra(Constants.EXTRA_IS_FROM_GAME, true);
+                //startActivity(intent);
+                Util.keepAppAlive();
+                activity.startActivityForResult(intent, Numerics.ONE);
+            } else {
+                Intent i = new Intent(activity, DWLoginActivity.class);
+                activity.startActivityForResult(i, Numerics.ZERO);
+            }
+        } else {
+            Util.showAlert(activity, activity.getString(R.string.We_Need_Internet),
+                           activity.getString(R.string.Please_Connect_Internet),
+                           activity.getString(R.string.Ok), null);
+        }
+
+    }
+
+    /**
+     * displays the Privacy policy
+     *
+     * @param activity activity
+     */
+    public static void showPrivacyPolicy(Activity activity) {
+        if (NetworkUtil.checkInternetConnection(activity)) {
+            ParentInfoDO parentInfo = getParentInfo(activity);
+            if (parentInfo != null) {
+                Intent intent = new Intent(activity, DWDialogActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra(JSONConstants.PRIVACY, true);
+                intent.putExtra(Constants.EXTRA_IS_FROM_GAME, true);
+                //startActivity(intent);
+                Util.keepAppAlive();
+                activity.startActivityForResult(intent, Numerics.ONE);
+            } else {
+                Intent i = new Intent(activity, DWLoginActivity.class);
+                activity.startActivityForResult(i, Numerics.ZERO);
+            }
+        } else {
+            Util.showAlert(activity, activity.getString(R.string.We_Need_Internet),
+                           activity.getString(R.string.Please_Connect_Internet),
+                           activity.getString(R.string.Ok), null);
+        }
+    }
+
+    /**
+     * displays the credits
+     *
+     * @param activity activity
+     */
+    public static void showCredits(Activity activity) {
+        Intent intent = new Intent(activity, DWDialogActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra(Constants.EXTRA_IS_FROM_GAME, true);
+        intent.putExtra(Constants.EXTRA_IS_CREDITS, true);
+        //startActivity(intent);
+        Util.keepAppAlive();
+        activity.startActivityForResult(intent, Numerics.ONE);
     }
 }

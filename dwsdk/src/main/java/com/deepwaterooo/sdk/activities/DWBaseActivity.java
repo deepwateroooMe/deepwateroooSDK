@@ -350,23 +350,24 @@ public abstract class DWBaseActivity extends AppCompatActivity
     protected void didNavigatesToMainMenu() {
     }
 
+// LoginListener 两个公用接口方法的定义,供子类DWUnityActivity覆写用来通知 游戏端 玩家选好登录好了    
     /**
      * This method is to get called when user login successful
      */
-    public void didFinishSdkUserConfiguration() {
+    public void didFinishSdkUserConfiguration() { // LoginListener
+    }
+    public void didSelectedChild(PlayerDO playerDO) {  // LoginListener
     }
 
     /**
      * This method is to get called when game activity launches from timer screen
      */
-    public void didfinishSDKscreenflow() {
+    // @Override
+    public void didfinishSDKscreenflow() { 
     }
 
     @Override
     public void onBackPressed() {
-    }
-
-    public void didSelectedChild(PlayerDO playerDO) {
     }
 
     protected void onSuccessLogoutEvent() {
