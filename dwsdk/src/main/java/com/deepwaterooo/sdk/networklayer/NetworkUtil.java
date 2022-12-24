@@ -70,7 +70,7 @@ public class NetworkUtil {
         if (NetworkUtil.checkInternetConnection(activity)) {
             final SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(activity);
             if (activity instanceof BaseActivity && isProgresNeeded) {
-//                ((BaseActivity) activity).showProgressDialog(activity.getString(R.string.Please_Wait)); // 这里可能要涉及到一点儿方法的垂柳
+//                ((BaseActivity) activity).showProgressDialog(activity.getString(Please_Wait)); // 这里可能要涉及到一点儿方法的垂柳
             }
             ApiClient.getApiInterface((DWForgotPasswordActivity) activity).ReAuthenticationAPI(sharedPrefUtil.getString(SharedPrefUtil.PREF_LOGIN_USER_TOKEN)).enqueue(new Callback<ResponseBody>() {
                     @Override

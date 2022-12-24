@@ -42,7 +42,7 @@ public class DWParentalCheckActivity extends BaseActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate() start");
-//        setContentView(R.layout.activity_parental_check);
+        setContentView(R.layout.activity_parental_check);
         intUI();
         numberStrings = Arrays.asList(getResources().getStringArray(R.array.Number));
         crateNumberTOWordMap();

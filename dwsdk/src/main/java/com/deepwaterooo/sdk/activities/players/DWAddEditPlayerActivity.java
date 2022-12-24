@@ -19,6 +19,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.PermissionChecker;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -215,13 +217,13 @@ public class DWAddEditPlayerActivity extends DWBaseActivity implements View.OnCl
             e.printStackTrace();
         }
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//                isPermissionGranted = false;
-//                Util.keepAppAlive();
-//                requestWriteExternalStoragePermission();
-//            }
-//        }
+       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+           if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+               isPermissionGranted = false;
+               Util.keepAppAlive();
+               requestWriteExternalStoragePermission();
+           }
+       }
     }
 
     /**
@@ -1251,35 +1253,34 @@ public class DWAddEditPlayerActivity extends DWBaseActivity implements View.OnCl
     }
 
 
-//    private void requestWriteExternalStoragePermission() {
-//        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, Numerics.ONE);
-//    }
+   private void requestWriteExternalStoragePermission() {
+       ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, Numerics.ONE);
+   }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode,
-//                                           String permissions[], int[] grantResults) {
-//        switch (requestCode) {
-//            case Numerics.ONE: {
-//                // If request is cancelled, the result arrays are empty.
-//                if (grantResults.length > Numerics.ZERO
-//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    if (!isPermissionGranted) {
-//                        isPermissionGranted = true;
-//
-//                    }
-//                } else {
-//
-//                    Toast.makeText(this, "Permission denied.", Toast.LENGTH_LONG).show();
-//                }
-//                return;
-//            }
-//        }
-//    }
+   // @Override
+   // public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+   //     switch (requestCode) {
+   //         case Numerics.ONE: {
+   //             // If request is cancelled, the result arrays are empty.
+   //             if (grantResults.length > Numerics.ZERO
+   //                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+   //                 if (!isPermissionGranted) {
+   //                     isPermissionGranted = true;
+
+   //                 }
+   //             } else {
+
+   //                 Toast.makeText(this, "Permission denied.", Toast.LENGTH_LONG).show();
+   //             }
+   //             return;
+   //         }
+   //     }
+   // }
     private void checkPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
             //just request the permission
             Util.keepAppAlive();
-//        ActivityCompat.requestPermissions(DWAddEditPlayerActivity.this, permissionsRequired.toArray(new String[0]), PERMISSION_CALLBACK_CONSTANT);
+            ActivityCompat.requestPermissions(DWAddEditPlayerActivity.this, permissionsRequired.toArray(new String[0]), PERMISSION_CALLBACK_CONSTANT);
         }else if(isCamera){
             openCamera();
         }else if(!isCamera){
@@ -1305,15 +1306,15 @@ public class DWAddEditPlayerActivity extends DWBaseActivity implements View.OnCl
                 openCamera();
             } else if(allgranted && !isCamera){
                 fromLibrary();
-//            }else if ((permissionsRequired != null && permissionsRequired.size() == 2) &&
-//                    (ActivityCompat.shouldShowRequestPermissionRationale(DWAddEditPlayerActivity.this, permissionsRequired.get(0))
-//                            || ActivityCompat.shouldShowRequestPermissionRationale(DWAddEditPlayerActivity.this, permissionsRequired.get(1)))) {
-//                showPermissionInfo(DWAddEditPlayerActivity.this, permissions, grantResults,false);
-//            } else if ((permissionsRequired != null && permissionsRequired.size() == 3) &&
-//                        (ActivityCompat.shouldShowRequestPermissionRationale(DWAddEditPlayerActivity.this, permissionsRequired.get(0))
-//                                || ActivityCompat.shouldShowRequestPermissionRationale(DWAddEditPlayerActivity.this, permissionsRequired.get(1))
-//                                || ActivityCompat.shouldShowRequestPermissionRationale(DWAddEditPlayerActivity.this, permissionsRequired.get(2)))) {
-//                showPermissionInfo(DWAddEditPlayerActivity.this, permissions, grantResults,false);
+            }else if ((permissionsRequired != null && permissionsRequired.size() == 2) &&
+                    (ActivityCompat.shouldShowRequestPermissionRationale(DWAddEditPlayerActivity.this, permissionsRequired.get(0))
+                            || ActivityCompat.shouldShowRequestPermissionRationale(DWAddEditPlayerActivity.this, permissionsRequired.get(1)))) {
+                showPermissionInfo(DWAddEditPlayerActivity.this, permissions, grantResults,false);
+            } else if ((permissionsRequired != null && permissionsRequired.size() == 3) &&
+                        (ActivityCompat.shouldShowRequestPermissionRationale(DWAddEditPlayerActivity.this, permissionsRequired.get(0))
+                                || ActivityCompat.shouldShowRequestPermissionRationale(DWAddEditPlayerActivity.this, permissionsRequired.get(1))
+                                || ActivityCompat.shouldShowRequestPermissionRationale(DWAddEditPlayerActivity.this, permissionsRequired.get(2)))) {
+                showPermissionInfo(DWAddEditPlayerActivity.this, permissions, grantResults,false);
             } else {
                 showPermissionInfo(DWAddEditPlayerActivity.this,permissions, grantResults,true);
             }
@@ -1353,11 +1354,11 @@ public class DWAddEditPlayerActivity extends DWBaseActivity implements View.OnCl
     }
     private boolean checkWriteExternalPermission(){
         int permission = 1;
-//        if (Build.VERSION.SDK_INT >= 23) {
-//             permission = ContextCompat.checkSelfPermission(DWAddEditPlayerActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//        }else {
-//             permission = PermissionChecker.checkSelfPermission(DWAddEditPlayerActivity.this,  Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//        }
+       if (Build.VERSION.SDK_INT >= 23) {
+            permission = ContextCompat.checkSelfPermission(DWAddEditPlayerActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+       }else {
+            permission = PermissionChecker.checkSelfPermission(DWAddEditPlayerActivity.this,  Manifest.permission.WRITE_EXTERNAL_STORAGE);
+       }
 
         if (permission == PermissionChecker.PERMISSION_GRANTED) {
             return true;

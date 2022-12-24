@@ -1,5 +1,8 @@
 package com.deepwaterooo.sdk.activities;
 
+import static android.os.Build.VERSION;
+import static android.os.Build.VERSION_CODES;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -21,15 +24,19 @@ import android.widget.AdapterView;
 
 import com.deepwaterooo.sdk.R;
 import com.deepwaterooo.sdk.activities.authentication.DWLoginActivity;
+import com.deepwaterooo.sdk.activities.players.DWManagePlayerActivity;
 import com.deepwaterooo.sdk.appconfig.Constants;
 import com.deepwaterooo.sdk.appconfig.Numerics;
 import com.deepwaterooo.sdk.beans.PlayerDO;
+import com.deepwaterooo.sdk.utils.LocaleHelper;
 import com.deepwaterooo.sdk.utils.LoginListener;
 import com.deepwaterooo.sdk.utils.PlayerUtil;
 import com.deepwaterooo.sdk.utils.SharedPrefUtil;
 import com.deepwaterooo.sdk.utils.Util;
 
-// 这里主要是提供DWUnityActivity与安卓SDK交互上下文,吃完饭把它理清楚
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+// 这里主要是提供DWUnityActivity与安卓SDK交互上下文
 public abstract class DWBaseActivity extends AppCompatActivity
     implements LoginListener,
     DialogInterface.OnDismissListener {
@@ -45,15 +52,20 @@ public abstract class DWBaseActivity extends AppCompatActivity
     public static final int PERMISSION_CALLBACK_CONSTANT = 100;
     public static final int REQUEST_PERMISSION_SETTING = 101;
 
+    public static Context mAppContext;
+    
     private Handler onPauseHandler;
     Runnable _idleRunnable = new Runnable() {
             @Override
             public void run() {
-                if (!Util.IS_APP_RUNNING && !BaseActivity.IS_APP_RUNNING) {
+                Log.d(TAG, "run() _idleRunnable");
+                 if (!Util.IS_APP_RUNNING && !BaseActivity.IS_APP_RUNNING) {
                     PlayerUtil.setSelectedPlayer(DWBaseActivity.this, null);
                     try {
                         Class classs = Class.forName(getString(R.string.game_activity));
+                        Log.d(TAG, "(!(DWBaseActivity.this).getClass().equals(classs)): " + (!(DWBaseActivity.this).getClass().equals(classs)));
                         if (!(DWBaseActivity.this).getClass().equals(classs)) {
+                            Log.d(TAG, "run() Constants.RESULT_FINISH_APP");
                             setResult(Constants.RESULT_FINISH_APP);
                             finish();
                         }
@@ -75,6 +87,7 @@ public abstract class DWBaseActivity extends AppCompatActivity
         hideSystemUI();
         Util.IS_APP_RUNNING = true;
         // getApplicationContext(): DWUnityActivity中应该是可以拿到这个上下文的,把这个上下文作为安卓SDK的上下文 ?
+        mAppContext = getApplicationContext();
 //        bluetoothStateReceiver = new BluetoothStateReceiver();
         // if (!BluetoothUtil.isInitialized()) 
         //     BluetoothUtil.initialize(getApplicationContext()); // <<<<<<<<<<<<<<<<<<<< 这里会拿到应用层级的上下文,返回的是 ==> ContextWrapper extends Context
@@ -190,10 +203,10 @@ public abstract class DWBaseActivity extends AppCompatActivity
             onPauseHandler.removeCallbacks(_idleRunnable);
             onPauseHandler = null;
         }
-        //Sometimes removeCallbacks is not working properly so we are initializing with null and create new Handler.
+        // Sometimes removeCallbacks is not working properly so we are initializing with null and create new Handler.
         onPauseHandler = new Handler();
         if (onPauseHandler != null) {
-            onPauseHandler.postDelayed(_idleRunnable, Numerics.ONE * Numerics.THOUSAND); //1 minute
+            onPauseHandler.postDelayed(_idleRunnable, Numerics.ONE * Numerics.THOUSAND); // 1 minute
         }
     }
 
@@ -201,16 +214,17 @@ public abstract class DWBaseActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume() ");
-//        LocaleHelper.setLocale(this, LocaleHelper.getLanguage(this));
-//        IntentFilter bluetooth = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-//        registerReceiver(bluetoothStateReceiver, bluetooth);
-//        BluetoothUtil.setListener(this);
+       LocaleHelper.setLocale(this, LocaleHelper.getLanguage(this));
+       // IntentFilter bluetooth = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+       // registerReceiver(bluetoothStateReceiver, bluetooth);
+       // BluetoothUtil.setListener(this);
         Util.IS_APP_RUNNING = true;
         try {
             Class classs = Class.forName(getString(R.string.game_activity));
+            Log.d(TAG, "(((DWBaseActivity) this).getClass().equals(classs)): " + (((DWBaseActivity) this).getClass().equals(classs)));
             if (((DWBaseActivity) this).getClass().equals(classs)) {
                 DWLoginActivity.setListener(this);
-                // DWManagePlayerActivity.setListener(this); // 对当前玩家的管理: 主要是想要监听这里的登录状态,谁是当前玩家等.观察者模式
+                DWManagePlayerActivity.setListener((LoginListener)this); // 对当前玩家的管理: 主要是想要监听这里的登录状态,谁是当前玩家等.观察者模式
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -241,12 +255,12 @@ public abstract class DWBaseActivity extends AppCompatActivity
     @Override
     protected void attachBaseContext(Context newBase) {
 //Implement this for api 28 and below
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q){
-//            super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-//        } else { // Or implement this for api 29 and above
-        super.attachBaseContext(newBase);
-//        }
-        // super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        if (VERSION.SDK_INT < VERSION_CODES.O) { // originally Q
+            super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        } else { // Or implement this for api 29 and above
+            super.attachBaseContext(newBase);
+        }
+            // super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     /**

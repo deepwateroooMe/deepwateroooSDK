@@ -28,15 +28,22 @@
 
   <!--       android:name=".DWApplication"-->
   <application
+      android:name=".DWApplication"
+      android:allowBackup="true"
       android:label="@string/app_name"
       android:largeHeap="true"
       android:supportsRtl="true">
 
     <activity
+        android:name=".activities.authentication.DWBeforeStartActivity"
+        android:exported="true"
+        android:theme="@style/DWAppTheme.NoActionBar"/>
+
+    <activity
         android:name=".activities.authentication.DWLoginActivity"
         android:theme="@style/DWAppTheme.NoActionBar.keyboard"
-        android:exported="true"
-        android:windowSoftInputMode="stateHidden|adjustResize"/>
+        android:exported="true"/>
+        <!-- android:windowSoftInputMode="stateHidden|adjustResize"/> for tmp-->
 
     <activity
         android:name=".activities.authentication.DWSignUpActivity"
@@ -92,11 +99,11 @@
     <!--     android:name="com.soundcloud.android.crop.CropImageActivity" -->
     <!--     android:exported="true" -->
     <!--     android:theme="@style/Base.Theme.AppCompat"/> -->
-    <!-- <receiver android:name=".utils.NetworkChangeReceiver" -->
-    <!--           android:exported="true"> -->
-    <!--   <intent-filter> -->
-    <!--     <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/> -->
-    <!--   </intent-filter> -->
-    <!-- </receiver> -->
+    <receiver android:name=".utils.NetworkChangeReceiver"
+              android:exported="true">
+      <intent-filter>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+      </intent-filter>
+    </receiver>
   </application>
 </manifest>

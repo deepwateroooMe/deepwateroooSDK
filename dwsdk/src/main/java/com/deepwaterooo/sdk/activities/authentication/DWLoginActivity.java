@@ -39,13 +39,19 @@ import android.widget.TextView;
 
 import com.deepwaterooo.sdk.R;
 import com.deepwaterooo.sdk.activities.BaseActivity;
+import com.deepwaterooo.sdk.activities.players.DWAddNewPlayerActivity;
+import com.deepwaterooo.sdk.activities.players.DWManagePlayerActivity;
 import com.deepwaterooo.sdk.appconfig.Constants;
 import com.deepwaterooo.sdk.appconfig.JSONConstants;
+import com.deepwaterooo.sdk.appconfig.Logger;
 import com.deepwaterooo.sdk.appconfig.Numerics;
 import com.deepwaterooo.sdk.beans.LoginUserDO;
+import com.deepwaterooo.sdk.beans.ParentInfoDO;
 import com.deepwaterooo.sdk.networklayer.ApiClient;
 import com.deepwaterooo.sdk.networklayer.NetworkUtil;
+import com.deepwaterooo.sdk.utils.LocaleHelper;
 import com.deepwaterooo.sdk.utils.LoginListener;
+import com.deepwaterooo.sdk.utils.PlayerUtil;
 import com.deepwaterooo.sdk.utils.SharedPrefUtil;
 import com.deepwaterooo.sdk.utils.Util;
 import com.google.gson.Gson;
@@ -54,6 +60,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -104,7 +111,7 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
         if (savedInstanceState != null)
             Util.getDeviceDimensions(this);
         intUI();
-        NetworkUtil.callGetAppUpdate(this);
+//        NetworkUtil.callGetAppUpdate(this);
         sharedPrefUtil = new SharedPrefUtil(this);
     }
  
@@ -115,6 +122,19 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
         if (viewTreeObserver.isAlive()) {
             viewTreeObserver.removeOnGlobalLayoutListener(listener);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume() ");
+        etUserName.setText("");
+        etPassword.setText("");
+        etUserName.requestFocus();
+        if (viewTreeObserver == null || !viewTreeObserver.isAlive()) {
+            viewTreeObserver = rootView.getViewTreeObserver();
+        }
+        viewTreeObserver.addOnGlobalLayoutListener(listener);
     }
 
     @Override
@@ -208,18 +228,6 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
             });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        etUserName.setText("");
-        etPassword.setText("");
-        etUserName.requestFocus();
-        if (viewTreeObserver == null || !viewTreeObserver.isAlive()) {
-            viewTreeObserver = rootView.getViewTreeObserver();
-        }
-        viewTreeObserver.addOnGlobalLayoutListener(listener);
-    }
-
     /**
      * return true if the given input fields are valid
      *
@@ -258,6 +266,7 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
      * @throws Exception thrown for network/response  issues
      */
     private void callLoginAPI() throws Exception {
+        Log.d(TAG, "callLoginAPI() ");
         showProgressDialog(getString(R.string.Please_Wait), false);
         ApiClient
             .getApiInterface(this)
@@ -266,11 +275,13 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
                                   @Override
                                   public void onResponse(Call<LoginUserDO> call, Response<LoginUserDO> response) {
                                       dismissProgressDialog();
+                                      Log.d(TAG, "(BaseActivity.IS_APP_RUNNING || Util.IS_APP_RUNNING): " + (BaseActivity.IS_APP_RUNNING || Util.IS_APP_RUNNING));
                                       if (BaseActivity.IS_APP_RUNNING || Util.IS_APP_RUNNING) {
                                           try {
                                               if (response.body() != null) {
                                                   loginUser = (LoginUserDO) response.body();
-
+// // 因为不能过，所以这里简化成这样                                                  
+//                                                   setUpGame(loginUser, true);
                                                   if (loginListener != null) {
                                                       loginListener.didFinishSdkUserConfiguration();
 //                                if (loginUser.getPlayer().size() == Numerics.ONE) {
@@ -278,17 +289,19 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
 //                                }
 //                                loginListener = null;
                                                   }
-
                                                   if (!loginUser.getTerms() && !loginUser.getPrivacy()) {
                                                       setUpGame(loginUser, true);
                                                   } else {
                                                       setUpGame(loginUser, false);
                                                       updatePolicyAndTerms();
                                                   }
-                                              } else if (response.code() == 423) {
+                                              } else if (response.code() == 423) { // 不知道是怎么回事，这里暂时
 //                            Util.showAlertWarning(DWLoginActivity.this, getString(R.string.Resp_423_Title),
 //                                    getString(R.string.Resp_423_msg), getString(R.string.Ok), null);
-                                                  showHelpAreaDialog();
+// // 把下面的改成是，让它过去                                                  
+//                                                   showHelpAreaDialog();
+                                                  if (loginListener != null)
+                                                      loginListener.didFinishSdkUserConfiguration();
                                               } else {
                                                   if (response.errorBody() != null) {
                                                       JSONObject jsonObject = new JSONObject(response.errorBody().string());
@@ -324,7 +337,7 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
 
                                   @Override
                                   public void onFailure(Call<LoginUserDO> call, Throwable t) {
-                                      //Logger.info("Login", "onFailure: " + t.toString());
+                                      Logger.info("Login", "onFailure: " + t.toString());
                                       dismissProgressDialog();
                                       btnLogin.setClickable(true);
                                       if (BaseActivity.IS_APP_RUNNING || Util.IS_APP_RUNNING) {
@@ -342,8 +355,9 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
      */
     @Override
     public void onClick(View v) {
-
+        Log.d(TAG, "onClick() ");
         if (v.getId() == R.id.btnLogin) {
+            Log.d(TAG, "onClick() btnLogin");
             hideSoftKeyboard(this);
             if (validateFields()) {
                 try {
@@ -387,17 +401,38 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
      */
     private void setUpGame(LoginUserDO loginUserDO, boolean isTermsPrivacyUpgraded) {
         Gson gson = new Gson();
-//        ParentInfoDO parentInfoDO = gson.fromJson(gson.toJson(loginUserDO), ParentInfoDO.class);
-//        sharedPrefUtil.setString(SharedPrefUtil.PREF_LOGIN_USER_INFO, gson.toJson(parentInfoDO));
+        ParentInfoDO parentInfoDO = gson.fromJson(gson.toJson(loginUserDO), ParentInfoDO.class);
+        sharedPrefUtil.setString(SharedPrefUtil.PREF_LOGIN_USER_INFO, gson.toJson(parentInfoDO));
         sharedPrefUtil.setBoolean(SharedPrefUtil.PREF_LOGIN_USER_STATUS, true);
         sharedPrefUtil.setString(SharedPrefUtil.PREF_LOGIN_USER_ID, loginUserDO.getId());
         sharedPrefUtil.setString(SharedPrefUtil.PREF_LOGIN_USER_TOKEN, loginUserDO.getTokenId());
         sharedPrefUtil.setInteger(SharedPrefUtil.PREF_PLAYERS_LIMIT, loginUserDO.getPlayerLimit());
         sharedPrefUtil.setString(SharedPrefUtil.PREF_LOGIN_USER_BUCKET_URL, loginUserDO.getBucketUrl());
-//        sharedPrefUtil.setBoolean(SharedPrefUtil.PREF_LOGIN_USER_QR_STATUS, Boolean.valueOf(loginUserDO.getSettings().getQrCodeStatus()));
+        sharedPrefUtil.setBoolean(SharedPrefUtil.PREF_LOGIN_USER_QR_STATUS, Boolean.valueOf(loginUserDO.getSettings().getQrCodeStatus()));
         if (isTermsPrivacyUpgraded) {
 
-            if (loginUserDO.getPlayerCount() == Numerics.ZERO) {
+            if (loginUserDO.getPlayerCount() >= Numerics.ONE) {
+                Intent intent = new Intent(DWLoginActivity.this, DWManagePlayerActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra(Constants.EXTRA_SELECT_PLAYER, true);
+                intent.putExtra(Constants.EXTRA_IS_FIRST_TIME, true);
+                intent.putExtra(Constants.EXTRA_CALL_APP_UPDATES_API,true);
+                startActivityForResult(intent, Numerics.ZERO);
+            } else if (loginUserDO.getPlayerCount() == Numerics.ZERO) {
+                if (parentInfoDO.getRole().equalsIgnoreCase(getString(R.string.PARENT))) {
+                    Intent intent = new Intent(DWLoginActivity.this, DWAddNewPlayerActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    intent.putExtra(Constants.EXTRA_IS_FROM_LOGIN, true);
+                    intent.putExtra(Constants.EXTRA_LOGIN_USER, loginUserDO);
+                    intent.putExtra(Constants.EXTRA_CALL_APP_UPDATES_API,true);
+                    startActivityForResult(intent, Numerics.ZERO);
+                } else {
+                    Intent intent = new Intent(DWLoginActivity.this, DWManagePlayerActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    intent.putExtra(Constants.EXTRA_IS_FIRST_TIME, true);
+                    intent.putExtra(Constants.EXTRA_SELECT_PLAYER, true);
+                    startActivityForResult(intent, Numerics.ZERO);
+                }
             }
 //            else {
 //                //TODO: 19/6/17 needs to change logic based on Login API
@@ -435,7 +470,7 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Log.d(TAG, "onActivityResult() ");
         if (requestCode == Numerics.ONE && data != null && data.hasExtra(JSONConstants.MESSAGE)) {
 
             if (data.getStringExtra(JSONConstants.MESSAGE).equals(JSONConstants.SUCCESS)) {
@@ -463,12 +498,11 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
         } /*else if (resultCode == Constants.RESULT_PARENTAL_CHECK_SUCCESS) {
             PlayerUtil.startHelpActivity(DWLoginActivity.this);
             }*/
-//        else if (resultCode == Constants.RESULT_PARENTAL_CHECK_SUCCESS && requestCode == Numerics.TWO) {
-//            PlayerUtil.startHelpActivity(DWLoginActivity.this);
-//        }
-//        else if (resultCode == Constants.RESULT_PARENTAL_CHECK_SUCCESS && requestCode == Numerics.ZERO) {
-//            PlayerUtil.loadTeacherPortalUrl(this, false);
-//        }
+       else if (resultCode == Constants.RESULT_PARENTAL_CHECK_SUCCESS && requestCode == Numerics.TWO) {
+           PlayerUtil.startHelpActivity(DWLoginActivity.this);
+       } else if (resultCode == Constants.RESULT_PARENTAL_CHECK_SUCCESS && requestCode == Numerics.ZERO) {
+           PlayerUtil.loadTeacherPortalUrl(this, false);
+       }
     }
 
     private void showHelpAreaDialog() {
@@ -527,7 +561,7 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void attachBaseContext(Context base) {
-//        super.attachBaseContext(LocaleHelper.onAttach(base));
+        super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
     @Override
@@ -537,15 +571,15 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
             buttonView.setTextColor(getResources().getColor(R.color.white));
         } else {
             buttonView.setTextColor(getResources().getColor(R.color.MediumPurple));
-//            if (buttonView.getId() == R.id.rbtnEnglish) {
-//                LocaleHelper.persist(this, Locale.ENGLISH.getLanguage());
-//            } else {
-//                LocaleHelper.persist(this, Locale.SIMPLIFIED_CHINESE.getLanguage());
-//            }
+            if (buttonView.getId() == R.id.rbtnEnglish) {
+                LocaleHelper.persist(this, Locale.ENGLISH.getLanguage());
+            } else {
+                LocaleHelper.persist(this, Locale.SIMPLIFIED_CHINESE.getLanguage());
+            }
             Resources res = getResources();
             DisplayMetrics dm = res.getDisplayMetrics();
             Configuration conf = res.getConfiguration();
-//            conf.locale = new Locale(LocaleHelper.getLanguage(DWLoginActivity.this));
+            conf.locale = new Locale(LocaleHelper.getLanguage(DWLoginActivity.this));
             res.updateConfiguration(conf, dm);
             onConfigurationChanged(conf);
         }
@@ -570,15 +604,15 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
 
 
     private void updateLanButtons() {
-//        if (LocaleHelper.getLanguage(this).equals(Locale.ENGLISH.getLanguage())) {
-//            rbtnEnglish.setChecked(true);
-//            rbtnChinese.setTextColor(getResources().getColor(R.color.white));
-//            rbtnEnglish.setTextColor(getResources().getColor(R.color.MediumPurple));
-//        } else {
+       if (LocaleHelper.getLanguage(this).equals(Locale.ENGLISH.getLanguage())) {
+           rbtnEnglish.setChecked(true);
+           rbtnChinese.setTextColor(getResources().getColor(R.color.white));
+           rbtnEnglish.setTextColor(getResources().getColor(R.color.MediumPurple));
+       } else {
             rbtnChinese.setChecked(true);
             rbtnChinese.setTextColor(getResources().getColor(R.color.MediumPurple));
             rbtnEnglish.setTextColor(getResources().getColor(R.color.white));
-//        }
+       }
     }
 
     private void possiblyResizeChildOfContent() {

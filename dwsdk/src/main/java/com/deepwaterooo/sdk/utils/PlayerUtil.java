@@ -223,4 +223,25 @@ public class PlayerUtil {
         //activity.startActivityForResult(browserIntent, Numerics.ZERO);
         activity.startActivity(browserIntent);
     }
+
+    /**
+     * This method loads the playground help url
+     *
+     * @param activity activity
+     */
+    public static void loadTeacherPortalUrl(Activity activity, boolean isKeepAppAlive) {
+
+        SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(activity);
+        String link = sharedPrefUtil.getString(SharedPrefUtil.PREF_UPDATE_LINK);
+        //need to change this url for production
+        link = link != null ? link : activity.getString(R.string.app_update_link);
+
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+        //   activity.startActivityForResult(browserIntent, Numerics.ZERO);
+        activity.startActivity(browserIntent);
+
+        if (isKeepAppAlive) {
+            // Util.keepAppAlive();
+        }
+    }
 }

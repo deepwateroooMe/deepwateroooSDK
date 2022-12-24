@@ -1,14 +1,18 @@
 <resources>
 
-  <string name="app_name" translatable="false">SPSDK</string>
+  <string name="app_name" translatable="false">DWSDK</string>
   <string name="LoBatteryTitle">Low Battery</string>
   <string name="LowBatteryMsg">Approximately X% of battery remaining.</string>
-  <string name="game_activity" translatable="false">com.deepwaterooo.sdk.activities.DemoActivity</string>
+  <string name="game_activity" translatable="false">com.deepwaterooo.sdk.activities.bluetooth.DemoActivity</string>
   <string name="Enable_Production" translatable="false">false</string>
-  <string name="PARENT">PARENT</string>
+  <string name="PARENT" translatable="false">PARENT</string>
 
-  <!--Have a DW account  -->
-  <string name="Have_Account">Do you have a Square Panda account?</string>
+  <!--Have a SP playset  -->
+  <string name="Have_Playset">Before we get started, do you the Deepwaterooo playset?</string>
+
+
+  <!--Have a SP account  -->
+  <string name="Have_Account">Do you have a Deepwaterooo account?</string>
   <string name="Not_Yet_New_User">Not yet, I\'m a new user.</string>
 
   <string name="English">English</string>
@@ -29,14 +33,14 @@
   <string name="Login_Mail_Not_Found_Message">If you have an account and believe you have received this message in error, please visit our help area.</string>
 
   <!-- Sign screen  -->
-  <string name="Create_Account">Create a Square Panda Account</string>
+  <string name="Create_Account">Create a Deepwaterooo Account</string>
   <string name="Firstname">Grown-up\'s First Name</string>
   <string name="Lastname">Grown-up\'s Last Name</string>
   <string name="Email">Grown-up\'s Email</string>
   <string name="Retype_Password">Re-Enter Password</string>
   <string name="Next">Next</string>
   <string name="User_Have_Account"><u>Already have an account? Log in.</u></string>
-  <string name="Stay_Up_To_Date_Msg"><u>Stay up to date with the latest Square Panda news!</u></string>
+  <string name="Stay_Up_To_Date_Msg"><u>Stay up to date with the latest Deepwaterooo news!</u></string>
 
   <!-- Forgot Password screen  -->
   <string name="ForgotPassword">Forgot your password?</string>
@@ -66,10 +70,10 @@
   <string name="Take_me_Login">OK, take me to Log In</string>
   <string name="Activate_Account">Activate your account!</string>
   <string name="Activate_Account_Text">We\'ve sent a verification email to %s. Please click on the Activate button to verify your account.
-  If you can\'t find it, be sure to check your DWAM folder!</string>
+  If you can\'t find it, be sure to check your SPAM folder!</string>
 
   <!--Before starting  -->
-  <string name="Before_Start">Before we get started, do you have \nthe Square Panda playset?</string>
+  <string name="Before_Start">Before we get started, do you have \nthe Deepwaterooo playset?</string>
   <string name="Yes">Yes!</string>
   <string name="What_Playset">What\'s a Playset?</string>
 
@@ -95,7 +99,7 @@
   <string name="Invalid_Email_format">That doesn\'t look like a valid email. Please check for typos.</string>
   <string name="Invalid_Password">The email or password is incorrect.\n\nIf you have forgotten your password, you can reset it.</string>
   <string name="User_does_not_exits">Sorry, we don\'t recognize that email.</string>
-  <string name="Email_not_verified">Looks like your account has not yet been activated. Check your email for a message from Square Panda.</string>
+  <string name="Email_not_verified">Looks like your account has not yet been activated. Check your email for a message from Deepwaterooo.</string>
   <string name="Login_failure_in_unknown_case">Something is wrong on our end.  Please, try again later.</string>
 
   <string name="Without_giving_any_input">Please fill in</string>
@@ -107,10 +111,10 @@
 
 
   <string name="Password_RetypePassword_Match">That\'s not the same password as the first one.</string>
-  <string name="Email_Already_Exists">That email has already been used to create a Square Panda account.
+  <string name="Email_Already_Exists">That email has already been used to create a Deepwaterooo account.
   \n\n If you\'ve forgotten your password, you can reset it.</string>
   <string name="Email_Not_Verified">Looks like your account has not yet been activated.
-  Check your email for a message from Square Panda.</string>
+  Check your email for a message from Deepwaterooo.</string>
   <string name="Failure_Unknown_Case">Something is wrong on our end.  Please, try again later.</string>
   <string name="ForgotPwd_Success">You will receive an email shortly that will allow you to reset your password.</string>
   <string name="Bluetooth_OFF">Looks like your bluetooth isn\'t enabled yet.
@@ -207,8 +211,8 @@ Please clear the playset of all letters. when you\'re ready, press the button be
 
 <!-- Delete player Info -->
 <string name="DeletePlayerInfoTitle">What happens to the data?</string>
-<string name="DeletePlayerInfoMsg">When you delete a player, we permanently delete any and all player identifiers from Square Panda servers.
-This includes the player\'s name, birthday and picture.\n\nSquare Panda anonymizes and retains the player\'s educational activity (i.e. what
+<string name="DeletePlayerInfoMsg">When you delete a player, we permanently delete any and all player identifiers from Deepwaterooo servers.
+This includes the player\'s name, birthday and picture.\n\nDeepwaterooo anonymizes and retains the player\'s educational activity (i.e. what
 words they spelled, what mistakes they made). We use this information only to help improve our products. For maximum privacy protection, the data
 is not traceable back to your account or other players in your account.</string>
 
@@ -248,8 +252,8 @@ is not traceable back to your account or other players in your account.</string>
 
 <!--All set for game ,before going to game screen -->
 <string name="YouAllSet">You\'re all set!</string>
-<string name="YouAllSetMsg">Get ready to jump into Square Panda\'s world of reading readiness.</string>
-<string name="YouAllSetText">With your Square Panda account you can access the Square Panda Playground and check out the skill badges your player(s) will earn!</string>
+<string name="YouAllSetMsg">Get ready to jump into Deepwaterooo\'s world of reading readiness.</string>
+<string name="YouAllSetText">With your Deepwaterooo account you can access the Deepwaterooo Playground and check out the skill badges your player(s) will earn!</string>
 <string name="YouAllSettakeToGame">Take me to the game!</string>
 <string name="YouAllSettakeToPlayGround">Take me to the Playground!</string>
 
@@ -274,18 +278,18 @@ is not traceable back to your account or other players in your account.</string>
 <string name="are_you_teacher">Are you a teacher?</string>
 <string name="create_a_teacher">Yes, create a teacher account.</string>
 <string name="not_a_teacher">No, I am not a teacher.</string>
-<string name="app_update_msg">This feature is currently available online at the Square Panda Teacher Playground!</string>
+<string name="app_update_msg">This feature is currently available online at the Deepwaterooo Teacher Playground!</string>
 <string name="click_here_to_continue">Click here to continue...</string>
 <string name="signup_are_you_teacher_account"><u>Are you a teacher? Create a teacher account.</u></string>
 <string name="app_update_link">https://teacher.squarepanda.com</string>
 <string name="parent_zero_player">Your account does not have any player profiles created yet. Would you like to create one now?</string>
-<string name="teacher_zero_player">Your account does not have any student profiles created yet. This feature is available online in the Square Panda Teacher Playground.</string>
+<string name="teacher_zero_player">Your account does not have any student profiles created yet. This feature is available online in the Deepwaterooo Teacher Playground.</string>
 
 <string name="RemberPlayset_off">Off</string>
 <string name="RemberPlayset_on">On</string>
 
-<string name="result_text" translatable="false">Found plain text</string>
-<string name="msg_bulk_mode_scanned" translatable="false">Bulk mode: barcode scanned and saved</string>
+<string name="result_text">Found plain text</string>
+<string name="msg_bulk_mode_scanned">Bulk mode: barcode scanned and saved</string>
 <string name="manually_select">Manually Select a Playset</string>
 <string name="scan_qr_code">Scan QR Code</string>
 <string name="scan_qr_code_playset">Scan the QR Code on your Playset</string>
@@ -299,13 +303,43 @@ is not traceable back to your account or other players in your account.</string>
 <string name="PermissionStart">This app needs</string>
 <string name="PermissionEnd">permissions.</string>
 
+<string-array name="firstHalfLetters">
+<item>A</item>
+<item>B</item>
+<item>C</item>
+<item>D</item>
+<item>E</item>
+<item>F</item>
+<item>G</item>
+<item>H</item>
+<item>I</item>
+<item>J</item>
+<item>K</item>
+<item>L</item>
+<item>M</item>
+</string-array>
+<string-array name="secondHalfLetters">
+<item>N</item>
+<item>O</item>
+<item>P</item>
+<item>Q</item>
+<item>R</item>
+<item>S</item>
+<item>T</item>
+<item>U</item>
+<item>V</item>
+<item>W</item>
+<item>X</item>
+<item>Y</item>
+<item>Z</item>
+</string-array>
 
 <string-array name="vowels">
-  <item>A</item>
-  <item>E</item>
-  <item>I</item>
-  <item>O</item>
-  <item>U</item>
+<item>A</item>
+<item>E</item>
+<item>I</item>
+<item>O</item>
+<item>U</item>
 </string-array>
 
 <string name="zero">0</string>
@@ -319,17 +353,18 @@ is not traceable back to your account or other players in your account.</string>
 <string name="eight">8</string>
 <string name="nine">9</string>
 
+
 <string-array name="Number">
-  <item>zero</item>
-  <item>one</item>
-  <item>two</item>
-  <item>three</item>
-  <item>four</item>
-  <item>five</item>
-  <item>six</item>
-  <item>seven</item>
-  <item>eight</item>
-  <item>nine</item>
+<item>zero</item>
+<item>one</item>
+<item>two</item>
+<item>three</item>
+<item>four</item>
+<item>five</item>
+<item>six</item>
+<item>seven</item>
+<item>eight</item>
+<item>nine</item>
 </string-array>
 
 </resources>

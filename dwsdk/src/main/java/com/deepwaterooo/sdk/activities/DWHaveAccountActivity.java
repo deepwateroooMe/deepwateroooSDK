@@ -39,7 +39,7 @@ public class DWHaveAccountActivity extends BaseActivity implements View.OnClickL
         Log.d(TAG, "onCreate() ");
         setContentView(R.layout.activity_have_account);
 
-        // NetworkUtil.callGetAppUpdate(this); // 我不认为我的SDK需要检查应用的更新,跳过
+        // NetworkUtil.callGetAppUpdate(this); // 我不认为我的SDK需要检查应用的更新,跳过,把这里面的逻辑检查一遍
         intUI();
         sharedPrefUtil = new SharedPrefUtil(this);
     }
@@ -73,7 +73,7 @@ public class DWHaveAccountActivity extends BaseActivity implements View.OnClickL
             Intent intent = new Intent(DWHaveAccountActivity.this, DWLoginActivity.class);
 
             Log.d(TAG, "onClick() (sharedPrefUtil == null): " + (sharedPrefUtil == null));
-            sharedPrefUtil.setBoolean(SharedPrefUtil.PREF_DO_YOU_HAVE_ACC, true); // 把这些还是记录下来的的
+            sharedPrefUtil.setBoolean(SharedPrefUtil.PREF_DO_YOU_HAVE_ACC, true); 
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivityForResult(intent, Numerics.ZERO);
 // 感觉这里极其诡异,还没有想明白为什么?左边点了就空指针异常,像是ActivityManagerService之类的找不到什么东西,右边就狠正常            

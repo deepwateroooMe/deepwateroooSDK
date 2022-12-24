@@ -1,48 +1,9 @@
 package com.deepwaterooo.sdk.activities;
 
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Handler;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewTreeObserver;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.deepwaterooo.sdk.R;
-import com.deepwaterooo.sdk.activities.authentication.DWLoginActivity;
-import com.deepwaterooo.sdk.appconfig.Constants;
-import com.deepwaterooo.sdk.appconfig.JSONConstants;
-import com.deepwaterooo.sdk.appconfig.Numerics;
-import com.deepwaterooo.sdk.beans.PlayerDO;
-import com.deepwaterooo.sdk.networklayer.ApiClient;
-import com.deepwaterooo.sdk.networklayer.NetworkUtil;
 import com.deepwaterooo.sdk.utils.ApiCallListener;
-import com.deepwaterooo.sdk.utils.LoginListener;
-import com.deepwaterooo.sdk.utils.PlayerUtil;
-import com.deepwaterooo.sdk.utils.SharedPrefUtil;
-import com.deepwaterooo.sdk.utils.Util;
-
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Activity used for manage players of your account
@@ -51,6 +12,7 @@ import retrofit2.Response;
 public class DWManagePlayerActivity // 不要这个类了
     // extends BluetoothBaseActivity // 我可以不用管这个类,就设置为单用户呀
     implements OnClickListener, ApiCallListener {
+
     @Override
     public void onClick(View view) {
 
