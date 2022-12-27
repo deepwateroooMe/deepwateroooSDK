@@ -1,8 +1,5 @@
 package com.deepwaterooo.sdk.activities;
 
-import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -13,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +17,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.deepwaterooo.sdk.R;
 import com.deepwaterooo.sdk.activities.authentication.DWLoginActivity;
@@ -33,8 +31,6 @@ import com.deepwaterooo.sdk.utils.LoginListener;
 import com.deepwaterooo.sdk.utils.PlayerUtil;
 import com.deepwaterooo.sdk.utils.SharedPrefUtil;
 import com.deepwaterooo.sdk.utils.Util;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 // 这里主要是提供DWUnityActivity与安卓SDK交互上下文
 public abstract class DWBaseActivity extends AppCompatActivity
@@ -222,6 +218,7 @@ public abstract class DWBaseActivity extends AppCompatActivity
         try {
             Class classs = Class.forName(getString(R.string.game_activity));
             Log.d(TAG, "(((DWBaseActivity) this).getClass().equals(classs)): " + (((DWBaseActivity) this).getClass().equals(classs)));
+// 任何时候,是这个基类的子类,在恢复的时候,都重新设置 登录 和 管理当前用户的回调            
             if (((DWBaseActivity) this).getClass().equals(classs)) {
                 DWLoginActivity.setListener(this);
                 DWManagePlayerActivity.setListener((LoginListener)this); // 对当前玩家的管理: 主要是想要监听这里的登录状态,谁是当前玩家等.观察者模式
@@ -229,12 +226,10 @@ public abstract class DWBaseActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         hideSystemUI();
         isScreenLocked = true;
-        if (getIntent().hasExtra(Constants.EXTRA_FROM_MENU)) {
+        if (getIntent().hasExtra(Constants.EXTRA_FROM_MENU)) 
             didNavigatesToMainMenu();
-        }
     }
 
     /**
@@ -255,12 +250,11 @@ public abstract class DWBaseActivity extends AppCompatActivity
     @Override
     protected void attachBaseContext(Context newBase) {
 //Implement this for api 28 and below
-        if (VERSION.SDK_INT < VERSION_CODES.O) { // originally Q
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-        } else { // Or implement this for api 29 and above
+//        if (VERSION.SDK_INT < VERSION_CODES.O) { // originally Q
+//            super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//        } else { // Or implement this for api 29 and above
             super.attachBaseContext(newBase);
-        }
-            // super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//        }
     }
 
     /**

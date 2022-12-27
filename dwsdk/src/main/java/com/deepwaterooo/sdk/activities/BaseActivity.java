@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.deepwaterooo.sdk.R;
 import com.deepwaterooo.sdk.activities.authentication.DWSignUpActivity;
@@ -26,7 +27,7 @@ import com.deepwaterooo.sdk.utils.PlayerUtil;
 import com.deepwaterooo.sdk.utils.SharedPrefUtil;
 import com.deepwaterooo.sdk.utils.Util;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 /**
  * Activity used for base class for all activities
@@ -193,7 +194,8 @@ public class BaseActivity extends AppCompatActivity implements DialogInterface.O
      */
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase)); // 以前老旧版本的
     }
 
     /**

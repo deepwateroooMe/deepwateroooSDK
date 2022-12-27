@@ -42,6 +42,7 @@ import java.util.List;
  * Class containing static utility methods for App
  */
 public class Util {
+    private final String TAG = "Util";
 
     public static boolean IS_APP_RUNNING;
     public static boolean BT_ENABLE_ACTIVITY_SHOWING = false;
@@ -233,6 +234,7 @@ public class Util {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
     }
     public static void keepAppAlive() {
+        Log.d(TAG, "keepAppAlive() ");
         new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

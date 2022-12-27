@@ -284,6 +284,7 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
 //                                                   setUpGame(loginUser, true);
                                                   if (loginListener != null) {
                                                       loginListener.didFinishSdkUserConfiguration();
+// 同时再多加一点儿：通知SDK流程结束                                                      
 //                                if (loginUser.getPlayer().size() == Numerics.ONE) {
 //                                    loginListener.didSelectedChild(loginUser.getPlayer().get(Numerics.ZERO));
 //                                }
@@ -300,8 +301,10 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
 //                                    getString(R.string.Resp_423_msg), getString(R.string.Ok), null);
 // // 把下面的改成是，让它过去                                                  
 //                                                   showHelpAreaDialog();
+// // 把下面的改成是，让它过去                                                  
                                                   if (loginListener != null)
                                                       loginListener.didFinishSdkUserConfiguration();
+                                                  
                                               } else {
                                                   if (response.errorBody() != null) {
                                                       JSONObject jsonObject = new JSONObject(response.errorBody().string());

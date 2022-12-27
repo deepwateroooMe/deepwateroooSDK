@@ -3,8 +3,8 @@ apply plugin: 'com.android.library'
 
 android {
     namespace 'com.deepwaterooo.sdk'
-    compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    compileSdkVersion 31
+    buildToolsVersion '31.0.0'
     // multiDexEnabled true // added for Bubbles game build 这个有待验证,不相信自己几年前的智商.....
 
     // compileOptions {
@@ -15,10 +15,9 @@ android {
     defaultConfig {
         minSdk 26
         //noinspection ExpiredTargetSdkVersion
-        targetSdk 26
-        versionCode 1
-        versionName "1.0"
-        multiDexEnabled true
+        targetSdk 31
+        // multiDexEnabled true
+// 好像是并没有用到上面的东西？暂时去掉 
         // testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -41,12 +40,13 @@ dependencies {
     // implementation 'com.android.support:appcompat-v7:28.0.0'
     // implementation 'com.android.support:design:28.0.0'
     // implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:appcompat-v7:26.0.1'
 
-    implementation 'com.android.support:multidex:1.0.3'
+    // implementation 'com.android.support:appcompat-v7:26.0.1'
+    // implementation 'com.android.support:multidex:1.0.3'
     
-    // implementation 'androidx.appcompat:appcompat:1.5.1'
-    // implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
 // 这里的版本号都还需要再检查一下比较好,参考了先前的项目      
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
@@ -54,9 +54,12 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation 'com.google.code.gson:gson:2.6.2'
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
-    implementation 'com.github.barteksc:android-pdf-viewer:2.2.0'
+
+    // implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     implementation 'io.github.inflationx:calligraphy3:3.1.1'
+    implementation 'io.github.inflationx:viewpump:2.0.3'
+    
+    // implementation 'com.github.barteksc:android-pdf-viewer:2.2.0'
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
     implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
     // implementation 'com.android.support:multidex:1.0.0'

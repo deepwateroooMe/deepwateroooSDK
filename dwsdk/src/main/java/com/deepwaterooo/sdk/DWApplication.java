@@ -10,7 +10,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import io.github.inflationx.calligraphy3.CalligraphyConfig;
+import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
+import io.github.inflationx.viewpump.ViewPump;
 
 public class DWApplication extends Application implements Thread.UncaughtExceptionHandler {
     private final String TAG = "DWApplication";
@@ -18,12 +20,19 @@ public class DWApplication extends Application implements Thread.UncaughtExcepti
     @Override
     public void onCreate() {
         super.onCreate();
-       //applying custom font over the application using Calligraphy
-       CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-               .setDefaultFontPath("fonts/averta_light.ttf")
-               .setFontAttrId(R.attr.fontPath)
-               .build()
-       );
+        //applying custom font over the application using Calligraphy
+        ViewPump.init(ViewPump.builder()
+                      .addInterceptor(new CalligraphyInterceptor(
+                                          new CalligraphyConfig.Builder()
+                                          .setDefaultFontPath("fonts/Roboto-RobotoRegular.ttf")
+                                          .setFontAttrId(R.attr.fontPath)
+                                          .build()))
+                      .build());
+//        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+//               .setDefaultFontPath("fonts/averta_light.ttf")
+//               .setFontAttrId(R.attr.fontPath)
+//               .build()
+//       );
 // 可以多点儿提示,就暂时还把它放这里
        Thread.setDefaultUncaughtExceptionHandler(this); // 这个捕获异常,好像帮助不大
     }

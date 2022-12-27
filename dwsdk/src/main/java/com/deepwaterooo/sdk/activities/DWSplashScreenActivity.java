@@ -30,7 +30,7 @@ public class DWSplashScreenActivity extends BaseActivity {
         setContentView(R.layout.activity_splash_screen);
         Util.getDeviceDimensions(this);
         sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
-
+// 这里想要把整个登录界面跳过去
         new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
