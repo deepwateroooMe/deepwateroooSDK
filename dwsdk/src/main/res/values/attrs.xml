@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="fontPath" />
+
+    <declare-styleable name="MCCP_SeekBar">
+      <attr name="android:thumb" />
+      <attr name="mccp_max" format="integer"></attr>
+      <attr name="mccp_start_angle" format="integer"></attr>
+      <attr name="mccp_end_angle" format="integer"></attr>
+      <attr name="mccp_seekbar_progress_unit_text" format="string"></attr>
+      <attr name="mccp_seekbar_progress_textsize" format="integer"></attr>
+      <attr name="mccp_seekbar_progress_unit_textsize" format="integer"></attr>
+      <attr name="mccp_seekbar_bg_width" format="dimension"></attr>
+      <attr name="mccp_seekbar_progress_width" format="dimension"></attr>
+      <attr name="mccp_seekbar_outside_color" format="color"></attr>
+      <attr name="mccp_seekbar_bg_color" format="color"></attr>
+      <attr name="mccp_seekbar_inside_color" format="color"></attr>
+      <attr name="mccp_seekbar_progress_bg_color" format="color"></attr>
+      <attr name="mccp_seekbar_thumb_color" format="color"></attr>
+      <attr name="mccp_seekbar_progress_text_color" format="color"></attr>
+      <attr name="mccp_seekbar_progress_unit_color" format="color"></attr>
+      <attr name="mccp_seekbar_progress_start_color" format="color"></attr>
+      <attr name="mccp_seekbar_progress_mid_color" format="color"></attr>
+      <attr name="mccp_seekbar_progress_end_color" format="color"></attr>
+      <attr name="mccp_seekbar_progress_linelong" format="dimension"></attr>
+      <attr name="mccp_seekbar_progress_thumb_r" format="dimension"></attr>
+      <attr name="mccp_seekbar_progress_color_style" format="integer"></attr>
+    </declare-styleable>
+
 </resources>

@@ -58,9 +58,10 @@ public abstract class DWBaseActivity extends AppCompatActivity
                  if (!Util.IS_APP_RUNNING && !BaseActivity.IS_APP_RUNNING) {
                     PlayerUtil.setSelectedPlayer(DWBaseActivity.this, null);
                     try {
-                        Class classs = Class.forName(getString(R.string.game_activity));
+// 这里就是从安卓SDK中启动游戏activity的地方: res/values/String.xml game_activity                        
+                        Class classs = Class.forName(getString(R.string.game_activity)); // <<<<<<<<<<<<<<<<<<<< 
                         Log.d(TAG, "(!(DWBaseActivity.this).getClass().equals(classs)): " + (!(DWBaseActivity.this).getClass().equals(classs)));
-                        if (!(DWBaseActivity.this).getClass().equals(classs)) {
+                        if (!(DWBaseActivity.this).getClass().equals(classs)) { // 如果当前活动不是游戏里的活动,结束
                             Log.d(TAG, "run() Constants.RESULT_FINISH_APP");
                             setResult(Constants.RESULT_FINISH_APP);
                             finish();
@@ -202,7 +203,7 @@ public abstract class DWBaseActivity extends AppCompatActivity
         // Sometimes removeCallbacks is not working properly so we are initializing with null and create new Handler.
         onPauseHandler = new Handler();
         if (onPauseHandler != null) {
-            onPauseHandler.postDelayed(_idleRunnable, Numerics.ONE * Numerics.THOUSAND); // 1 minute
+            onPauseHandler.postDelayed(_idleRunnable, Numerics.ONE * Numerics.THOUSAND); // 1000 
         }
     }
 
@@ -264,6 +265,7 @@ public abstract class DWBaseActivity extends AppCompatActivity
      * @param resultCode  result code
      * @param data        intent data from form other Activity
      */
+// 这里是对活动的分类导向:　可以跳至游戏端,可以安卓间活动的跳转等  
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "onActivityResult() ");
@@ -272,7 +274,9 @@ public abstract class DWBaseActivity extends AppCompatActivity
             onPauseHandler.removeCallbacks(_idleRunnable);
             onPauseHandler = null;
         }
-        if (resultCode == Constants.RESULT_FINISH_APP) {
+        Log.d(TAG, "(resultCode == Constants.RESULT_FINISH_APP): " + (resultCode == Constants.RESULT_FINISH_APP));
+        Log.d(TAG, "(resultCode == Constants.RESULT_BACK_TO_GAME): " + (resultCode == Constants.RESULT_BACK_TO_GAME));
+        if (resultCode == Constants.RESULT_FINISH_APP) { // <<<<<<<<<<<<<<<<<<<< 
             try {
                 Class classs = Class.forName(getString(R.string.game_activity));
                 if (!((DWBaseActivity) this).getClass().equals(classs)) {
@@ -283,7 +287,7 @@ public abstract class DWBaseActivity extends AppCompatActivity
                 e.printStackTrace();
             }
 
-        } else if (resultCode == Constants.RESULT_LOGOUT) {
+        } else if (resultCode == Constants.RESULT_LOGOUT) { // <<<<<<<<<<<<<<<<<<<< 
             try {
                 Class classs = Class.forName(getString(R.string.game_activity));
                 if (!((DWBaseActivity) this).getClass().equals(classs)) {
@@ -296,7 +300,7 @@ public abstract class DWBaseActivity extends AppCompatActivity
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-        } else if (requestCode == Constants.REQUEST_CODE_PARENTAL_CHECK // 去找这两个码
+        } else if (requestCode == Constants.REQUEST_CODE_PARENTAL_CHECK // <<<<<<<<<<<<<<<<<<<< 
                    && resultCode == Constants.RESULT_PARENTAL_CHECK_SUCCESS) {
             try {
                 Class classs = Class.forName(getString(R.string.game_activity));
@@ -307,23 +311,27 @@ public abstract class DWBaseActivity extends AppCompatActivity
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-        } else if (resultCode == Constants.RESULT_BACK_TO_GAME) {
-
+// 把下面这里重点弄清楚:　安卓SDK与游戏端的切换            
+        } else if (resultCode == Constants.RESULT_BACK_TO_GAME) { // <<<<<<<<<<<<<<<<<<<< 用这个作测试,要求SDK跳回至游戏端
             try {
                 Class classs = Class.forName(getString(R.string.game_activity));
+                Log.d(TAG, "(!((DWBaseActivity) this).getClass().equals(classs)): " + (!((DWBaseActivity) this).getClass().equals(classs)));
+                Log.d(TAG, "(data != null && data.hasExtra(Constants.EXTRA_FROM_MENU)): " + (data != null && data.hasExtra(Constants.EXTRA_FROM_MENU)));
+                Log.d(TAG, "(data != null && data.hasExtra(Constants.EXTRA_DATA)): " + (data != null && data.hasExtra(Constants.EXTRA_DATA)));
                 if (!((DWBaseActivity) this).getClass().equals(classs)) {
                     setResult(resultCode, data);
                     finish();
+// 因为我想要跳过DWLoginActivity的界面,我需要去找SDK中什么地方会导致这个结果,以便连接跳过                    
                 } else if (data != null && data.hasExtra(Constants.EXTRA_FROM_MENU)) {
                     didNavigatesToMainMenu();
                 } else if (data != null && data.hasExtra(Constants.EXTRA_DATA)) {
-                    didfinishSDKscreenflow();
+                    didfinishSDKscreenflow(); // <<<<<<<<<<<<<<<<<<<< 
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
 
-        } else if (requestCode == Constants.REQUEST_CODE_CHILD_ADD_TEACHER &&
+        } else if (requestCode == Constants.REQUEST_CODE_CHILD_ADD_TEACHER && // <<<<<<<<<<<<<<<<<<<< 
                    resultCode == Constants.RESULT_PARENTAL_CHECK_SUCCESS) {
 //            PlayerUtil.loadTeacherPortalUrl(this, true); // 这块儿暂时不管
         }/*else if (resultCode != Constants.RESULT_PARENTAL_CHECK_SUCCESS) {

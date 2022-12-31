@@ -1,7 +1,7 @@
 <resources>
 
-  <!-- <string name="game_activity" translatable="false">com.deepwaterooo.sdk.activities.DWUnityActivity</string> -->
   <string name="app_name" translatable="false">DWSDK</string>
+  <string name="game_activity" translatable="false">com.deepwaterooo.sdk.activities.DemoActivity</string>
   <string name="LoBatteryTitle">Low Battery</string>
   <string name="LowBatteryMsg">Approximately X% of battery remaining.</string>
   <string name="Enable_Production" translatable="false">false</string>

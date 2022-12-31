@@ -4,6 +4,23 @@
   <!-- <color name="colorPrimaryDark">#303F9F</color> -->
   <!-- <color name="colorAccent">#FF4081</color> -->
 
+  <!-- <color name="colorPrimary">#3F51B5</color> -->
+  <!-- <color name="colorPrimaryDark">#303F9F</color> -->
+  <!-- <color name="colorAccent">#FF4081</color> -->
+  <!-- <color name="text_color_user_group_sel_name">#FF0289ff</color> -->
+  <!-- <color name="text_color_user_group">#FF161616</color> -->
+  <!-- <color name="text_color_user_group_name">#FF161616</color> -->
+  <!-- <color name="text_color_main_valume">#FFe0e0e0</color> -->
+  <!-- <color name="text_color_high_set">#FF334456</color> -->
+  <!-- <color name="text_color_back">#FF0289ff</color> -->
+  <!-- <color name="mc_seekbar_outside_color">#FF2565c3</color> -->
+  <!-- <color name="mc_seekbar_bg_color">#FFbcb7b4</color> -->
+  <!-- <color name="mc_seekbar_inside_color">#FF88b6fb</color> -->
+  <!-- <color name="mc_seekbar_progress_bg_color">#FF0289ff</color> -->
+  <!-- <color name="mc_seekbar_thumb_color">#FFf6ff00</color> -->
+  <!-- <color name="text_color_mainvalume_t">#FF161616</color> -->
+  <!-- <color name="white">#FFFFFF</color> -->
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

@@ -42,7 +42,7 @@ import java.util.List;
  * Class containing static utility methods for App
  */
 public class Util {
-    private final String TAG = "Util";
+    private static final String TAG = "Util";
 
     public static boolean IS_APP_RUNNING;
     public static boolean BT_ENABLE_ACTIVITY_SHOWING = false;

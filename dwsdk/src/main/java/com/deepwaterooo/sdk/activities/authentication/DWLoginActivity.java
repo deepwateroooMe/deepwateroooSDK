@@ -304,7 +304,13 @@ public class DWLoginActivity extends BaseActivity implements View.OnClickListene
 // // 把下面的改成是，让它过去                                                  
                                                   if (loginListener != null)
                                                       loginListener.didFinishSdkUserConfiguration();
-                                                  
+// 模仿ManagerPlayers中的backBtn: 直接返回到游戏中去,测试一下                                                  
+                                                  Intent intent = new Intent();
+                                                  // 这里好像是不能要这个
+                                                  // intent.putExtra(Constants.EXTRA_FROM_MENU, true); // <<<<<<<<<< 这个标签是什么意思呢 ?
+                                                  setResult(Constants.RESULT_BACK_TO_GAME, intent);
+                                                  finish();
+
                                               } else {
                                                   if (response.errorBody() != null) {
                                                       JSONObject jsonObject = new JSONObject(response.errorBody().string());
